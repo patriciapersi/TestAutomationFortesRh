@@ -19,7 +19,7 @@ describe('Tentativas de Login', () => {
                 .visit('/login.action')
         });
 
-        it('Login usuário inválido', () => {
+        it.only('Login usuário inválido', () => {
             cy
                 .login(dados.user, Cypress.config('user_password'))
                 .validaMensagem(dados.mensagem[0]).and('have.css', 'color', "rgb(255, 87, 87)")
