@@ -649,15 +649,24 @@ Cypress.Commands.add("insere_X_Mensagens", (dados) => {
 
 Cypress.Commands.add("InsereDiasAcompanhamentoExperiencia", (dados) => {
     cy.exec_sql(
-        "insert into periodoexperiencia values (nextval('periodoexperiencia_sequence'), 60, (select id from empresa where nome = 'Empresa Padrão'), '" + dados.descricao_periodo2 + "', true)"
+        "insert into periodoexperiencia (id, dias, empresa_id, descricao, ativo) values (nextval('periodoexperiencia_sequence'), 60, (select id from empresa where nome = 'Empresa Padrão'), '" + dados.descricao_periodo2 + "', true)"
     )
 })
 
 Cypress.Commands.add("insereMotivosDesligamentos", (dados) => {
     cy.exec_sql(
-        "insert into motivodemissao values (nextval('motivodemissao_sequence'), '"+dados.descricao_motivo2+"', (select id from empresa where nome = 'Empresa Padrão'), false, false, true)"
-
+        "insert into motivodemissao (id, motivo, empresa_id, turnover, reducaodequadro, ativo) values (nextval('motivodemissao_sequence'), '"+dados.descricao_motivo2+"', (select id from empresa where nome = 'Empresa Padrão'), false, false, true)"
     )
+})
 
+Cypress.Commands.add("insereProvidencia", (dados) => {
+    cy.exec_sql(
+        "insert into providencia (id, descricao, empresa_id) values (nextval('providencia_sequence'), '"+dados.descricao_providencia+"', (select id from empresa where nome = 'Empresa Padrão'))"
+        )
+})
 
+Cypress.Commands.add("insereOcorrenciaProvidenciaColaborador", (dados) => {
+    cy.exec_sql(
+        "insert into colaboradorocorrencia (id, dataini, datafim, observacao, colaborador_id, ocorrencia_id, providencia_id) values (nextval('colaboradorocorrencia_sequence'), '01/01/2022', '01/01/2022', null, (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from ocorrencia where descricao = '" + dados.nomeOcorrencia + "'), (select id from providencia where descricao = '" + dados.descricao_providencia + "'))"
+        )
 })

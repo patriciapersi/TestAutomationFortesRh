@@ -809,4 +809,18 @@ Cypress.Commands.add('cadastraMotivosDesligamentos', (dados) => {
 
 })
 
+Cypress.Commands.add('cadastraTiposOcorrencias', (dados) => {
+    cy.contains('.rh-button' , 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name="descricao"]', dados.nomeOcorrencia)
+    cy.digita('input[name="pontuacao"]', dados.pontuacao)
+    cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click()
+})
+ 
+Cypress.Commands.add('cadastraProvidencia', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name="descricao"]', dados.descricao_providencia)
+    cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click()
+
+
+})
 
