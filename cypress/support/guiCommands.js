@@ -378,22 +378,20 @@ Cypress.Commands.add("cadastrarParticipantes", () => {
     //Inserir Avaliado
     cy.get('#inserir_Avaliado').click()
     cy.get('#empresa').select('Empresa Padrão')
+    //cy.get('#btnPesquisar').dblclick({force: true})
     cy.get('#btnPesquisar').click()
+    
     cy.get('#wwctrl_colaboradorsCheck > .listCheckBoxContainer > .listCheckBoxBarra > #mt').click()
-    cy.get('.buttonGroup').within(($form) => {
-        cy.get('#btnGravar').first().click()
-        cy.get('#boxtitle').should('not.exist')
-    })
+    
+    cy.get('#btnGravar').should('be.visible').click()
 
     //Inserir Avaliador
     cy.get('#inserir_Avaliador').click()
     cy.get('#btnPesquisar').click()
     cy.get('#wwctrl_colaboradorsCheck > .listCheckBoxContainer > .listCheckBoxBarra > #mt').click()
+    
+    cy.get('#btnGravar').should('be.visible').click()
 
-    cy.get('.buttonGroup').within(($form) => {
-        cy.get('#btnGravar').first().click()
-        cy.get('#boxtitle').should('not.exist')
-    })
 
     cy.get('#selecionarTodosAvaliado').click()
     cy.get('#relacionar_selecionados').click()

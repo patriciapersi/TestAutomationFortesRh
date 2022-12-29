@@ -43,13 +43,11 @@ describe('Área Organizacional', () => {
             .find('.fa-edit').click({ force: true })
         cy.contains('span', 'Selecione...').click()
         cy.contains('Suporte').click({ force: true })
-        cy  .contains('label', 'Ativo').next().click()
-            .get('.p-dropdown-item').within(($form) => {
-            cy.contains('li', 'Não').click({ force: true })
-        })
+        cy.contains('label', 'Ativo').next().click()
+        cy.contains('li', 'Não').dblclick({ force: true })
             .clickNewButton('Gravar')
             .validaMensagem(dados.mensagem[1]).and('have.css', 'color', "rgb(34, 74, 35)")
-        cy  .contains('td',dados.areaOrganizacional[1]).should('not.exist')
+        cy.contains('td',dados.areaOrganizacional[1]).should('not.exist')
     });
 
     it('Exclusão de Area Organizacional', () => {

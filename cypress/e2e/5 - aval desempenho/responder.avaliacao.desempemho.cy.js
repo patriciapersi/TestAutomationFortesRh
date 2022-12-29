@@ -36,7 +36,6 @@ describe('Responder Avaliação de Desempenho', () => {
         cy.responderAvaliacaoDesempenho(aval)
             .validaMensagem('Respostas gravadas com sucesso.')
             cy.contains('td', aval.Titulo).parent().find('.anonimo-tag').should('have.length',3)
-            
 
     });
 });
