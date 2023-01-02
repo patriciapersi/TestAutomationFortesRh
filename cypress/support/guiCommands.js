@@ -822,3 +822,12 @@ Cypress.Commands.add('cadastraProvidencia', (dados) => {
 
 })
 
+Cypress.Commands.add('cadastraAreadeInteresse', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name = "nome"]', dados.nomeAreadeInteresseManual)
+    .get('.checklistbox-content').within(($form) => {
+        cy.get('.VS-item > label').should('be.visible').click()
+    })
+    
+    cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click()
+})

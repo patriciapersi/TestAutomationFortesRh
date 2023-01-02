@@ -670,3 +670,11 @@ Cypress.Commands.add("insereOcorrenciaProvidenciaColaborador", (dados) => {
         "insert into colaboradorocorrencia (id, dataini, datafim, observacao, colaborador_id, ocorrencia_id, providencia_id) values (nextval('colaboradorocorrencia_sequence'), '01/01/2022', '01/01/2022', null, (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from ocorrencia where descricao = '" + dados.nomeOcorrencia + "'), (select id from providencia where descricao = '" + dados.descricao_providencia + "'))"
         )
 })
+
+
+Cypress.Commands.add("inserirAreaInteresse", (dados) => {
+    cy.exec_sql("insert into areaorganizacional values (nextval('areaorganizacional_sequence'), '" + dados.nomeAreaOrganizacional + "', null, null, (select id from empresa where nome = 'Empresa Padrão'), true, null, true)"),
+    cy.exec_sql("insert into areainteresse(id, nome, observacao, empresa_id)values (nextval('areainteresse_sequence'),'" + dados.nomeAreaInteresse + "', '', (select id from empresa where nome = 'Empresa Padrão'))"),
+    cy.exec_sql("insert into areainteresse_areaorganizacional(areasinteresse_id, areasorganizacionais_id) values ((select id from areainteresse where nome = '" + dados.nomeAreaInteresse + "'), (select id from areaorganizacional where nome = '" + dados.nomeAreaOrganizacional + "'))")
+
+})
