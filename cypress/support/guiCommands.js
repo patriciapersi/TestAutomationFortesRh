@@ -380,16 +380,16 @@ Cypress.Commands.add("cadastrarParticipantes", () => {
     cy.get('#empresa').select('Empresa Padrão')
     //cy.get('#btnPesquisar').dblclick({force: true})
     cy.get('#btnPesquisar').click()
-    
+
     cy.get('#wwctrl_colaboradorsCheck > .listCheckBoxContainer > .listCheckBoxBarra > #mt').click()
-    
+
     cy.get('#btnGravar').should('be.visible').click()
 
     //Inserir Avaliador
     cy.get('#inserir_Avaliador').click()
     cy.get('#btnPesquisar').click()
     cy.get('#wwctrl_colaboradorsCheck > .listCheckBoxContainer > .listCheckBoxBarra > #mt').click()
-    
+
     cy.get('#btnGravar').should('be.visible').click()
 
 
@@ -798,7 +798,7 @@ Cypress.Commands.add('cadastraPeriodoAcompanhamentoExperiencia', (dados) => {
 })
 
 Cypress.Commands.add('cadastraMotivosDesligamentos', (dados) => {
-    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click({force:true})
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click({ force: true })
     cy.digita('input[name="motivo"]', dados.descricao_motivo)
     cy.contains('label', 'Ativo')
     cy.contains('span', 'Sim').parent().click()
@@ -808,12 +808,12 @@ Cypress.Commands.add('cadastraMotivosDesligamentos', (dados) => {
 })
 
 Cypress.Commands.add('cadastraTiposOcorrencias', (dados) => {
-    cy.contains('.rh-button' , 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.digita('input[name="descricao"]', dados.nomeOcorrencia)
     cy.digita('input[name="pontuacao"]', dados.pontuacao)
     cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click()
 })
- 
+
 Cypress.Commands.add('cadastraProvidencia', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.digita('input[name="descricao"]', dados.descricao_providencia)
@@ -825,9 +825,22 @@ Cypress.Commands.add('cadastraProvidencia', (dados) => {
 Cypress.Commands.add('cadastraAreadeInteresse', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.digita('input[name = "nome"]', dados.nomeAreadeInteresseManual)
-    .get('.checklistbox-content').within(($form) => {
-        cy.get('.VS-item > label').should('be.visible').click()
-    })
-    
+        .get('.checklistbox-content').within(($form) => {
+            cy.get('.VS-item > label').should('be.visible').click()
+        })
+
     cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click()
+})
+
+Cypress.Commands.add('cadastraModeloAvaliacaoCandidatoManual', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name = "titulo"]', dados.avaliacao_nomeManual)
+    cy.contains('label', 'Ativa: ').next().click()
+    cy.contains('li', 'Ativo').dblclick({ force: true })
+    cy.contains('.rh-button', 'Avançar').should('be.visible').and('be.enabled').click()
+    cy.contains('label', 'Pergunta: *').next().type(chance.sentence({ words: 5 }))
+    cy.clickNewButton('Gravar')
+    cy.validaMensagem('Pergunta salva com sucesso.')
+    cy.clickNewButton('Voltar')
+    cy.clickNewButton('Voltar')
 })

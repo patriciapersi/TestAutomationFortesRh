@@ -678,3 +678,11 @@ Cypress.Commands.add("inserirAreaInteresse", (dados) => {
     cy.exec_sql("insert into areainteresse_areaorganizacional(areasinteresse_id, areasorganizacionais_id) values ((select id from areainteresse where nome = '" + dados.nomeAreaInteresse + "'), (select id from areaorganizacional where nome = '" + dados.nomeAreaOrganizacional + "'))")
 
 })
+
+Cypress.Commands.add("inseremodeloAvaliacaoCandidatoNova", (dados) => {
+    cy.exec_sql(
+        "insert into avaliacao (id, titulo, cabecalho, ativo, empresa_id, tipomodeloavaliacao, periodoexperiencia_id, exiberesultadoautoavaliacao, avaliarcompetenciascargo, percentualaprovacao, respostascompactas) values (nextval('avaliacao_sequence'), '" + dados.avaliacao_nome + "', '', true, (select id from empresa where nome = 'Empresa Padrão'), 'S', null, false, false, null, false)",
+        "insert into pergunta (id, ordem, texto, comentario, textocomentario, tipo, aspecto_id, questionario_id, notaminima, notamaxima, peso, avaliacao_id, obrigatoria) values (nextval('pergunta_sequence'), 1, 'Pergunta 01', false, 'null', 3, null, null, null, null, null, (select id from avaliacao where titulo = '" + dados.avaliacao_nome + "'), true)",
+    )
+})
+
