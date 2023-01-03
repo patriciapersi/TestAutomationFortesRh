@@ -844,3 +844,9 @@ Cypress.Commands.add('cadastraModeloAvaliacaoCandidatoManual', (dados) => {
     cy.clickNewButton('Voltar')
     cy.clickNewButton('Voltar')
 })
+
+Cypress.Commands.add('cadastraMotivoSolicitacao', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name = "descricao"]', dados.motivoSolicitacao)
+    cy.clickNewButton('Gravar')
+})
