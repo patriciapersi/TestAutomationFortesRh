@@ -686,3 +686,8 @@ Cypress.Commands.add("inseremodeloAvaliacaoCandidatoNova", (dados) => {
     )
 })
 
+Cypress.Commands.add("insereTipodeDocumento", (dados) => {
+    cy.exec_sql(
+        "insert into tipodocumento(id, descricao) values (nextval('tipodocumento_sequence'), '"+dados.descricaoTipoDocumento+"')",
+    )
+})

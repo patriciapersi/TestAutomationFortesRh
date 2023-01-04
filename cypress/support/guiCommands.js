@@ -850,3 +850,9 @@ Cypress.Commands.add('cadastraMotivoSolicitacao', (dados) => {
     cy.digita('input[name = "descricao"]', dados.motivoSolicitacao)
     cy.clickNewButton('Gravar')
 })
+
+Cypress.Commands.add('cadastraTipodeDocumento', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name = "descricao"]', dados.descricaoTipoDocumentoManual)
+    cy.clickNewButton('Gravar')
+})
