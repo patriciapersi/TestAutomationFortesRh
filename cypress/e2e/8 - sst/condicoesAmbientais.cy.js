@@ -9,7 +9,8 @@ describe('Condições ambientais', () => {
          ambiente: chance.word({syllables: 7 }),
          cpf: chance.cpf().split(/[.\-]/).join(''),
          funcao: chance.word({ syllables: 6 }),
-         descricao: chance.sentence({ words: 15 })
+         descricao: chance.sentence({ words: 15 }),
+         nomeRiscoScript: chance.word()
      }
     
      
@@ -25,6 +26,7 @@ describe('Condições ambientais', () => {
             .insereColaboradorComCompetencias(dados)
             .inserirGrupoHomogeneoExposicao(dados)
             .insereCondicaoAmbiental(dados)
+            .inserirRisco(dados)
             .navigate('/sst/condicao-ambientais')
     })
   
@@ -41,7 +43,7 @@ describe('Condições ambientais', () => {
             })
         
         cy
-            .contains('label', 'Talentos que estão no ambiente e/tavez na função do Grupo Homogêneo selecionado: *').should('be.visible').click()
+            .contains('label', 'Talentos que estão no ambiente e/talvez na função do Grupo Homogêneo selecionado: *').should('be.visible').click()
             .get('.checklistbox-header').last().within(($form) => {
                 cy.contains('button', 'Marcar Todos').should('be.visible').click({ force: true })
             })
@@ -75,6 +77,62 @@ describe('Condições ambientais', () => {
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Condição ambiental excluído com sucesso.')
     });
+
+    it('Validar o Numero CA quando inserimos 2 EPIs com Codigos Iguais', () => {
+      
+        cy
+            .contains('td', dados.colaborador).parent()
+            .find('.fa-edit').should('be.visible').click()    
+        cy  
+            .contains('Inserir Agentes Nocivos').should('be.visible').click()
+        cy  
+            .contains('.p-fieldset-content', dados.colaborador) 
+        cy  
+            .contains('label', 'Atividade perigosa insalubre:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+            cy
+                .contains('li', '03.01.007').click({ force: true })
+            })
+        cy  
+            .contains('label', 'Risco:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+            cy
+                .contains('li', dados.nomeRiscoScript).click({ force: true })
+            })
+        cy  
+            .contains('label', 'Gravidade do risco:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+            cy
+                .contains('li', 'Leve').click({ force: true })
+            })
+        cy  
+            .contains('label', 'Probabilidade do risco:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+            cy
+                .contains('li', 'Altamente Exposto').click({ force: true })
+            })
+        cy  
+            .contains('label', 'Tipo da avaliação: *').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+            cy
+                .contains('li', 'Critério qualitativo').click({ force: true })
+            })
+        cy  
+            .get('#rh_id_31 > .p-dropdown-label').click()
+            .get('[aria-label="Utilizado"]').click()
+            .get('#rh_id_32').click()
+            .get('[aria-label="Sim"]').click()
+            .clickNewButton('Gravar')
+        cy
+            .digita('input[name = "epiCA"]', '123')
+            .clickNewButton('Gravar')
+            .clickNewButton('Inserir EPI')
+            .digita('input[name = "epiCA"]', '123')
+            .clickNewButton('Gravar')
+            .validaMensagem('Certificado de aprovação (CA) existente neste agentes nocivos aos quais o trabalhador está exposto. Insira um diferente.')
+
+    });
+
 
 
 

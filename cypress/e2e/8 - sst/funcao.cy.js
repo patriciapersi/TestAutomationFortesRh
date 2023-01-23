@@ -12,7 +12,7 @@ describe('Cadastro de Funções', () => {
          cnoTeste: '207238696781',
          nomeEpiRisco: chance.word() ,
          nomeEpiRisco2 : chance.word(),
-         nomeRiscoSemEPI: chance.word()
+         nomeRiscoScript: chance.word()
      }
     
 

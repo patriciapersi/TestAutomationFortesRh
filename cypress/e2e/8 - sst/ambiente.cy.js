@@ -35,7 +35,6 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
         cy
             .contains('td', 'Descrição Histórico').parent()
             .find('.fa-edit').should('be.visible').click()    
-            .get('.p-inputtextarea').type(dados.descricaoAmbiente)  
         cy
             .contains('.rh-button', 'Gravar').should('be.visible').click() 
             .validaMensagem('Histórico do Ambiente atualizada com sucesso.')
@@ -68,7 +67,6 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
             .get('.p-dropdown-trigger-icon').eq(2).click()     
         cy
             .contains('li', dados.obraNome).click({ force: true })
-            .get('.p-inputtextarea').type(dados.descricaoAmbiente)
         cy
             .contains('.rh-button', 'Gravar').should('be.visible').click()  
             .validaMensagem('Ambiente salvo com sucesso.')    
@@ -92,7 +90,6 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
         cy
             .contains('label', 'CAEPF:').click()
             .get('input[name="historicoAmbienteAtual.caepf"]').clear().type(dados.caepfTeste)
-            .get('.p-inputtextarea').type(dados.descricaoAmbiente)
         cy
             .contains('.rh-button', 'Gravar').should('be.visible').click()  
             .validaMensagem('Ambiente salvo com sucesso.')        
@@ -115,7 +112,6 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
         cy
             .contains('label', 'CNPJ:').click()
             .get('input[name="historicoAmbienteAtual.cnpj"]').clear().type(dados.cnpjTeste)
-            .get('.p-inputtextarea').type(dados.descricaoAmbiente)
         cy
             .contains('.rh-button', 'Gravar').should('be.visible').click()  
             .validaMensagem('Ambiente salvo com sucesso.')                 
@@ -138,7 +134,6 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
         cy
             .contains('label', 'CNO:').click()
             .get('input[name="historicoAmbienteAtual.cno"]').clear().type(dados.cnoTeste)
-            .get('.p-inputtextarea').type(dados.descricaoAmbiente)
         cy
             .contains('.rh-button', 'Gravar').should('be.visible').click()  
             .validaMensagem('Ambiente salvo com sucesso.')                                

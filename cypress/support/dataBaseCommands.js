@@ -416,7 +416,7 @@ Cypress.Commands.add("inserirRiscocomEpi", (dados) => {
 Cypress.Commands.add("inserirRisco", (dados) => {
 
     cy.exec_sql(
-        "insert into risco (id, descricao, gruporisco, empresa_id, gruporiscoesocial, fatorderisco_id, descricaoriscooutros) values (nextval('risco_sequence'), '" + dados.nomeRiscoSemEPI + "', '01', (select id from empresa where nome = 'Empresa Padrão'), null, null, null)"
+        "insert into risco (id, descricao, gruporisco, empresa_id, gruporiscoesocial, fatorderisco_id, descricaoriscooutros) values (nextval('risco_sequence'), '" + dados.nomeRiscoScript + "', '01', (select id from empresa where nome = 'Empresa Padrão'), null, null, null)"
     )
 })
 
@@ -531,12 +531,6 @@ Cypress.Commands.add("inserirGrupoHomogeneoExposicao", (ghe) => {
 
 })
 
-// Cypress.Commands.add("inserirRisco", (dados) => {
-//     cy.exec_sql(
-//         "insert into risco(id, descricao, gruporisco, empresa_id, gruporiscoesocial, fatorderisco_id, descricaoriscooutros, procedimentoemergencia, possiveisdanossaude) values (nextval('risco_sequence'),'" + dados.riscoNome + "', 05, (select id from empresa where nome = 'Empresa Padrão'), null, null, null, 93381, 93380)"
-// 	)
-
-// })
 
 Cypress.Commands.add("insereCondicaoAmbiental", (dados) => {
 

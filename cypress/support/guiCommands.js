@@ -634,7 +634,6 @@ Cypress.Commands.add('inserirAmbienteManual', (dados) => {
         .contains('label', 'Estabelecimento:').click()
     cy.contains('span', 'Selecione...').first().click()
     cy.contains('li', 'Estabelecimento Padrão').click({ force: true })
-        .get('.p-inputtextarea').type(dados.descricaoAmbiente)
     cy
         .contains('.rh-button', 'Gravar').should('be.visible').click()
 })
@@ -656,7 +655,6 @@ Cypress.Commands.add('inserirAmbientecomEPIManual', (dados) => {
     cy.contains('label', 'Estabelecimento:').click()
     cy.contains('span', 'Selecione...').first().click()
     cy.contains('li', 'Estabelecimento Padrão').click({ force: true })
-        .get('.p-inputtextarea').type(dados.descricaoAmbiente)
     cy.contains('td', dados.nomeRisco).prev().click()
     cy.contains('td', dados.nomeRisco).parent()
         .find('.p-dropdown-label').eq(0).should('be.visible').click()
@@ -855,4 +853,16 @@ Cypress.Commands.add('cadastraTipodeDocumento', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.digita('input[name = "descricao"]', dados.descricaoTipoDocumentoManual)
     cy.clickNewButton('Gravar')
+})
+
+Cypress.Commands.add('cadastraRisco', (dados) => {
+    cy
+            .clickNewButton('Inserir')
+            .get('input[name="descricao"]').should('be.visible').and('be.enabled').clear().type(dados.descricao)
+        cy
+            .contains('label', 'Tipo de Risco').next().click()
+            .get('.p-dropdown-items').within(() => {
+                cy.contains('li', 'Químico').click({ force: true })
+            })
+            .clickNewButton('Gravar')
 })
