@@ -1,5 +1,3 @@
-const { Chance } = require("chance")
-
 Cypress.Commands.add("insereUsuario", (param) => {
     cy.exec_sql(
         "insert into usuario values (nextval('usuario_sequence'),'" + param + "', '" + param + "', 'MTIzNA==', true, null, false, (select caixasmensagens from usuario where nome = 'SOS'), null)",

@@ -866,3 +866,23 @@ Cypress.Commands.add('cadastraRisco', (dados) => {
             })
             .clickNewButton('Gravar')
 })
+Cypress.Commands.add('cadastraEpi', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.contains('label', 'Categoria de EPI: *').next().click()
+    cy.get('.p-dropdown-items').within(() => {
+        cy.contains('li', dados.categoriaEPI_nome).should('be.visible').click()
+    })
+    cy.contains('label','Status')
+    cy.contains('span', 'Ativo').parent().click()
+    //PrimeiroHistorico
+    cy.contains('label', 'A partir de: *').click()
+    cy.selecionaDataDeHoje()
+    cy.digita('input[name="historico.nome"]', dados.nomeEpi)
+    cy.digita('.p-inputtextarea', dados.descricaoEpi)
+    cy.digita('input[name="historico.fabricante"]', dados.nomeFabricante)
+    cy.digita('input[name="historico.numeroCA"]', dados.numeroCA)
+    cy.digita('input[name="historico.vencimentoCA"]', dados.dataVencimentoCA)
+    cy.digita('input[name="historico.atenuacao"]', dados.atenuacaoRisco)
+    cy.digita('input[name="historico.validadeUso"]', dados.diasRecomendado)
+    cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click() 
+})
