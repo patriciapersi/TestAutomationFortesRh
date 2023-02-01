@@ -14,20 +14,40 @@ const selectTableNames = async (client) => {
 }
 
 const cleanDatabase = async (client, database) => {
-  await client.query(`select alter_trigger(table_name, 'DISABLE') FROM information_schema.constraint_column_usage  where table_schema='public'  and table_catalog='${database}' group by table_name;`)
+  const disableTriggersQuery = `
+    SELECT alter_trigger(table_name, 'DISABLE')
+    FROM information_schema.constraint_column_usage
+    WHERE table_schema='public'
+    AND table_catalog='${database}'
+    GROUP BY table_name;
+  `;
+  await client.query(disableTriggersQuery);
+
   const tables = await selectTableNames(client);
-  await client.query(
-    tables.map(table_name => `delete from ${table_name};`).join('')
-  );
-  tables.forEach(async (table) => {
+  const deleteTablesQuery = `
+    ${tables.map(table_name => `DELETE FROM ${table_name};`).join('')}
+  `;
+  await client.query(deleteTablesQuery);
+
+  for (const table of tables) {
     try {
-      await client.query(`alter table ${table} alter column id set default nextval('${table}_sequence');`);
+      const alterIdColumnQuery = `
+        ALTER TABLE ${table}
+        ALTER COLUMN id SET DEFAULT nextval('${table}_sequence');
+      `;
+      await client.query(alterIdColumnQuery);
     } catch (ignored) { }
-  });
-  await client.query(
-    `select alter_trigger(table_name, 'ENABLE') FROM information_schema.constraint_column_usage  where table_schema='public'  and table_catalog='${database}' group by table_name;`
-  );
-}
+  }
+
+  const enableTriggersQuery = `
+    SELECT alter_trigger(table_name, 'ENABLE')
+    FROM information_schema.constraint_column_usage
+    WHERE table_schema='public'
+    AND table_catalog='${database}'
+    GROUP BY table_name;
+  `;
+  await client.query(enableTriggersQuery);
+};
 
 const populateDatabase = async (client) => {
   const interface = createInterface('create_data.sql');
@@ -63,7 +83,7 @@ const populateDatabase = async (client) => {
 
 const setupSOSAccess = async (client) => {
   const proximaVersao = `${new Date().getFullYear() + 20}-01-01`;
-  [
+  const queries = [
     "SELECT pg_catalog.set_config('search_path', 'public', false);",
     "CREATE OR REPLACE FUNCTION insert_papel_perfil_administrador() RETURNS integer AS $$ DECLARE     mviews RECORD; BEGIN     FOR mviews IN       select p.id as papelId from papel p where p.id not in (select papeis_id from perfil_papel where perfil_id = 1)     LOOP         INSERT INTO perfil_papel (perfil_id, papeis_id) VALUES (1, mviews.papelId);      END LOOP;     RETURN 1; END; $$ LANGUAGE plpgsql;",
     "select insert_papel_perfil_administrador();",
@@ -75,8 +95,12 @@ const setupSOSAccess = async (client) => {
     "update parametrosdosistema set appcontext = '/fortesrh'",
     "insert into usuario values (nextval('usuario_sequence'),'homolog', 'homolog', 'czNjcmVULXBAc3N3MHJk', true, null, false, (select caixasmensagens from usuario where nome = 'SOS'), null)",
     "insert into usuarioempresa values (nextval('usuarioempresa_sequence'), (select id from usuario where nome = 'homolog'), 1, 1)"
-  ].forEach(async (query) => client.query(query));
-}
+  ];
+
+  for (const query of queries) {
+    await client.query(query);
+  }
+};
 
 const reloadDB = ({ env }) => async () => {
   const client = await createPool(env.db).connect();

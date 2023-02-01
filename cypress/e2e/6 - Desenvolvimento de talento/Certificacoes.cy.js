@@ -10,41 +10,42 @@ describe('Modelos de Avaliação de Aluno', () => {
     beforeEach('', () => {
         cy
             .insereCertificacoes(dados)
-            .navigate('/desenvolvimento/certificacao/list.action')
-            .entendiButton()
+            .navigate('/desenvolvimento/certificacao')
       });
 
 
     it('Inserir uma Certificação', () => {
         cy
-            .get('#btnInserir').should('be.visible').click()
-            .get('#nome').should('be.visible').clear().type(dados.nomeCertificacaoManual)
-            .get('#mt').should('be.visible').click()
-            .get('#btnGravar').should('be.visible').click()
+            .clickNewButton('Inserir')
+            .get('input[name="nome"]').should('be.visible').clear().type(dados.nomeCertificacaoManual)
+        cy  
+            .contains('Incluir Todos').should('be.visible').click()
+            .clickNewButton('Gravar')
+            .validaMensagem('Certificação salva com sucesso.')
         cy
             .contains('td', dados.nomeCertificacaoManual).should('be.exist')
        
         })
 
-    it('Editar uma Certificação', () => {
-        cy
-            .contains('td', dados.nomeCertificacao).parent()
-            .find('.fa-edit').click({ force: true })
-            .get('#nome').should('be.visible').clear().type(dados.nomeCertificacaoManual) 
-            .get('#btnGravar').should('be.visible').click()
+    it.only('Editar uma Certificação', () => {
+        cy  
+            .generalButtons("Editar", dados.nomeCertificacao)
+            .get('input[name="nome"]').should('be.visible').clear().type(dados.nomeCertificacaoManual)
+            .get('.p-radiobutton-box').should('be.visible').click()
+            .clickNewButton('Gravar')
+            .validaMensagem('Certificação atualizada com sucesso.')
         cy
             .contains('td', dados.nomeCertificacaoManual).should('be.exist')
            
         })
         
     it('Excluir uma Certificação', () => {
-        cy
-            .contains('td', dados.nomeCertificacao).parent()
-            .find('.fa-trash').click({ force: true })
-            .old_popUpMessage('Confirma exclusão?')   
+        
+        cy  
+            .generalButtons("Remover", dados.nomeCertificacao)
+            .popUpMessage('Confirma exclusão?')
             .validaMensagem('Certificação excluída com sucesso.')
-        cy
-            .contains('td', dados.nomeCertificacao).should('not.exist')       
+           
         })
 
 

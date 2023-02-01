@@ -58,3 +58,11 @@ Cypress.Commands.add("alteraEmpresa", (company) => {
     });
 })
 
+Cypress.Commands.add('generalButtons', (title, nome) => {
+    cy.contains('td', nome)
+      .closest('tr')
+      .find(`[title="${title}"]`)
+      .should('be.visible')
+      .click();
+})
+
