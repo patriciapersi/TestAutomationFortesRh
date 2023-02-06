@@ -886,3 +886,13 @@ Cypress.Commands.add('cadastraEpi', (dados) => {
     cy.digita('input[name="historico.validadeUso"]', dados.diasRecomendado)
     cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click() 
 })
+
+Cypress.Commands.add('cadastraAvaliacaodoAluno', (dados) => {
+    cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
+    cy.digita('input[name="titulo"]', dados.tituloAVManual)
+    cy.get('.p-dropdown').click()
+    cy.contains('.p-dropdown-item','Nota').click()
+    cy.digita('input[name="minimoAprovacao"]', dados.minimoAprov)
+    cy.clickNewButton('Gravar')
+
+})
