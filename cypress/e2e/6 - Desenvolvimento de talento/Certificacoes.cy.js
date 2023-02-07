@@ -27,7 +27,7 @@ describe('Modelos de Avaliação de Aluno', () => {
        
         })
 
-    it.only('Editar uma Certificação', () => {
+    it('Editar uma Certificação', () => {
         cy  
             .generalButtons("Editar", dados.nomeCertificacao)
             .get('input[name="nome"]').should('be.visible').clear().type(dados.nomeCertificacaoManual)
