@@ -1,5 +1,5 @@
 describe('Funcionalidade Grupo AC', () => {
-    const grupoAc = {
+    const dados = {
         descricao: chance.word({length: 5}),
         code: "001",
         codigo: "002",
@@ -9,7 +9,7 @@ describe('Funcionalidade Grupo AC', () => {
         wdsl: "http://localhost:1024/wsdl/IAcPessoal"
     }
 
-    const grupoAc1 = {
+    const dados1 = {
         descricao: chance.word({length: 5}),
         codigo: "009",
         usuario: "ADMIN",
@@ -20,46 +20,54 @@ describe('Funcionalidade Grupo AC', () => {
 
     beforeEach('', () => {
         cy
-            .insereGrupoAC(grupoAc)
-            .navigate('/geral/grupoAC/list.action')
-            .entendiButton()
+            .insereGrupoAC(dados)
+            .navigate('/utilitario/grupos-ac')
     })
 
     it('Inserir Grupo AC - Código já cadastrado', () => {
         cy
-            .cadastrarGrupoAc(grupoAc)
-            .validaMensagem("Não é permitido cadastrar Grupo com o mesmo código.")
+            .cadastrarGrupoAc(dados)
+        cy    
+            .contains("Código já cadastrado.").should('be.visible')
     })
 
     it('Inserir Grupo AC', () => {
         cy
-            .cadastrarGrupoAc(grupoAc1)
-        cy.contains(grupoAc1.descricao).should('exist')
+            .cadastrarGrupoAc(dados1)
+        cy
+            .validaMensagem('Grupo AC adicionado com sucesso.')
+        cy
+            .contains(dados1.descricao).should('exist').and('be.visible')
     })
 
     it('Editar Grupo AC', () => {
+        cy  
+            .generalButtons("Editar", dados.descricao)
         cy
-        .contains('td', grupoAc.descricao).parent()
-        .find('.fa-edit').should('be.visible').click()
-        .get('#btnGravar').should('be.enabled').and('be.visible').click()
-        cy.contains(grupoAc.descricao).should('exist')
+            .digita('input[name="descricao"]', dados1.descricao)
+        cy
+            .clickNewButton('Gravar')
+        cy
+            .validaMensagem('Grupo AC atualizado com sucesso.')
+        cy
+            .contains(dados1.descricao).should('exist').and('be.visible')
     })
 
     it('Excluir Grupo AC', () => {
-        cy
-        .contains('td', grupoAc.descricao).parent()
-        .find('.fa-trash').should('be.visible').click()
-            .old_popUpMessage('Confirma exclusão?')
+        cy  
+            .generalButtons("Excluir", dados.descricao)
+            .popUpMessage('Confirma exclusão?')
             .validaMensagem('Grupo AC excluído com sucesso.')
-            cy.contains(grupoAc.descricao).should('not.exist')
+        cy  
+            .contains(dados.descricao).should('not.exist')
     })
 
     it('Excluir Grupo AC - associado ao cadastroo de empresa', () => {
+        cy  
+            .generalButtons("Excluir", dados.code)
+            .popUpMessage('Confirma exclusão?')
+            .validaMensagem('Não foi possível excluir o Grupo AC.')
         cy
-        .contains('td', grupoAc.code).parent()
-        .find('.fa-trash').should('be.visible').click()
-            .old_popUpMessage('Confirma exclusão?')
-            .validaMensagem('Não foi possível excluir este Grupo AC.')
-        cy.contains(grupoAc.code).should('exist')
+            .contains(dados.code).should('exist')
     })
 })

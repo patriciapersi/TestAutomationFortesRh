@@ -174,15 +174,15 @@ Cypress.Commands.add('cadastrarUsuarioAutomatico', (usu) => {
     cy.get('#btnCriarUsuarios').should('be.enabled').and('be.visible').click()
 })
 
-Cypress.Commands.add('cadastrarGrupoAc', (grupoAc) => {
-    cy.get('#btnInserir').should('be.enabled').and('be.visible').click()
-    cy.get('#descricao').clear().should('be.enabled').and('be.visible').type(grupoAc.descricao)
-    cy.get('#codigo').clear().should('be.enabled').and('be.visible').type(grupoAc.codigo)
-    cy.get('#acUsuario').clear().should('be.enabled').and('be.visible').type(grupoAc.usuario)
-    cy.get('#acSenha').clear().should('be.enabled').and('be.visible').type(grupoAc.senha)
-    cy.get('#acUrlSoap').clear().should('be.enabled').and('be.visible').type(grupoAc.soap)
-    cy.get('#acUrlWdsl').clear().should('be.enabled').and('be.visible').type(grupoAc.wdsl)
-    cy.get('#btnGravar').should('be.enabled').and('be.visible').click()
+Cypress.Commands.add('cadastrarGrupoAc', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="descricao"]', dados.descricao)
+    cy.digita('input[name="codigo"]', dados.codigo)
+    cy.digita('input[name="acUsuario"]', dados.usuario)
+    cy.digita('input[name="acSenha"]', dados.senha)
+    cy.digita('input[name="acUrlSoap"]', dados.soap)
+    cy.digita('input[name="acUrlWsdl"]', dados.wdsl)
+    cy.clickNewButton('Gravar')
 })
 
 Cypress.Commands.add('cadastrarEmpresa', (empresa) => {
