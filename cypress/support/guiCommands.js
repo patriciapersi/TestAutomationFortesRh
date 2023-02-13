@@ -887,6 +887,15 @@ Cypress.Commands.add('cadastraEpi', (dados) => {
     cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click() 
 })
 
+Cypress.Commands.add('cadastraMotivoAfastamento', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name = "descricao"]', dados.afastamentoMotivoManual)
+    cy.clickNewButton('Gravar')
+})
+
+
+
+
 Cypress.Commands.add('cadastraAvaliacaodoAluno', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.digita('input[name="titulo"]', dados.tituloAVManual)
@@ -894,5 +903,4 @@ Cypress.Commands.add('cadastraAvaliacaodoAluno', (dados) => {
     cy.contains('.p-dropdown-item','Nota').click()
     cy.digita('input[name="minimoAprovacao"]', dados.minimoAprov)
     cy.clickNewButton('Gravar')
-
 })

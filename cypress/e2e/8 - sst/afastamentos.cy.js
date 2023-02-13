@@ -1,7 +1,7 @@
 describe('Funcionalidade SST > Afastamentos', () => {
 
     const afastamento = {
-        motivo: 'Atestado Clinica Geral',
+        afastamentoMotivo: 'Atestado Clinica Geral',
         cid: 'A150',
         //profissionalsaude: chance.name()
     }
@@ -15,23 +15,11 @@ describe('Funcionalidade SST > Afastamentos', () => {
             .navigate('/sesmt/colaboradorAfastamento/list.action')
             .entendiButton()
     })
-
-    it('Motivos de Afastamento', () => {
-        cy.visit('/sesmt/afastamento/list.action')
-        cy.get('button').contains('Continuar').click()
-        cy.contains('1 registro(s) encontrado(s).').should('be.visible')
-
-        cy.get('#btnInserir').click()
-        cy.get('#descricao').type(afastamento.motivo)
-        cy.get('button').contains('Gravar').click()
-        cy.contains('2 registro(s) encontrado(s).').should('be.visible')
-
-    });
-
+    
     it('Inserir Afastamento', () => {
         cy.get('#btnInserir').should('be.visible').click()
         cy.get('#btnPesquisar').should('be.visible').click()
-        cy.get('#tipo').select(afastamento.motivo)
+        cy.get('#tipo').select(afastamento.afastamentoMotivo)
         //Validar contagem dos dias de mesma data
         cy.get('#inicio').clear().type('01/05/2021')
         cy.get('#fim').clear().type('01/05/2021') 
@@ -49,7 +37,7 @@ describe('Funcionalidade SST > Afastamentos', () => {
     it('Inserir Afastamento com validação do periodo', () => {
         cy.get('#btnInserir').should('be.visible').click()
         cy.get('#btnPesquisar').should('be.visible').click()
-        cy.get('#tipo').select(afastamento.motivo)
+        cy.get('#tipo').select(afastamento.afastamentoMotivo)
         cy.get('#inicio').clear().type('15/01/2021')
         cy.get('#btnGravar').click()
         cy.validaMensagem('O talento já possui um afastamento que compreende este período.')
@@ -60,7 +48,7 @@ describe('Funcionalidade SST > Afastamentos', () => {
     it('Inserir Afastamento anterior a admissao', () => {
         cy.get('#btnInserir').should('be.visible').click()
         cy.get('#btnPesquisar').should('be.visible').click()
-        cy.get('#tipo').select(afastamento.motivo)
+        cy.get('#tipo').select(afastamento.afastamentoMotivo)
         cy.get('#inicio').clear().type('10/05/2020')
         cy.get('#fim').clear().type('30/05/2020')
         cy.get('#qtdDias').focus().should('have.value', '21')

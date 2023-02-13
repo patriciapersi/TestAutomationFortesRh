@@ -299,8 +299,8 @@ Cypress.Commands.add('inserirDiasExperiencia', (dias) => {
 
 })
 
-Cypress.Commands.add("insereMotivoAfastamento", (afastamento) => {
-    cy.exec_sql("insert into afastamento values (nextval('afastamento_sequence'), false, '" + afastamento.motivo + "', false, true)")
+Cypress.Commands.add("insereMotivoAfastamento", (dados) => {
+    cy.exec_sql("insert into afastamento values (nextval('afastamento_sequence'), false, '" + dados.afastamentoMotivo + "', false, true)")
 })
 
 Cypress.Commands.add("insereAfastamento", () => {
