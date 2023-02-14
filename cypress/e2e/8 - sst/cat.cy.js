@@ -17,7 +17,7 @@ describe('Funcionalidade SST > CAT', () => {
             .entendiButton()
     })
 
-    it('Cadastrar CAT', () => {
+    it.only('Cadastrar CAT', () => {
        
         cy
         
@@ -27,7 +27,8 @@ describe('Funcionalidade SST > CAT', () => {
 
         // // Dados do Acidente
             .get('#tipo').select('Inicial').should('be.enabled')
-            .get('#data').clear().type(returnDate.formatDate(new Date())).and('be.visible')
+            cy.log(returnDate.formatDate(new Date(), -4))
+            .get('#data').clear().type(returnDate.formatDate(new Date(), -4)).and('be.visible')
             
             .get('#tipoAcidente').select('Doença').should('be.enabled')
             .get('#horario').should('be.disabled')
@@ -91,7 +92,7 @@ describe('Funcionalidade SST > CAT', () => {
          cy
              .contains('span', dados.medicoNome).should('be.visible').click()
         cy
-             .get('#dataAtendimento').clear().type(returnDate.formatDate(new Date())).and('be.visible') 
+             .get('#dataAtendimento').clear().type(returnDate.formatDate(new Date(), -4)).and('be.visible') 
              .get('#horaAtendimento').should('be.enabled').clear().type(2359)
              .get('#indicativoInternacao').should('be.enabled').select('Não')
              .get('#duracaoTratamentoEmDias').should('be.enabled').type(1)
@@ -156,7 +157,7 @@ describe('Funcionalidade SST > CAT', () => {
             .get('#tipo').select('Comunicação de Óbito')
             .get('#catOrigem').select('1').should('be.visible')
 
-            .get('#dataObito').should('be.visible').type(returnDate.formatDate(new Date())).and('be.visible')
+            .get('#dataObito').should('be.visible').type(returnDate.formatDate(new Date(), 0)).and('be.visible')
         cy
             .contains('.flat', 'Gravar').click()
         cy    

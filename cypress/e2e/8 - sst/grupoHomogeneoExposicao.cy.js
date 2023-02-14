@@ -4,7 +4,7 @@ describe.skip('Funcionalidade Grupos Homogêneos de Exposição', () => {
         descricao: 'GHE',//nn utilizar no script
         nomeGHE: chance.word(),
         nomeGHE2: chance.word(),
-        dataIni: returnDate.formatDate(new Date()),
+        dataIni: returnDate.formatDate(new Date(), 0),
         descricaoAtividade: 'FUNCAO',
         ambiente: chance.word(),
         nomeProfissional: chance.name(),

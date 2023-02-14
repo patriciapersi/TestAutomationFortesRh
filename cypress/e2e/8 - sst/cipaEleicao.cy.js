@@ -19,13 +19,13 @@ describe('Funcionalidade SST > Cadastros > Cipa > Eleicões', () => {
         cy
             .get('#btnInserir').click()
             .get('#descricao').type(eleicao.descricao)
-            .get('#posse').clear().type(returnDate.formatDate(new Date()))
+            .get('#posse').clear().type(returnDate.formatDate(new Date(), 0))
             .get('#estabelecimento').select(eleicao.estabelecimento)
             .get('#btnGravar').click()
             .validaMensagem('Eleição cadastrada com sucesso.')
             .get('#btnInserir').click()
             .get('#etapaNome').type(eleicao.nome)
-            .get('#etapaPrazo').clear().type(returnDate.formatDate(new Date()))
+            .get('#etapaPrazo').clear().type(returnDate.formatDate(new Date(), 0))
             .get('#btnGravar').click()
             .validaMensagem('Etapa do processo eleitoral cadastrada com sucesso.')
     });

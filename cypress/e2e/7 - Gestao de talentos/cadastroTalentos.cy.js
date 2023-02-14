@@ -118,7 +118,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
             .contains('td', 'Contratado').should('be.visible')
             .get('#btnEditarHistoricos').should('be.visible').click()
             .get('#btnInserir').should('be.visible').click()
-            .get('#data').should('have.value', returnDate.formatDate(new Date()))
+            .get('#data').should('have.value', returnDate.formatDate(new Date(), 0))
             .get('#motivo').select('Promoção')
             .get('#mt').should('be.visible').click()
             .get('#btnGravar').should('be.visible').click()
@@ -142,7 +142,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
         cy
             .contains('.waDivFormulario', dados.colaborador).should('be.visible')
             .get('#btnInserir').should('be.visible').click()
-            .get('#data').should('have.value', returnDate.formatDate(new Date())).and('be.visible')
+            .get('#data').should('have.value', returnDate.formatDate(new Date(), 0)).and('be.visible')
             .get('#avaliador').should('be.visible').select('Anônimo')
             .get('#checkAllCompetencia').should('be.visible').click()
         cy
@@ -180,7 +180,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
             .find('.fa-paperclip').should('be.visible').click()
             .get('#btnInserir').should('be.visible').click()
             .get('input[name = "documentoAnexo.descricao"]').should('be.visible').and('have.attr', 'maxLength', "100").clear().type(chance.word())
-            .get('#data').clear().type(returnDate.formatDate(new Date()))
+            .get('#data').clear().type(returnDate.formatDate(new Date(), 0))
         cy.fixture('example.json', { encoding: null }).as('myFile')
             .get('input[type="file"').selectFile('@myFile')
             .get('#btnGravar').should('be.visible').click()
@@ -194,7 +194,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
             .contains('td', dados.colaborador).parent()
             .find('.fa-trello').should('be.visible').click()
             .clickNewButton('Inserir')
-            .get('input[name="data"').clear().type(returnDate.formatDate(new Date()))
+            .get('input[name="data"').clear().type(returnDate.formatDate(new Date(), 0))
         cy
             .contains('Marcar Todos').should('be.visible').click()
         cy

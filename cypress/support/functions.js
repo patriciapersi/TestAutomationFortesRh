@@ -1,13 +1,9 @@
-function padTo2Digits(num) {
-    return num.toString().padStart(2, '0');
-}
-
-function formatDate(date) {
-    return [
-        padTo2Digits(date.getDate()),
-        padTo2Digits(date.getMonth() + 1),
-        date.getFullYear(),
-    ].join('/');
-}
-
-export { formatDate }
+export function formatDate(actualDate, daysToAdd) {
+    const date = actualDate;
+    date.setDate(date.getDate() + daysToAdd);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+  
+    return `${day}/${month}/${year}`;
+  }

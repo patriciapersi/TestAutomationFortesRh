@@ -6,7 +6,7 @@ describe('Indices', () => {
         indice_nome2: chance.sentence({ words: 2 }),
         indice_nome3: chance.sentence({ words: 2 }),
         valor: chance.integer({ min: 2000, max: 3500 }),
-        data: returnDate.formatDate(new Date())
+        data: returnDate.formatDate(new Date(), 0)
     }
 
     beforeEach('', () => {

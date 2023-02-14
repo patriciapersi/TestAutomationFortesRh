@@ -45,7 +45,7 @@ describe.skip('Testes da nota tecnica com prazo 20/07', () => {
         cy.get('.done').click()
 
         
-        cy.get('#data').clear().type(returnDate.formatDate(new Date())).and('be.visible')
+        cy.get('#data').clear().type(returnDate.formatDate(new Date(), 0)).and('be.visible')
         cy.get('#tipoDescricaoAtividade').select('Utilizar "Descrição das Atividades Executadas" da Função')
         cy.get('#descricaoAtividades').should('not.be.null')
         cy.get('#btnGravar').click()
@@ -81,7 +81,7 @@ describe.skip('Testes da nota tecnica com prazo 20/07', () => {
         // cy.get('.done').click()
 
         cy
-            .get('input[name="data"').clear().type(returnDate.formatDate(new Date()))
+            .get('input[name="data"').clear().type(returnDate.formatDate(new Date(), 0))
         cy
             .contains('Marcar Todos').should('be.visible').click()
             cy
@@ -98,7 +98,7 @@ describe.skip('Testes da nota tecnica com prazo 20/07', () => {
     })
 
 
-        // cy.get('#data').clear().type(returnDate.formatDate(new Date())).and('be.visible')
+        // cy.get('#data').clear().type(returnDate.formatDate(new Date(), 0)).and('be.visible')
         // cy.get('#tipoDescricaoAtividade').should('be.visible').select('Utilizar "Descrição das Atividades Executadas" da Função')
         // cy.get('#descricaoAtividades').should('not.be.null')
         // cy.get('#btnGravar').should('be.visible').click()

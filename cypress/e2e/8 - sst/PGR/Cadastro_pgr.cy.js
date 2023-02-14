@@ -30,7 +30,7 @@ describe.skip('Cadastro do PGR', () => {
         
         cy
             .clickNewButton('Inserir')
-            .get('input[name="data"]').should('be.visible').clear().type(returnDate.formatDate(new Date()))
+            .get('input[name="data"]').should('be.visible').clear().type(returnDate.formatDate(new Date(), 0))
             .get('textarea[name="objetivo"]').should('be.visible').type(dados.objetivo)
         cy
             .contains('label', 'Grupo Homogêneo:*').should('be.visible').click()

@@ -9,7 +9,7 @@ describe('Cadastro de EPI', () => {
         descricaoEpi: chance.sentence({ words: 5 }),
         nomeFabricante: chance.word(),
         numeroCA: chance.integer({ min: 1000, max: 20000 }),
-        dataVencimentoCA: returnDate.formatDate(new Date()),
+        dataVencimentoCA: returnDate.formatDate(new Date(), 0),
         atenuacaoRisco: chance.integer({ min: 1, max: 100 }),
         diasRecomendado: chance.integer({ min: 1, max: 7 }),
 

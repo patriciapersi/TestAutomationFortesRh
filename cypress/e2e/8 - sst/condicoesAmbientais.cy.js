@@ -35,7 +35,7 @@ describe('Condições ambientais', () => {
         
         cy
             .clickNewButton('Inserir')
-            .get('input[name="data"').clear().type(returnDate.formatDate(new Date()))
+            .get('input[name="data"').clear().type(returnDate.formatDate(new Date(), 0))
         cy
             .contains('span', 'Selecione...').next().should('be.visible').click()
             .get('.p-dropdown-items').within(($form) => {
