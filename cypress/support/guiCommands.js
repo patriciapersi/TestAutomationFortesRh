@@ -904,3 +904,20 @@ Cypress.Commands.add('cadastraAvaliacaodoAluno', (dados) => {
     cy.digita('input[name="minimoAprovacao"]', dados.minimoAprov)
     cy.clickNewButton('Gravar')
 })
+
+Cypress.Commands.add('cadastraMenuExtra', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.descricaoMenu)
+    cy.clickNewButton('Gravar')
+    cy.validaMensagem('Menu Extra adicionado com sucesso.')
+
+})
+
+Cypress.Commands.add('cadastraMenuExtra', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.descricaoMenu)
+    cy.clickNewButton('Gravar')
+    cy.validaMensagem('Menu Extra adicionado com sucesso.')
+    cy.validaMensagem('O usuário deverá sair e realizar novo login no sistema para refletir as alterações do Menu.')
+
+})

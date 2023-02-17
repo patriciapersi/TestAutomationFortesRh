@@ -683,3 +683,10 @@ Cypress.Commands.add("insereTipodeDocumento", (dados) => {
         "insert into tipodocumento(id, descricao) values (nextval('tipodocumento_sequence'), '"+dados.descricaoTipoDocumento+"')",
     )
 })
+
+Cypress.Commands.add("insereMenuExtra", (dados) => {
+    cy.exec_sql(
+        "insert into menuextra (id, nome) values (nextval('menuextra_sequence'), '"+dados.descricaoMenu+"')",
+        "insert into menuextralink (id, nome, url, novaaba, menuextra_id) values (nextval('menuextralink_sequence'), '"+dados.descricaoLink+"', 'https://www.google.com.br', 'true', (select id from menuextra where nome = '" +dados.descricaoMenu+ "'))" 
+    )
+})
