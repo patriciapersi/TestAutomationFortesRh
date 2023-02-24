@@ -17,7 +17,7 @@ describe('Funcionalidade SST > CAT', () => {
             .entendiButton()
     })
 
-    it.only('Cadastrar CAT', () => {
+    it('Cadastrar CAT', () => {
        
         cy
         

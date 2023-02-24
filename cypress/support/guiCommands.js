@@ -781,7 +781,7 @@ Cypress.Commands.add('cadastraIndice', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.enabled').and('be.visible').click()
     cy.contains('label', 'Nome').next().clear().type(dados.indice_nome2)
     cy.digita('input[name="indiceHistorico.data"]', dados.data)
-    cy.digita('input[name="indiceHistorico.valor"]', '100,00')
+    cy.digita('input[name="indiceHistorico.valor"]', '100,00').should('have.value', '100,00')
     cy.contains('.rh-button', 'Gravar').should('be.enabled').and('be.visible').click()
 })
 
