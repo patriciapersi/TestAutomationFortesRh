@@ -38,7 +38,7 @@ describe('Indices', () => {
         cy.contains('td', dados.indice_nome).parent().find('.fa-edit').should('be.visible').click()
         cy.digita('input[name="nome"]', dados.indice_nome3)
         cy.contains('td', '05/10/2020').parent().find('.fa-edit').should('be.visible').click()
-        cy.digita('input[name="valor"]', '3000').should('have.value', '3.000,00')
+        cy.digita('input[name="valor"]', '3000').should('have.value', '3.000')
         cy.contains('.rh-button', 'Gravar').should('be.enabled').and('be.visible').click({ force: true })
         cy.contains('.rh-button', 'Gravar').should('be.enabled').and('be.visible').click({ force: true })
             .validaMensagem('Índice atualizado com sucesso.')

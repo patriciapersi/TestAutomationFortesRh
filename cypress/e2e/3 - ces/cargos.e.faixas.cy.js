@@ -56,7 +56,7 @@ describe('Cargos', () => {
                 cy.contains('li', dados.indice).click({ force: true })
             })
             .get('input[name="historico.quantidade"]').type('2')
-            .get('input[name="salarioCalculado"]').should('have.value', '4.000,00')
+            .get('input[name="salarioCalculado"]').should('have.value', '4.000')
         cy
             .contains('.rh-button', 'Gravar').click()
             .validaMensagem('Faixa Salarial gravada com sucesso.')
