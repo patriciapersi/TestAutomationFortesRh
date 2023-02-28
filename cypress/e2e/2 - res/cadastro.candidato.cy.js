@@ -17,8 +17,14 @@ describe('Gerenciamento de Candidatos', () => {
         ]
     }
 
+    const dadosCurriculo = {
+        nome: chance.name(),
+        cargoNome: chance.name()
+    }
+
     beforeEach('', () => {
         cy
+            .inserirCargo(dadosCurriculo.cargoNome)
             .navigate('/captacao/candidato/list.action')
             .entendiButton()
     });
@@ -121,5 +127,56 @@ describe('Gerenciamento de Candidatos', () => {
         cy.contains('Confirmar').should('be.visible').click()
             .validaURL('/geral/colaborador/prepareContrata.action?candidato.id=1')
     });
+
+    
+    it('Inserir Curriculo Escaneado', () => {
+        cy
+            .clickButton('#btnInserirCurriculoEscaneado')
+        cy
+            .digita('input[name="nome"]', dadosCurriculo.nome)
+        cy
+            .contains(dadosCurriculo.cargoNome).click()
+        cy
+            .get('input[type=file]').first()
+            .selectFile('cypress/fixtures/curriculo.txt', {
+                action: "select",
+                force: true,
+              })
+        cy
+            .contains('label', 'Sexo: *').next().click()
+        cy
+            .contains('li', 'Feminino').dblclick({ force: true }) 
+        cy
+            .clickNewButton('Gravar')
+            .validaMensagem('O Curriculo foi salvo com sucesso.')
+        cy
+            .clickNewButton('Concluir')
+        cy
+            .contains(dadosCurriculo.nome).should('be.visible')
+
+    });
+
+    it('Inserir Curriculo Digitado', () => {
+        cy
+            .clickButton('#btnInserirCurriculoDigitado')
+        cy
+            .digita('input[name="nome"]', dadosCurriculo.nome)
+        cy
+            .contains('label', 'Sexo: *').next().click()
+        cy
+            .contains('li', 'Feminino').dblclick({ force: true }) 
+        cy
+            .contains(dadosCurriculo.cargoNome).click()
+        cy
+            .digita('textarea[name="ocrTexto"]', 'Lorem ipsum dolor sit amet, consectetur adipis')
+            .clickNewButton('Gravar')
+            .validaMensagem('Currículo ('+ dadosCurriculo.nome +') cadastrado com sucesso.')    
+        cy
+            .clickNewButton('Cancelar')
+        cy
+            .contains(dadosCurriculo.nome).should('be.visible')
+
+    });
+
 
 });
