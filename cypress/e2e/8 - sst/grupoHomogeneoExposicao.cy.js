@@ -1,6 +1,6 @@
 import * as returnDate from '../../support/functions'
-describe.skip('Funcionalidade Grupos Homogêneos de Exposição', () => {
-    const ghe = {
+describe('Funcionalidade Grupos Homogêneos de Exposição', () => {
+    const dados = {
         descricao: 'GHE',//nn utilizar no script
         nomeGHE: chance.word(),
         nomeGHE2: chance.word(),
@@ -8,15 +8,15 @@ describe.skip('Funcionalidade Grupos Homogêneos de Exposição', () => {
         descricaoAtividade: 'FUNCAO',
         ambiente: chance.word(),
         nomeProfissional: chance.name(),
-        riscoNome: chance.name(),
+        nomeRiscoScript: chance.name()
     }
 
     beforeEach('', () => {
         cy
-            .inserirAmbiente(ghe.ambiente)
-            .inserirProfissionalSaude(ghe.nomeProfissional)
-            .inserirGrupoHomogeneoExposicao(ghe)
-            .inserirRisco(ghe)
+            .inserirAmbiente(dados.ambiente)
+            .inserirProfissionalSaude(dados.nomeProfissional)
+            .inserirGrupoHomogeneoExposicao(dados)
+            .inserirRisco(dados)
             .navigate('/sst/grupo-homogeneo')
     })
 
@@ -24,38 +24,35 @@ describe.skip('Funcionalidade Grupos Homogêneos de Exposição', () => {
 
     it('Inserir Grupos Homogêneos de Exposição', () => {
         cy
-            .cadastrarGrupoHomogeneoExposicao(ghe)
-            //teste incompleto devido a tela esta com botao quebrado
+            .cadastrarGrupoHomogeneoExposicao(dados)
+            
     });
 
 
     it('Editar Grupos Homogêneos de Exposição', () => {
         cy
-            .contains('td', ghe.nomeGHE).parent()
-            .find('.fa-edit').should('be.visible').click()
+            .generalButtons("Editar", dados.nomeGHE)
         cy
             .contains('label', 'Nome*').click({ force: true })
-            .get('.p-inputtext').eq(2).type(ghe.nomeGHE2)
+            .get('.p-inputtext').eq(2).type(dados.nomeGHE2)
         cy
-            .contains('.rh-button', 'Gravar').should('be.visible').click()
+            .clickNewButton('Gravar')
         cy
-            .validaMensagem('Grupo Homogeneo atualizado com sucesso.')
+            .validaMensagem('Grupo Homogêneo atualizado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
             
     });
 
     it('Excluir Grupos Homogêneos de Exposição', () => {
         cy
-            .contains('td', ghe.nomeGHE).parent()
-            .find('.fa-trash').should('be.visible').click()   
+            .generalButtons("Remover", dados.nomeGHE) 
             .popUpMessage('Confirma exclusão?')
-            .validaMensagem('Grupo Homogêneo excluído com sucesso.')    
+            .validaMensagem('Grupo Homogêneo excluído com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")    
         
     });
 
     it('Clonar Grupos Homogêneos de Exposição', () => {
         cy
-            .contains('td', ghe.nomeGHE).parent()
-            .find('.fa-clone').should('be.visible').click()
+            .generalButtons("Clonar", dados.nomeGHE)
         cy
             .contains('label', 'Local do Ambiente:*').next().click()
             .get('.p-dropdown-items').within(($form) => {
@@ -68,13 +65,25 @@ describe.skip('Funcionalidade Grupos Homogêneos de Exposição', () => {
         cy
             .contains('label', 'Ambientes:*').next().click().within(($form) => {
         cy
-            .contains('label', ghe.ambiente).click({ force: true })})
+            .contains('label', dados.ambiente).click({ force: true })})
         cy
-            .contains('.rh-button', 'Clonar').should('be.visible').click()   
+            .clickNewButton('Clonar')  
     });
 
     it('Editar Historico do Grupos Homogêneos de Exposição', () => {
-        //Preciso de uma versão com as situação  resolvida para cuida desse teste 
+        cy
+            .generalButtons("Históricos", dados.nomeGHE)
+        cy
+            .generalButtons("Editar", dados.dataIni)
+        cy
+            .generalButtons("Remover", '09.01.001 - Ausência de agente nocivo ou de atividades previstas no Anexo IV do Decreto 3.048/1999')
+            .clickNewButton('OK')
+            .popUpMessage2('Agentes nocivos aos quais o trabalhador está exposto excluído com sucesso.')
+            .clickNewButton('Gravar')
+            .popUpMessage('Não existem agentes nocivos aos quais o trabalhador está exposto adicionado. Deseja Continuar?')
+            .validaMensagem(' Histórico do Grupo Homogêneo atualizada com sucesso.')
+           
+            
     });
 
 })

@@ -673,7 +673,7 @@ Cypress.Commands.add('inserirAmbientecomEPIManual', (dados) => {
 
 Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     //GrupoHomogeneo
-    cy.contains('.rh-button', 'Inserir').should('be.visible').click()
+    cy.clickNewButton('Inserir')
     cy.contains('label', 'Empresa:*').next().click()
         .get('.p-dropdown-items').within(($form) => {
             cy.contains('li', 'Empresa Padrão').click({ force: true })
@@ -690,26 +690,27 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.contains('label', 'Ambientes:*').next().click().within(($form) => {
         cy.contains('label', ghe.ambiente).click({ force: true })
     })
-    cy.contains('.rh-button', 'Gravar e criar histórico').should('be.visible').click()
-    cy.validaMensagem('Grupo Homogeneo salvo com sucesso.')
+    cy.clickNewButton('Gravar e criar histórico')
+    cy.contains('Grupo Homogêneo salvo com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
     //Historico
     cy.contains('label', 'A partir de:*').click({ force: true })
     cy.get('.p-inputtext').eq(1).clear().type(ghe.dataIni)
     cy.get('.p-inputtext').eq(3).click()
-    cy.contains('Descrição das Atividades Executadas" da Função').click()
-    cy.contains('label', 'Responsáveis pelos registros (Profissionais de SST (CRM, CREA e Outros)):*').next().click().within(($form) => {
+    cy.contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({force:true})
+    cy.contains('label', 'Responsáveis pelos registros (Profissionais de SST (CRM, CREA e Outros)): ').next().click().within(($form) => {
         cy.contains('label', ghe.nomeProfissional).click({ force: true })
     })
-    cy.contains('.rh-button', 'Gravar e Gerara Medição').should('be.visible').click()//Precisa de uma nova versão
-    cy.validaMensagem('Histórico do Grupo Homogêneo gravada com sucesso.')
+    cy.clickNewButton('Gravar e Gerar Medição')
+    cy.contains('Histórico do Grupo Homogêneo gravada com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
     //AgentesNocivos
+
     cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
     cy.get('.p-dropdown-items').within(($form) => {
         cy.contains('li', '01.02.001').click({ force: true })
     })
     cy.contains('label', 'Risco:*').next().click()
     cy.get('.p-dropdown-items').within(($form) => {
-        cy.contains('li', ghe.riscoNome).click({ force: true })
+        cy.contains('li', ghe.nomeRiscoScript).click({ force: true })
     })
     cy.contains('label', 'Gravidade do risco:*').next().click()
     cy.get('.p-dropdown-items').within(($form) => {
@@ -727,11 +728,13 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.get('.p-dropdown-items').within(($form) => {
         cy.contains('li', 'Critério qualitativo').click({ force: true })
     })
-    cy.contains('.rh-button', 'Gravar').should('be.visible').click()
-    cy.validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto salvo com sucesso.')
-    //Parte Final
-    cy.contains('.rh-button', 'Gravar').should('be.visible').click()
-    cy.validaMensagem('Grupo Homogêneo atualizada com sucesso.')
+    cy.clickNewButton('Gravar')
+    cy.validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto salvo com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+    cy
+      .contains('td', '01.02.001').parent().should('be.visible')
+    // //Parte Final
+    cy.clickNewButton('Gravar')
+    cy.validaMensagem('Grupo Homogêneo atualizada com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 })
 
 Cypress.Commands.add('cadastrarReuniao', (comissao) => {
@@ -920,4 +923,29 @@ Cypress.Commands.add('cadastraMenuExtra', (dados) => {
     cy.validaMensagem('Menu Extra adicionado com sucesso.')
     cy.validaMensagem('O usuário deverá sair e realizar novo login no sistema para refletir as alterações do Menu.')
 
+})
+
+Cypress.Commands.add('popUpMessage2', (text) => {
+
+    cy.get('.p-dialog-content').then(($popup) => {
+        if ($popup.text().includes(text)) {
+            cy.get('.confirmation-reject').should('be.enabled').and('be.visible').click({ force: true })
+        } else {
+            console.log('erro')
+        }
+    })
+    cy.get('.p-dialog-content').should('not.exist')
+})
+
+Cypress.Commands.add('cadastraCondicaoAmbiental', (dados) => {
+    cy
+            .generalButtons("Condições Ambientais", dados.colaborador)
+            .clickNewButton('Inserir')
+            .get('input[name="data"').clear().type(dados.dataIni)
+       
+        cy
+            .contains('span', 'Descrição das atividades desempenhadas: *').click()
+            .get('.p-dropdown-label').eq(1).should('be.visible').click()
+        cy
+            .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({force:true})
 })

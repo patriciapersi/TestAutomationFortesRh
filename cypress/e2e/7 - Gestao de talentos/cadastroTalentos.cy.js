@@ -11,7 +11,8 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
         cpf: chance.cpf().split(/[.\-]/).join(''),
         entrevistaDesligamento: chance.sentence({ words: 3 }),
         ambiente: chance.word(),
-        funcao: chance.word({ syllables: 6 })
+        funcao: chance.word({ syllables: 6 }),
+        dataIni: returnDate.formatDate(new Date(), 0)
        
     }
     const dados2 = {
@@ -29,7 +30,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
     beforeEach('', () => {
         cy
             .insereColaboradorDemitido(dados2)
-            .inserirFuncao(dados.funcao)
+            .inserirFuncao(dados)
             .inserirAmbiente(dados.ambiente)
             .insereColaboradorComCompetencias(dados)
             .insereEntrevistaDesligamento(dados.entrevistaDesligamento)
@@ -186,24 +187,38 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
             .get('#btnGravar').should('be.visible').click()
     });
 
-    it.skip('Incluir condições ambientais para o talento', () => {
+    it('Incluir condições ambientais para o talento - sem medição', () => {
         let medico = chance.word({ syllabes: 5})
         cy
             .insereMedico(medico)
+            .cadastraCondicaoAmbiental(dados)
+
+        cy  .get('.rh-button').eq(1).click()
+            .validaMensagem('Condição Ambiental gravado com sucesso.')
         cy
-            .contains('td', dados.colaborador).parent()
-            .find('.fa-trello').should('be.visible').click()
-            .clickNewButton('Inserir')
-            .get('input[name="data"').clear().type(returnDate.formatDate(new Date(), 0))
+            .contains('td', returnDate.formatDate(new Date(), 0)).parent().should('be.visible')
+    })
+
+    it('Incluir condições ambientais para o talento - com medição', () => {
+        let medico = chance.word({ syllabes: 5})
         cy
-            .contains('Marcar Todos').should('be.visible').click()
+            .insereMedico(medico)
+            .cadastraCondicaoAmbiental(dados)
+        
+        cy  .clickNewButton('Gravar')
+        cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+
+        cy   .contains('label', 'Atividade perigosa insalubre:*').next().click()
+             .get('.p-dropdown-items').within(($form) => {
         cy
-            .contains('span', 'Descrição das atividades desempenhadas: *').click()
-            .get('.p-dropdown-label').click({ force: true })
-        cy
-            .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click()
+            .contains('li', '09.01.001').should('be.visible').click({ force: true })
+          
+            }) 
+        cy  .clickNewButton('Gravar')
+            .validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto salvo com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
             .clickNewButton('Gravar')
+     
         cy
-            .contains('.p-tag', 'Cadastro pendente (Sem descrição das atividades)').should('be.visible')
+            .contains('td', returnDate.formatDate(new Date(), 0)).parent().should('be.visible')
     })
 });
