@@ -469,7 +469,8 @@ Cypress.Commands.add("inserirCronogramaPGR", (dados) => {
 
 Cypress.Commands.add("cadastroPGR", (dados) => {
     cy.exec_sql(
-        "insert into pgr(id, data, introducao, objetivo, metodologia, responsabilidades, encerramento, empresa_id) values (nextval('pgr_sequence'), '" + dados.dataIni + "', 'introdução homologação testes', 'objetivo homologação testes', 'metodologia homologação testes', 'responsabilidades homologação testes', null, (select id from empresa where nome = 'Empresa Padrão'))"
+        "insert into pgr(id, data, introducao, objetivo, metodologia, responsabilidades, encerramento, empresa_id) values (nextval('pgr_sequence'), '" + dados.dataIni + "', 'introdução homologação testes', 'objetivo homologação testes', 'metodologia homologação testes', 'responsabilidades homologação testes', null, (select id from empresa where nome = 'Empresa Padrão'))",
+        "insert into pgr_historicogrupohomogeneo(pgr_id, historicogrupohomogeneos_id) VALUES ((select id from pgr where data = '" + dados.dataIni + "'), (select id from grupohomogeneo where nome = '" + dados.nomeGHE + "') )"
 
 
     )

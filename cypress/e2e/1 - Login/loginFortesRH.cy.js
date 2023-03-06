@@ -32,7 +32,7 @@ describe('Tentativas de Login', () => {
                 .validaMensagem(dados.mensagem[0]).and('have.css', 'color', "rgb(255, 87, 87)")
         });
     
-        it.skip('Primeiro Acesso', { timeout: 15000 }, () => {
+        it('Primeiro Acesso', { timeout: 15000 }, () => {
             cy
                 .exec_sql("update parametrosdosistema set exibiralteracaoprimeiroacesso = true")
                 .insereUsuario(dados.user)
@@ -41,7 +41,7 @@ describe('Tentativas de Login', () => {
                 .validaUsuarioLogado(dados.user)
         });
     
-        it.skip('Login válido', { timeout: 15000 }, () => {
+        it('Login válido', { timeout: 15000 }, () => {
             cy
                 .login(Cypress.config('user_name'), Cypress.config('user_password'))
                 .validaEmpresaLogada(Cypress.config('company'))

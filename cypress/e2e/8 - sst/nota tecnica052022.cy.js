@@ -1,12 +1,13 @@
 import * as returnDate from '../../support/functions'
-describe.skip('Testes da nota tecnica com prazo 20/07', () => {
+describe('Testes da nota tecnica com prazo 20/07', () => {
 
     const dados = {
         colaborador: chance.name(),
         cpf: chance.cpf().split(/[.\-]/).join(''),
         medico: chance.name(),
         ambiente: chance.word(),
-        funcao: chance.word()
+        funcao: chance.word(),
+        nomeRiscoScript: chance.name()
     }
 
     beforeEach('', () => {
@@ -16,43 +17,57 @@ describe.skip('Testes da nota tecnica com prazo 20/07', () => {
             .inserirFuncao(dados)
             .insereColaboradorComCompetencias(dados)
             .insereMedico(dados.medico)
+            .inserirRisco(dados)
+            
 
     });
 
     //tabela 24
 
     it('validar atualização da descrição de codigo na tabela 24', () => {
-        cy.visit('/sesmt/condicaoAmbiental/prepareInsertColaborador.action?colaborador.id=1')
-        cy.contains('Continuar').click()
-        cy.get('.done').click()
+        
+        cy.visit('/sst/condicao-ambientais/colaborador/1')
+            
+        cy  .contains('Continuar').click()
+            .clickNewButton('Inserir')
+            .get('input[name="data"').should('be.visible').clear().type(returnDate.formatDate(new Date(), 0))
 
+        cy
+            .contains('span', 'Descrição das atividades desempenhadas: *').click()
+            .get('.p-dropdown-label').eq(1).should('be.visible').click()
+        cy
+            .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
+        cy  .contains('Incluir Todos').should('be.enabled').and('be.visible').click()
+        cy  .clickNewButton('Gravar')
+        cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 
-        cy.get('#data').clear().type('19/08/2022', { force: true })
-        cy.get('#tipoDescricaoAtividade').select('Utilizar "Descrição das Atividades Executadas" da Função')
-        cy.get('#descricaoAtividades').should('not.be.null')
-        // cy.get('#btnGravar').click()
-        // cy.get('.ui-button-text').should('be.visible').click()
-        // cy.get('#adicionaLinhaAgenteNocivo').click()
-        // cy.get('#listCheckBoxFilterativPerigInsalsCheck').clear().type('01.19.008')
-        // cy.contains('Aminobifenila (4-aminodifenil)').should('be.visible')
+        cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy.get('.p-dropdown-filter').clear().should('be.enabled').and('be.visible').type('01.19.008').click({ force: true })
+        cy.contains('li', '01.19.008 - Aminobifenila (4-aminodifenil)').should('be.visible')
 
     })
 
 
     it('validar exclusão de codigo na tabela 24', () => {
-        cy.visit('/sesmt/condicaoAmbiental/prepareInsertColaborador.action?colaborador.id=1')
-        cy.contains('Continuar').click()
-        cy.get('.done').click()
-
         
-        cy.get('#data').clear().type(returnDate.formatDate(new Date(), 0)).and('be.visible')
-        cy.get('#tipoDescricaoAtividade').select('Utilizar "Descrição das Atividades Executadas" da Função')
-        cy.get('#descricaoAtividades').should('not.be.null')
-        cy.get('#btnGravar').click()
-        cy.get('.ui-button-text').should('be.visible').click()
-        cy.get('#adicionaLinhaAgenteNocivo').click()
-        cy.get('#listCheckBoxFilterativPerigInsalsCheck').clear().type('01.19.037')
-        cy.contains('4-aminodifenil').should('not.be.visible')
+        cy.visit('/sst/condicao-ambientais/colaborador/1')
+            
+        cy  .contains('Continuar').click()
+            .clickNewButton('Inserir')
+            .get('input[name="data"').should('be.visible').clear().type(returnDate.formatDate(new Date(), 0))
+
+        cy
+            .contains('span', 'Descrição das atividades desempenhadas: *').click()
+            .get('.p-dropdown-label').eq(1).should('be.visible').click()
+        cy
+            .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
+        cy  .contains('Incluir Todos').should('be.enabled').and('be.visible').click()
+        cy  .clickNewButton('Gravar')
+        cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+
+        cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy.get('.p-dropdown-filter').clear().should('be.enabled').and('be.visible').type('01.19.037')
+        cy.contains('li', 'Sem resultados encontrados').should('be.visible')
 
     })
 
@@ -76,43 +91,50 @@ describe.skip('Testes da nota tecnica com prazo 20/07', () => {
 
 
     it('validar campo obrigatorio profissional sst', () => {
-        cy.visit('sst/condicao-ambientais/colaborador/1/new')
-        cy.contains('Continuar').click()
-        // cy.get('.done').click()
+        cy.visit('sst/condicao-ambientais/colaborador/1')
+        cy  .contains('Continuar').click()
+            .clickNewButton('Inserir')
+            .get('input[name="data"').should('be.visible').clear().type(returnDate.formatDate(new Date(), 0))
 
         cy
-            .get('input[name="data"').clear().type(returnDate.formatDate(new Date(), 0))
-        cy
-            .contains('Marcar Todos').should('be.visible').click()
-            cy
             .contains('span', 'Descrição das atividades desempenhadas: *').click()
-             .get('.p-dropdown-label').within(($form) => {
-                 cy
-                     .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
-             })
-        
-        
-        //     .clickNewButton('Gravar')
-        // cy
-        //     .contains('.p-tag', 'Cadastro pendente (Sem descrição das atividades)').should('be.visible')
+            .get('.p-dropdown-label').eq(1).should('be.visible').click()
+        cy
+            .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
+        cy  .contains('label', 'Responsáveis pelos registros (Profissionais de SST (CRM, CREA e Outros)):').should('be.visible')
+        cy  .clickNewButton('Gravar')
+        cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+
+        cy  .contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy  .get('.p-dropdown-items').within(($form) => {
+            cy.contains('li', '01.02.001').click({ force: true })
+        })
+        cy  .contains('label', 'Risco:*').next().click()
+        cy  .get('.p-dropdown-items').within(($form) => {
+            cy.contains('li', dados.nomeRiscoScript).click({ force: true })
+        })
+        cy  .contains('label', 'Gravidade do risco:*').next().click()
+            cy.get('.p-dropdown-items').within(($form) => {
+            cy.contains('li', 'Significativo').click({ force: true })
+        })
+        cy  .contains('label', 'Probabilidade do risco:*').next().click()
+            cy.get('.p-dropdown-items').within(($form) => {
+            cy.contains('li', 'Altamente Exposto').click({ force: true })
+        })
+        cy  .contains('label', 'Classificação de severidade do risco:* ').next()
+        cy  .contains('span', 'Risco Crítico').should('not.be.enabled')
+        cy  .contains('label', 'Descrição do agente nocivo:').click({ force: true })
+        cy  .get('.p-inputtext').eq(12).type('Descrição do agente nocivo')
+        cy  .contains('label', 'Tipo da avaliação: *').next().click()
+            cy.get('.p-dropdown-items').within(($form) => {
+            cy.contains('li', 'Critério qualitativo').click({ force: true })
+        })
+        cy  .clickNewButton('Gravar')
+        cy  .validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto salvo com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+        cy  .get('.rh-button').eq(0).click()
+        cy  .clickNewButton('OK')
+        cy  .contains('Responsáveis pelos registros (Profissionais de SST (CRM, CREA e Outros)) é requerido')
     })
-
-
-        // cy.get('#data').clear().type(returnDate.formatDate(new Date(), 0)).and('be.visible')
-        // cy.get('#tipoDescricaoAtividade').should('be.visible').select('Utilizar "Descrição das Atividades Executadas" da Função')
-        // cy.get('#descricaoAtividades').should('not.be.null')
-        // cy.get('#btnGravar').should('be.visible').click()
-        // cy.get('.ui-button-text').should('be.visible').click()
-        // cy.get('#adicionaLinhaAgenteNocivo').should('be.visible').click()
-        // cy.contains('Arsênio e seus compostos').should('be.visible').click()
-        // cy.contains('span','Inserir').first().should('be.visible').click()
-        // cy.wait(2000)
-        // cy.get(':nth-child(11) > #btnGravar').should('be.visible').click()
-        // cy.contains('Preencha os campos indicados.').should('be.visible')
-        // cy.get('#listCheckBoxprofissionaisSSTCheck').should('have.css', 'color', "rgb(92, 92, 90)")
-        
-
-   
 
     // Evento 2220 - Monitoramento de saúde
 
