@@ -938,18 +938,12 @@ Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) =
 })
 
 Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
-Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
     cy.clickNewButton('Inserir')
     cy.digita('input[name="nome"]', dados.tituloplanejamento)
     cy.digita('input[name="data"]', dados.dataAplicacao)
     cy.contains('label', 'Tipo do Reajuste: *').next().click()
     cy.contains('.p-dropdown-item', 'Índice').dblclick({ force: true })
-    cy.clickNewButton('Gravar') 
-    cy.digita('input[name="nome"]', dados.tituloplanejamento)
-    cy.digita('input[name="data"]', dados.dataAplicacao)
-    cy.contains('label', 'Tipo do Reajuste: *').next().click()
-    cy.contains('.p-dropdown-item', 'Índice').dblclick({ force: true })
-    cy.clickNewButton('Gravar') 
+    cy.clickNewButton('Gravar')
 
 })
 
