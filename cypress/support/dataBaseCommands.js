@@ -691,3 +691,33 @@ Cypress.Commands.add("insereMenuExtra", (dados) => {
         "insert into menuextralink (id, nome, url, novaaba, menuextra_id) values (nextval('menuextralink_sequence'), '"+dados.descricaoLink+"', 'https://www.google.com.br', 'true', (select id from menuextra where nome = '" +dados.descricaoMenu+ "'))" 
     )
 })
+
+Cypress.Commands.add("inserePlanejamentoRealinhamentoFaixaSalarial", (dados) => {
+    cy.exec_sql(
+        "insert into tabelareajustecolaborador(id, nome, data, observacao, aprovada, empresa_id, dissidio, tiporeajuste) values (nextval('tabelareajustecolaborador_sequence'), 'Planejamento Teste Júnior', '01/01/2023', '', false, (select id from empresa where nome = 'Empresa Padrão'), false, 'F')",      
+       )
+})
+Cypress.Commands.add("inserePlanejamentoRealinhamentoIndice", (dados) => {
+    cy.exec_sql(
+        "insert into tabelareajustecolaborador(id, nome, data, observacao, aprovada, empresa_id, dissidio, tiporeajuste) values (nextval('tabelareajustecolaborador_sequence'), 'Planejamento Teste Indice', '01/02/2023', '', false, (select id from empresa where nome = 'Empresa Padrão'), false, 'I')",      
+       )
+})
+
+Cypress.Commands.add("insereSolicitacaoRealinhamentoFaixaSalarial", (dados) => {
+    cy.inserePlanejamentoRealinhamentoFaixaSalarial(dados)
+    cy.exec_sql(
+        "insert into cargo(id, nome, nomemercado, missao, competencias, responsabilidades, escolaridade, experiencia, recrutamento, selecao, observacao,grupoocupacional_id, empresa_id, ativo, exibirmoduloexterno, atitude, complementoconhecimento) values (nextval('cargo_sequence'), 'Encarregado Departamento Pessoal', 'Cargo Teste', null, null, null, null, null, null, null, null, null, (select id from empresa where nome = 'Empresa Padrão'), true, true, null, null)",
+        "insert into faixasalarial(id, nome, codigoac, cargo_id, nomeacpessoal, codigocbo) values (nextval('faixasalarial_sequence'), 'Júnior', null, (select id from cargo where nome = 'Encarregado Departamento Pessoal'), null, '411005')",
+        "insert into faixasalarial(id, nome, codigoac, cargo_id, nomeacpessoal, codigocbo) values (nextval('faixasalarial_sequence'), 'Pleno', null, (select id from cargo where nome = 'Encarregado Departamento Pessoal'), null, '411005')",
+        "insert into faixasalarialhistorico(id, data, valor, tipo, quantidade, faixasalarial_id, indice_id, status, reajustefaixasalarial_id) values (nextval('faixasalarialhistorico_sequence'), '01/01/2022', '1500', 3, null, (select id from faixasalarial where nome = 'Júnior'), null, 1, null )",
+        "insert into faixasalarialhistorico(id, data, valor, tipo, quantidade, faixasalarial_id, indice_id, status, reajustefaixasalarial_id) values (nextval('faixasalarialhistorico_sequence'), '01/01/2022', '2500', 3, null, (select id from faixasalarial where nome = 'Pleno'), null, 1, null )",
+        "insert into reajustefaixasalarial(id, faixasalarial_id, tabelareajustecolaborador_id, valoratual, valorproposto) values (nextval('reajustefaixasalarial_sequence'),(select id from faixasalarial where nome = 'Júnior'),(select id from tabelareajustecolaborador where nome = 'Planejamento Teste Júnior'), 1500.00, 1680.00)",
+     )
+})
+Cypress.Commands.add("insereSolicitacaoRealinhamentoIndice", (dados) => {
+    cy.insereIndicesComHistorico(dados.indice_nome2)
+    cy.inserePlanejamentoRealinhamentoIndice(dados)
+    cy.exec_sql(
+        "insert into reajusteindice (id, indice_id, tabelareajustecolaborador_id, valoratual, valorproposto) values (nextval('reajusteindice_sequence'),(select id from indice where nome = '"+ dados.indice_nome2 +"'), (select id from tabelareajustecolaborador where nome = 'Planejamento Teste Indice'), '3000.00', '3300.00' )" 
+     )
+})

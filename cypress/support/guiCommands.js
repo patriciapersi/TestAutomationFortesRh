@@ -913,17 +913,73 @@ Cypress.Commands.add('cadastraMenuExtra', (dados) => {
     cy.digita('input[name="nome"]', dados.descricaoMenu)
     cy.clickNewButton('Gravar')
     cy.validaMensagem('Menu Extra adicionado com sucesso.')
-
-})
-
-Cypress.Commands.add('cadastraMenuExtra', (dados) => {
-    cy.clickNewButton('Inserir')
-    cy.digita('input[name="nome"]', dados.descricaoMenu)
-    cy.clickNewButton('Gravar')
-    cy.validaMensagem('Menu Extra adicionado com sucesso.')
     cy.validaMensagem('O usuário deverá sair e realizar novo login no sistema para refletir as alterações do Menu.')
+})
+
+Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.tituloplanejamento)
+    cy.digita('input[name="data"]', dados.dataAplicacao)
+    cy.get('.p-dropdown').click()
+    cy.contains('li', 'Faixa Salarial').click()
+    cy.clickNewButton('Gravar') 
+    
+    cy.validaMensagem('O usuário deverá sair e realizar novo login no sistema para refletir as alterações do Menu.')
+})
+
+Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.tituloplanejamento)
+    cy.digita('input[name="data"]', dados.dataAplicacao)
+    cy.get('.p-dropdown').click()
+    cy.contains('li', 'Faixa Salarial').click()
+    cy.clickNewButton('Gravar') 
+    
+})
+
+Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
+Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.tituloplanejamento)
+    cy.digita('input[name="data"]', dados.dataAplicacao)
+    cy.contains('label', 'Tipo do Reajuste: *').next().click()
+    cy.contains('.p-dropdown-item', 'Índice').dblclick({ force: true })
+    cy.clickNewButton('Gravar') 
+    cy.digita('input[name="nome"]', dados.tituloplanejamento)
+    cy.digita('input[name="data"]', dados.dataAplicacao)
+    cy.contains('label', 'Tipo do Reajuste: *').next().click()
+    cy.contains('.p-dropdown-item', 'Índice').dblclick({ force: true })
+    cy.clickNewButton('Gravar') 
 
 })
+
+Cypress.Commands.add('cadastraSolicitacaoRealinhamentoFaixaSalarial', (dados) => {
+    cy.generalButtons('Visualizar Realinhamentos', dados.tituloplanejamento)
+    cy.clickNewButton('Inserir')
+    cy.contains('label', 'Cargo: *').next().click()
+    cy.get('.p-dropdown-items').within(() => {
+        cy.contains('li', 'Encarregado Departamento Pessoal').should('be.visible').click({force:true})
+    })
+    cy.contains('label', 'Faixas Salariais: *').next().click()
+    cy.get('.p-dropdown-items').within(() => {
+        cy.contains('li', 'Encarregado Departamento Pessoal Pleno').should('be.visible').click({force:true})
+    })
+    cy.digita('input[name="valorDissidio"]', dados.valor_reajuste)
+    cy.clickNewButton('Gravar')
+})
+
+Cypress.Commands.add('cadastraSolicitacaoRealinhamentoIndice', (dados) => {
+    cy.generalButtons('Visualizar Realinhamentos', dados.tituloplanejamento)
+    cy.clickNewButton('Inserir')
+    cy.contains('label', 'Indices: *').next().click()
+    cy.get('.p-dropdown-items').within(() => {
+        cy.contains('li', dados.indice_nome).should('be.visible').click({force:true})
+    })
+    cy.digita('input[name="valorDissidio"]', dados.valor_reajustepct)
+    cy.clickNewButton('Gravar')
+})
+
+
 
 Cypress.Commands.add('popUpMessage2', (text) => {
 
