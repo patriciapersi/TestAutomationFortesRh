@@ -1,10 +1,15 @@
+import * as returnDate from '../../support/functions'
 describe('Cursos e Treinamentos', () => {
 
     const dados = {
       colaborador: chance.name(),
       cpf: chance.cpf().split(/[.\-]/).join(''),
       curso: chance.word(),
-      curso1: chance.word()
+      curso1: chance.word(),
+      descCurso: chance.name(),
+      custo : chance.integer(),
+      data: returnDate.formatDate(new Date(), 0)
+      //data: '27/07/2022'
   
     }
   
@@ -13,57 +18,116 @@ describe('Cursos e Treinamentos', () => {
         .ativaIntegracaoEduvem()
         .insereColaboradorComCompetencias(dados)
         .insereCurso(dados.curso)
-        .navigate('/desenvolvimento/curso/list.action')
-        .entendiButton()
+        .navigate('/desenvolvimento/cursos')
     });
   
   
-    it('Novo curso com integração eduvem', () => {
+    it.only('Novo curso com integração eduvem', () => {
   
-      cy.get('#btnInserir').should('be.visible').click()
-      cy.get('#nome').should('be.visible').clear().type(dados.curso1)
-      cy.get('#uuidCursoEduvem').should('be.visible').select(2)
-      cy.get('#btnGravar').should('be.visible').click()
+      cy
+        .clickNewButton('Inserir')
+        .digita('input[name="nome"]', dados.curso1)
+      cy
+        .contains('label', 'Curso Eduvem').next().click()
+      cy
+        .contains('li', 'Bem-vindo a Fortes - Integração Geral (Todos)').dblclick({ force: true })  
+        .clickNewButton('Gravar')
+        .clickNewButton('OK')
   
       //inserir turma eduvem
   
       cy
-      .contains('td', dados.curso1).parent()
-      .find('.fa-database').should('be.visible').click()
-      cy.get('#btnInserir').should('be.visible').click()
-      cy.get('#desc').should('be.visible').clear().type('turma manha')
-      cy.get('#custo').should('be.visible').clear().type(250) 
-      cy.get('#eduvemIntegra').should('be.visible').contains('Sim')
-      cy.get('#inst').should('be.visible').clear().type(chance.name())
-      cy.get('#prevIni').should('be.visible').clear().type('27/07/2022', {delay: 0})
-      cy.get('#prevFim').should('be.visible').clear().type('27/07/2022')
-      cy.get('#listCheckBoxdiasCheck').click()
-      cy.get('.even > :nth-child(2) > label').should('be.visible').click()
-      cy.get('#btnGravar').should('be.visible').click()
-      cy.get('#btnPesquisar').should('be.visible').click()
-      cy.get('#btnInserirSelecionados').should('be.visible').click()
+        .generalButtons('Turmas', dados.curso1)
+      cy
+        .clickNewButton('Inserir')
+        .digita('input[name="descricao"]', dados.descCurso)
+        .digita('input[name="custo"]', dados.custo)
+      cy
+        .contains('label', 'Integrado:').next().click()
+      cy
+        .contains('li', 'Sim').dblclick({ force: true })  
+      cy
+        .contains('label', 'Nome:*').next().click().type(chance.name())
+        .digita('input[name="dataPrevIni"]', dados.data)
+        .digita('input[name="dataPrevFim"]', dados.data)
+      cy
+        .contains('label', 'Possibilitar assistir as aulas antes das datas especificadas.').click()
+      cy
+        .get('.p-checkbox').eq(1).should('be.visible').click()
+        .clickNewButton('Gravar')
+        .entendiButton()
+        .get('#btnPesquisar').click()
+        .get('#btnInserirSelecionados').click()
+        .validaMensagem('Talento(s) incluído(s) com sucesso!')
+        .clickNewButton('Voltar')
+      cy
+        .contains(dados.descCurso).should('be.exist')
+        .clickNewButton('Voltar')
+      cy
+        .contains(dados.curso1).should('be.exist')
+        
     })
   
     it('Editar um curso e ativar integração eduvem', () => {
+
       cy
-      .contains('td', dados.curso).parent()
-      .find('.fa-edit').should('be.visible').click()
-      cy.get('#uuidCursoEduvem').should('be.visible').select(2)
-      cy.get('#btnGravar').should('be.visible').click()
-      cy.contains('Esse curso agora está integrado com a plataforma Eduvem. Efetue a alteração nas turmas para que também tenham o vínculo com o Eduvem.')
-      cy.get('.ui-button').should('be.visible').click()
-  
+        .generalButtons('Editar', dados.curso)
       cy
-      .contains('td', dados.curso).parent()
-      .find('.fa-database').should('be.visible').click()
-  
+        .contains('label', 'Curso Eduvem').next().click()
       cy
-      .contains('td', 'Turma manhã').parent()
-      .find('.fa-edit').should('be.visible').click()
-      cy.get('#eduvemIntegra').should('be.visible').contains('Não')
-      cy.get('#eduvemIntegra').should('be.visible').select('Sim')
-      cy.get('#btnGravar').should('be.visible').click()
+        .contains('li', 'Bem-vindo a Fortes - Integração Geral (Todos)').dblclick({ force: true })  
+        .clickNewButton('Gravar')
+        .clickNewButton('OK')
+      cy
+        .generalButtons('Turmas', dados.curso)
+      cy
+        .contains('td', 'Turma manhã').parent().click()
+        .find('.fa-bars').click().get('.fa-edit').click({ force: true })
+      cy
+        .contains('label', 'Integrado:').next().click()
+      cy
+        .contains('li', 'Sim').dblclick({ force: true })  
+        .clickNewButton('Gravar')
+      
     })
-  
-  
+
+    it('Tentativa de Deletar um curso com Turma', () => {
+
+      cy
+        .generalButtons('Remover', dados.curso)
+        .popUpMessage('Confirma exclusão?')
+        .validaMensagem('Entidade curso possui dependências em:')
+      cy
+        .contains(dados.curso).should('be.exist')
+      
+    })
+
+    it('Clonar um curso', () => {
+
+      cy
+        .generalButtons('Clonar', dados.curso)
+        .clickNewButton('Clonar')
+        
+      cy
+        .contains(dados.curso+' (Clone)').should('be.exist')
+    })
+
+    it('Deletar um curso', () => {
+
+      cy
+        .generalButtons('Turmas', dados.curso)
+      cy
+        .contains('td', 'Turma manhã').parent().click()
+        .find('.fa-bars').click().get('.fa-trash').click({ force: true })
+        .validaMensagem('turma excluído com sucesso.')
+        .clickNewButton('Voltar')
+      cy
+        .generalButtons('Remover', dados.curso)
+        .popUpMessage('Confirma exclusão?')
+        .validaMensagem('Curso excluído com sucesso.')
+      cy
+        .contains(dados.curso+' (Clone)').should('not.exist')
+    })
+
+
   })
