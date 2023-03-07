@@ -22,7 +22,7 @@ describe('Cursos e Treinamentos', () => {
     });
   
   
-    it.only('Novo curso com integração eduvem', () => {
+    it('Novo curso com integração eduvem', () => {
   
       cy
         .clickNewButton('Inserir')

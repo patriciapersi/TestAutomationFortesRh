@@ -34,7 +34,10 @@ describe('Minhas avaliações', () => {
             .find('.fa-edit').should('be.visible').click()
         cy
             .get('.p-checkbox-icon').eq(0).click({force: true})
+            .get('.p-radiobutton-box').eq(0).click({force: true})
             .get('.p-checkbox-icon').eq(1).click({force: true})
+            .get('.p-radiobutton-box').eq(1).click({force: true})
+            
             .clickNewButton('Gravar')
             .validaMensagem('Avaliação gravada sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
         cy
@@ -48,6 +51,7 @@ describe('Minhas avaliações', () => {
             .find('.fa-edit').should('be.visible').click()
         cy
             .get('.p-checkbox-icon').eq(0).click({force: true})
+            .get('.p-radiobutton-box').eq(0).click({force: true})
             .clickNewButton('Gravar Parcialmente')
             .validaMensagem('Avaliação gravada sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
         cy

@@ -724,7 +724,7 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.contains('span', 'Risco Crítico').should('not.be.enabled')
     cy.contains('label', 'Descrição do agente nocivo:').click({ force: true })
     cy.get('.p-inputtext').eq(12).type('Descrição do agente nocivo')
-    cy.contains('label', 'Tipo da avaliação: *').next().click()
+    cy.contains('label', 'Tipo da avaliação:*').next().click()
     cy.get('.p-dropdown-items').within(($form) => {
         cy.contains('li', 'Critério qualitativo').click({ force: true })
     })
