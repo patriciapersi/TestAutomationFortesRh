@@ -13,13 +13,15 @@ describe('Condições ambientais', () => {
          nomeRiscoScript: chance.word()
      }
     
+     const dados2 ={
+        gravidade_nome: chance.word()
+        
+     }
      
     
 
     beforeEach('', () => {
         cy
-
-            
             .inserirFuncao(dados)
             .inserirAmbiente(dados.ambiente)
             .insereMedico(dados.nomeProfissional)
@@ -133,7 +135,53 @@ describe('Condições ambientais', () => {
 
     });
 
+    it('Validar o Comportamento da Severidade de Risco', () => {
+        cy
+            .insereGravidadeRiscos(dados2.gravidade_nome)
+            .reload()
+        cy
+            .generalButtons('Editar', dados.colaborador)    
+        cy   
+            .contains('Inserir Agentes Nocivos').should('be.visible').click()
+        cy   
+            .contains('.p-fieldset-content', dados.colaborador) 
+        cy   
+            .contains('label', 'Atividade perigosa insalubre:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+                cy
+                .contains('li', '03.01.007').click({ force: true })
+                })
+        cy   
+            .contains('label', 'Risco:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+                cy
+                .contains('li', dados.nomeRiscoScript).click({ force: true })
+                }) 
+        cy   
+            .contains('label', 'Gravidade do risco:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+                cy
+                .contains('li', dados2.gravidade_nome).click({ force: true })
+                }) 
+        cy   
+            .contains('label', 'Probabilidade do risco:*').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+                cy
+                .contains('li', 'Altamente Exposto').click({ force: true })
+                }) 
+        cy   
+            .contains('label', 'Tipo da avaliação: *').next().click()
+            .get('.p-dropdown-items').within(($form) => {
+                cy
+                .contains('li', 'Critério qualitativo').click({ force: true })
+                }) 
 
+            .clickNewButton('Gravar')
+            .clickNewButton('OK')
+            
+        cy
+            .contains('Classificação de severidade do risco é obrigatória. O resultado dessa Classificação de Severidade de Risco vem da combinação entre Gravidade do Risco e Probabilidade do Risco.').should('have.css', 'color', "rgb(244, 67, 54)") 
 
+    });
 
 })
