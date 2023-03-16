@@ -48,6 +48,17 @@ describe('Tentativas de Login', () => {
                 .validaUsuarioLogado(Cypress.config('user_name'))
         });
 
+        it('Valida versão disponível no portal do cliente', () => {
+            cy
+                .exec_sql("update parametrosdosistema set versao = '1.4.11.01'")
+                .reload()
+                .login(Cypress.config('user_name'), Cypress.config('user_password'))
+                .validaMensagem('para acessar o Portal do Cliente e realizar o download.').and('have.css', 'color', "rgb(4, 72, 104)")
+                
+        });
+
+
+
     })
 
        
