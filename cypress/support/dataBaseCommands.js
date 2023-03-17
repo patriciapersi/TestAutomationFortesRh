@@ -721,3 +721,9 @@ Cypress.Commands.add("insereSolicitacaoRealinhamentoIndice", (dados) => {
         "insert into reajusteindice (id, indice_id, tabelareajustecolaborador_id, valoratual, valorproposto) values (nextval('reajusteindice_sequence'),(select id from indice where nome = '"+ dados.indice_nome2 +"'), (select id from tabelareajustecolaborador where nome = 'Planejamento Teste Indice'), '3000.00', '3300.00' )" 
      )
 })
+
+Cypress.Commands.add("insereLotacaotributaria", (dados) => {
+    cy.exec_sql(
+        "insert into lotacaotributaria(id, nome, tipolotacaotributaria_id, numeroinscricao, codigoac, empresa_id, statuscadastroesocial, cadastropendente) values (nextval('lotacaotributaria_sequence'), '"+dados.nomeLotacaoTrib+"', 1, null, null, (select id from empresa where nome = 'Empresa Padrão'), null, false);",      
+       )
+})

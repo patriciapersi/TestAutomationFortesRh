@@ -999,3 +999,16 @@ Cypress.Commands.add('cadastraCondicaoAmbiental', (dados) => {
         cy
             .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({force:true})
 })
+
+Cypress.Commands.add('cadastraLotacaotributaria', (dados) => {
+    cy
+            .clickNewButton('Inserir')
+            .get('input[name="nome"').clear().type(dados.manualNomeLotacaoTrib)
+    cy      
+            .get('.tipo-lotacao-tributaria-formgroup-content').click()
+    cy      
+            .contains('01 - Classificação da atividade econômica exercida pela Pessoa Jurídica para fins de atribuição de código FPAS, inclusive obras de construção civil própria, exceto:').click()
+            .clickNewButton('Selecionar')
+    cy
+            .clickNewButton('Gravar')
+})
