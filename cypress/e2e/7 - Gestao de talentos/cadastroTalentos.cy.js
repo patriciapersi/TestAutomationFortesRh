@@ -159,7 +159,6 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
             .get('.base').should('be.visible')
             .get('#btnGravar').should('be.visible').click()
             .validaMensagem('Níveis de competência do talento salvos com sucesso.')
-
     })
 
     it('Incluir Talento em Solicitacão de Pessoal', () => {
@@ -218,7 +217,13 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
             .validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto salvo com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
             .clickNewButton('Gravar')
      
-        cy
-            .contains('td', returnDate.formatDate(new Date(), 0)).parent().should('be.visible')
+        cy  
+            .validaMensagem('Condição Ambiental atualizado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+            .validaMensagem('Não é possível inserir uma nova condição ambiental para este talento, pois uma condição ambiental já foi cadastrada com a data de hoje.').and('have.css', 'color', "rgb(43, 123, 181)")
+        cy  .contains('.rh-button', 'Inserir').should('be.disabled')
+        cy  .contains('td', returnDate.formatDate(new Date(), 0)).parent().should('be.visible')
+
+            //cy  .get('.rh-button').eq(0)
+
     })
 });
