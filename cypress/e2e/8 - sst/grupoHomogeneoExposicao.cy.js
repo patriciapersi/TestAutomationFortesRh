@@ -1,15 +1,22 @@
+/// <reference types="cypress" />
 import * as returnDate from '../../support/functions'
 describe('Funcionalidade Grupos Homogêneos de Exposição', () => {
     const dados = {
-        descricao: 'GHE',//nn utilizar no script
+        descricao: chance.word({ length: 5 }),
         nomeGHE: chance.word(),
         nomeGHE2: chance.word(),
         dataIni: returnDate.formatDate(new Date(), 0),
         descricaoAtividade: 'FUNCAO',
         ambiente: chance.word(),
         nomeProfissional: chance.name(),
-        nomeRiscoScript: chance.name()
+        nomeRiscoScript: chance.name(),
+        colaborador: chance.name(),
+        cpf: chance.cpf().split(/[.\-]/).join(''),
+        funcao: chance.word()
+
     }
+
+    
 
     beforeEach('', () => {
         cy
@@ -83,6 +90,29 @@ describe('Funcionalidade Grupos Homogêneos de Exposição', () => {
             .popUpMessage('Não existem agentes nocivos aos quais o trabalhador está exposto adicionado. Deseja Continuar?')
             .validaMensagem(' Histórico do Grupo Homogêneo atualizada com sucesso.')
            
+            
+    });
+
+    it('Editar Historico com condição ambiental atrelada ao talento', () => {
+        
+        cy.insereColaborador(dados)
+        cy
+            .generalButtons("Históricos", dados.nomeGHE)
+        cy
+            .generalButtons("Editar", dados.dataIni)
+        cy
+            .generalButtons("Editar", '09.01.001 - Ausência de agente nocivo ou de atividades previstas no Anexo IV do Decreto 3.048/1999')
+            .CadastraAtividadesPerigosasInsalubres(dados)
+        cy  .contains('Permitir criar/atualizar as condições ambientais dos talentos que possuem vínculo com este Grupo Homogêneo.')
+        cy  .get('.p-checkbox-box').eq(2).should('not.be.enabled')
+        cy  .get('.p-checkbox-box').eq(1).should('be.visible').click()
+        cy  .get('.p-checkbox-box').eq(2).should('be.visible').click()
+            .popUpMessage('Identificamos que esse grupo homogêneo já possui vínculo nas condições ambientais de talentos.')
+            .navigate('/sst/condicao-ambientais')
+            .generalButtons('Editar', dados.colaborador)
+        cy  .contains('td', '01.02.001').parent().should('be.visible')
+        
+        
             
     });
 

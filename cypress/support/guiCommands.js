@@ -999,6 +999,44 @@ Cypress.Commands.add('cadastraCondicaoAmbiental', (dados) => {
         cy
             .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({force:true})
 })
+Cypress.Commands.add('CadastraAtividadesPerigosasInsalubres', (dados) => {
+
+    cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', '01.02.001').click({ force: true })
+    })
+    cy.contains('label', 'Risco:*').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', dados.nomeRiscoScript).click({ force: true })
+    })
+    cy.contains('label', 'Gravidade do risco:*').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', 'Significativo').click({ force: true })
+    })
+    cy.contains('label', 'Probabilidade do risco:*').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', 'Altamente Exposto').click({ force: true })
+    })
+    cy.contains('label', 'Classificação de severidade do risco:* ').next()
+    cy.contains('span', 'Risco Crítico').should('not.be.enabled')
+    cy.contains('label', 'Descrição do agente nocivo:').click({ force: true })
+    cy.get('.p-inputtext').eq(12).type('Descrição do agente nocivo')
+    cy.contains('label', 'Tipo da avaliação:*').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', 'Critério qualitativo').click({ force: true })
+    })
+    cy.contains('label', 'Utiliza: *').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', 'Não se Aplica').click({ force: true })
+    })
+    cy.contains('label', 'Utiliza:*').next().click()
+    cy.get('.p-dropdown-items').within(($form) => {
+        cy.contains('li', 'Não se Aplica').click({ force: true })
+    })
+    cy.clickNewButton('Gravar')
+    cy.validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto atualizado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
+    cy.clickNewButton('Gravar')
+})
 
 Cypress.Commands.add('cadastraLotacaotributaria', (dados) => {
     cy
@@ -1011,4 +1049,5 @@ Cypress.Commands.add('cadastraLotacaotributaria', (dados) => {
             .clickNewButton('Selecionar')
     cy
             .clickNewButton('Gravar')
+
 })
