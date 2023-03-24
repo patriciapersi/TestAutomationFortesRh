@@ -96,6 +96,7 @@ describe('Funcionalidade Grupos Homogêneos de Exposição', () => {
     it('Editar Historico com condição ambiental atrelada ao talento', () => {
         
         cy.insereColaborador(dados)
+          .exec_sql( "insert into condicaoambiental (id, colaborador_id, empresa_id, ambiente_id, datainicio, descricaoatividades, observacao, statusfortespessoal, grupohomogeneo_id, tipodescricaoatividade, funcao_id) values (nextval('condicaoambiental_sequence'), (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from empresa where nome = 'Empresa Padrão'), (select id from ambiente where nome = '" + dados.ambiente + "'), '" + dados.dataIni + "', '" + dados.descricao + "', '', '', (select id from grupohomogeneo where nome = '" + dados.nomeGHE + "'), 'FUNCAO', (select id from funcao where nome = '" + dados.funcao + "'))")
         cy
             .generalButtons("Históricos", dados.nomeGHE)
         cy
