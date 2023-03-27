@@ -41,7 +41,7 @@ describe('Testes da nota tecnica com prazo 20/07', () => {
         cy  .clickNewButton('Gravar')
         cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 
-        cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy.contains('label', 'Agente nocivo:*').next().click()
         cy.get('.p-dropdown-filter').clear().should('be.enabled').and('be.visible').type('01.19.008').click({ force: true })
         cy.contains('li', '01.19.008 - Aminobifenila (4-aminodifenil)').should('be.visible')
 
@@ -65,7 +65,7 @@ describe('Testes da nota tecnica com prazo 20/07', () => {
         cy  .clickNewButton('Gravar')
         cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 
-        cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy.contains('label', 'Agente nocivo:*').next().click()
         cy.get('.p-dropdown-filter').clear().should('be.enabled').and('be.visible').type('01.19.037')
         cy.contains('li', 'Sem resultados encontrados').should('be.visible')
 
@@ -105,7 +105,7 @@ describe('Testes da nota tecnica com prazo 20/07', () => {
         cy  .clickNewButton('Gravar')
         cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 
-        cy  .contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy  .contains('label', 'Agente nocivo:*').next().click()
         cy  .get('.p-dropdown-items').within(($form) => {
             cy.contains('li', '01.02.001').click({ force: true })
         })

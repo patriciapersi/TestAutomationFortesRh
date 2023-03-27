@@ -61,7 +61,7 @@ describe('Condições ambientais', () => {
              .find('.fa-edit').should('be.visible').click()    
         cy   .contains('Inserir Agentes Nocivos').should('be.visible').click()
         cy   .contains('.p-fieldset-content', dados.colaborador) 
-        cy   .contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy   .contains('label', 'Agente nocivo:*').next().click()
              .get('.p-dropdown-items').within(($form) => {
             cy
                 .contains('li', '09.01.001').click({ force: true })
@@ -90,7 +90,7 @@ describe('Condições ambientais', () => {
         cy  
             .contains('.p-fieldset-content', dados.colaborador) 
         cy  
-            .contains('label', 'Atividade perigosa insalubre:*').next().click()
+            .contains('label', 'Agente nocivo:*').next().click()
             .get('.p-dropdown-items').within(($form) => {
             cy
                 .contains('li', '03.01.007').click({ force: true })
@@ -146,7 +146,7 @@ describe('Condições ambientais', () => {
         cy   
             .contains('.p-fieldset-content', dados.colaborador) 
         cy   
-            .contains('label', 'Atividade perigosa insalubre:*').next().click()
+            .contains('label', 'Agente nocivo:*').next().click()
             .get('.p-dropdown-items').within(($form) => {
                 cy
                 .contains('li', '03.01.007').click({ force: true })

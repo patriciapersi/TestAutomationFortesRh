@@ -207,7 +207,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
         cy  .clickNewButton('Gravar')
         cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 
-        cy   .contains('label', 'Atividade perigosa insalubre:*').next().click()
+        cy   .contains('label', 'Agente nocivo:*').next().click()
              .get('.p-dropdown-items').within(($form) => {
         cy
             .contains('li', '09.01.001').should('be.visible').click({ force: true })

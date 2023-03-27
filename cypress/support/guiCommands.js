@@ -704,7 +704,7 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.contains('Histórico do Grupo Homogêneo gravada com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
     //AgentesNocivos
 
-    cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+    cy.contains('label', 'Agente nocivo:*').next().click()
     cy.get('.p-dropdown-items').within(($form) => {
         cy.contains('li', '01.02.001').click({ force: true })
     })
@@ -1001,7 +1001,7 @@ Cypress.Commands.add('cadastraCondicaoAmbiental', (dados) => {
 })
 Cypress.Commands.add('CadastraAtividadesPerigosasInsalubres', (dados) => {
 
-    cy.contains('label', 'Atividade perigosa insalubre:*').next().click()
+    cy.contains('label', 'Agente nocivo:*').next().click()
     cy.get('.p-dropdown-items').within(($form) => {
         cy.contains('li', '01.02.001').click({ force: true })
     })
