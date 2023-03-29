@@ -728,3 +728,12 @@ Cypress.Commands.add("insereLotacaotributaria", (dados) => {
         "insert into lotacaotributaria(id, nome, tipolotacaotributaria_id, numeroinscricao, codigoac, empresa_id, statuscadastroesocial, cadastropendente) values (nextval('lotacaotributaria_sequence'), '"+dados.nomeLotacaoTrib+"', 1, null, null, (select id from empresa where nome = 'Empresa Padrão'), null, false);",      
        )
 })
+
+Cypress.Commands.add("inserePCMAT", (dados) => {
+    cy.inserirObra(dados.obra_nome)
+    cy.exec_sql(
+        "insert into pcmat(id, apartirde, datainiobra, datafimobra, qtdfuncionarios, obra_id, objetivo, textocondicoestrabalho, textoareasvivencia, textoatividadesseguranca, textoepis, textoepcs, textosinalizacao) values (nextval('pcmat_sequence'), '"+dados.dataPcMatSCRIPT+"', '"+dados.dataIniSCRIPT+"', '"+dados.dataFinSCRIPT+"', 20, (select id from obra where nome = '" +dados.obra_nome+ "'),null ,null ,null , null, null, null, null)",
+        "insert into fase(id, descricao, empresa_id) values (nextval('fase_sequence'), '"+dados.nomeFase+"', (select id from empresa where nome = 'Empresa Padrão'))",
+        "insert into areavivencia(id, nome, empresa_id) values (nextval('areavivencia_sequence'), '"+dados.nomeAreaVivencia+"', (select id from empresa where nome = 'Empresa Padrão'))" 
+     )
+})

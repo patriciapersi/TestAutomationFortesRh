@@ -21,43 +21,31 @@ describe('Cadastro de obras', () => {
   
     it('Inserir obra', () => {
         cy
-            .clickNewButton('Inserir')
-            .get('input[name="nome"]').should('be.enabled').and('be.visible').clear().type(dados.nome_obra)
-            .get('input[name="numeroInscricao"]').should('be.enabled').and('be.visible').clear().type(dados.cnoObra)
-            .get('input[name="tipoObra"]').should('be.enabled').and('be.visible').clear().type(dados.tipoObra)
-            .get('input[name="endereco.logradouro"]').should('be.enabled').and('be.visible').clear().type(dados.endereco_obra)
-            .get('input[name="endereco.numero"]').should('be.enabled').and('be.visible').clear().type(dados.endereco_numero)
-        cy  .contains('span', 'Nenhum').click()
-        cy  .contains('li','CE').click()
-        cy  .contains('span', 'Selecione').click()
-        cy  .contains('li', 'Fortaleza').click()
-        cy  .get('input[name="endereco.bairro"]').should('be.enabled').and('be.visible').clear().type(dados.endereco_bairro)
-        cy  .contains('span', 'Selecione').click()
-        cy  .contains('li', 'Estabelecimento Padrão').click()
-        cy  .clickNewButton('Gravar')
+            .cadastraObra(dados)
             .validaMensagem('Obra salva com sucesso.')
-
-
+        cy  
+            .contains('td', dados.obra_nome).parent().should('be.visible')
+        cy  
+            .contains('td', dados.nome_obra).parent().should('be.visible')
     });
 
-    it('Editar obra', () => {
+    it('Editar obra', () => {  
         cy
-             .contains('td', dados.obra_nome).parent()
-             .find('.fa-edit').should('be.visible').click()    
-        cy
-            .get('input[name="tipoObra"]').should('be.enabled').and('be.visible').clear().type(dados.tipoObra)
+            .generalButtons('Editar', dados.obra_nome)
+            .digita('input[name="tipoObra"]', dados.tipoObra)
             .clickNewButton('Gravar')
             .validaMensagem('Obra atualizada com sucesso.')
-         
-       
+        cy  
+            .contains('td', dados.obra_nome).parent().should('be.visible')
     });
 
     it('Excluir obra', () => {
         cy
-            .contains('td', dados.obra_nome).parent()
-            .find('.fa-trash').should('be.visible').click()       
+            .generalButtons('Remover', dados.obra_nome)      
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Obra excluída com sucesso.')
+        cy  
+            .contains('td', dados.obra_nome).should('not.exist')
     });
 
     it('Excluir obra com vinculo em um ambiente', () => {
@@ -69,13 +57,12 @@ describe('Cadastro de obras', () => {
             )
         cy
 
-            .contains('td', dados.obra_nome).parent()
-            .find('.fa-trash').should('be.visible').click()
+            .generalButtons('Remover', dados.obra_nome) 
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Entidade obra possui dependências')
+        cy  
+            .contains('td', dados.obra_nome).parent().should('be.visible')
     });
-
-
 
 
 })

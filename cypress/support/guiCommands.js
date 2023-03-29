@@ -696,7 +696,7 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.contains('label', 'A partir de:*').click({ force: true })
     cy.get('.p-inputtext').eq(1).clear().type(ghe.dataIni)
     cy.get('.p-inputtext').eq(3).click()
-    cy.contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({force:true})
+    cy.contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
     cy.contains('label', 'Responsáveis pelos registros (Profissionais de SST (CRM, CREA e Outros)): ').next().click().within(($form) => {
         cy.contains('label', ghe.nomeProfissional).click({ force: true })
     })
@@ -731,7 +731,7 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.clickNewButton('Gravar')
     cy.validaMensagem('Agentes Nocivos aos Quais o Trabalhador Está Exposto salvo com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
     cy
-      .contains('td', '01.02.001').parent().should('be.visible')
+        .contains('td', '01.02.001').parent().should('be.visible')
     // //Parte Final
     cy.clickNewButton('Gravar')
     cy.validaMensagem('Grupo Homogêneo atualizada com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
@@ -860,14 +860,14 @@ Cypress.Commands.add('cadastraTipodeDocumento', (dados) => {
 
 Cypress.Commands.add('cadastraRisco', (dados) => {
     cy
-            .clickNewButton('Inserir')
-            .get('input[name="descricao"]').should('be.visible').and('be.enabled').clear().type(dados.descricao)
-        cy
-            .contains('label', 'Tipo de Risco').next().click()
-            .get('.p-dropdown-items').within(() => {
-                cy.contains('li', 'Químico').click({ force: true })
-            })
-            .clickNewButton('Gravar')
+        .clickNewButton('Inserir')
+        .get('input[name="descricao"]').should('be.visible').and('be.enabled').clear().type(dados.descricao)
+    cy
+        .contains('label', 'Tipo de Risco').next().click()
+        .get('.p-dropdown-items').within(() => {
+            cy.contains('li', 'Químico').click({ force: true })
+        })
+        .clickNewButton('Gravar')
 })
 Cypress.Commands.add('cadastraEpi', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
@@ -875,7 +875,7 @@ Cypress.Commands.add('cadastraEpi', (dados) => {
     cy.get('.p-dropdown-items').within(() => {
         cy.contains('li', dados.categoriaEPI_nome).should('be.visible').click()
     })
-    cy.contains('label','Status')
+    cy.contains('label', 'Status')
     cy.contains('span', 'Ativo').parent().click()
     //PrimeiroHistorico
     cy.contains('label', 'A partir de: *').click()
@@ -887,7 +887,7 @@ Cypress.Commands.add('cadastraEpi', (dados) => {
     cy.digita('input[name="historico.vencimentoCA"]', dados.dataVencimentoCA)
     cy.digita('input[name="historico.atenuacao"]', dados.atenuacaoRisco)
     cy.digita('input[name="historico.validadeUso"]', dados.diasRecomendado)
-    cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click() 
+    cy.contains('.rh-button', 'Gravar').should('be.visible').and('be.enabled').click()
 })
 
 Cypress.Commands.add('cadastraMotivoAfastamento', (dados) => {
@@ -903,7 +903,7 @@ Cypress.Commands.add('cadastraAvaliacaodoAluno', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.digita('input[name="titulo"]', dados.tituloAVManual)
     cy.get('.p-dropdown').click()
-    cy.contains('.p-dropdown-item','Nota').click()
+    cy.contains('.p-dropdown-item', 'Nota').click()
     cy.digita('input[name="minimoAprovacao"]', dados.minimoAprov)
     cy.clickNewButton('Gravar')
 })
@@ -922,8 +922,8 @@ Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) =
     cy.digita('input[name="data"]', dados.dataAplicacao)
     cy.get('.p-dropdown').click()
     cy.contains('li', 'Faixa Salarial').click()
-    cy.clickNewButton('Gravar') 
-    
+    cy.clickNewButton('Gravar')
+
     cy.validaMensagem('O usuário deverá sair e realizar novo login no sistema para refletir as alterações do Menu.')
 })
 
@@ -933,8 +933,8 @@ Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) =
     cy.digita('input[name="data"]', dados.dataAplicacao)
     cy.get('.p-dropdown').click()
     cy.contains('li', 'Faixa Salarial').click()
-    cy.clickNewButton('Gravar') 
-    
+    cy.clickNewButton('Gravar')
+
 })
 
 Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
@@ -952,11 +952,11 @@ Cypress.Commands.add('cadastraSolicitacaoRealinhamentoFaixaSalarial', (dados) =>
     cy.clickNewButton('Inserir')
     cy.contains('label', 'Cargo: *').next().click()
     cy.get('.p-dropdown-items').within(() => {
-        cy.contains('li', 'Encarregado Departamento Pessoal').should('be.visible').click({force:true})
+        cy.contains('li', 'Encarregado Departamento Pessoal').should('be.visible').click({ force: true })
     })
     cy.contains('label', 'Faixas Salariais: *').next().click()
     cy.get('.p-dropdown-items').within(() => {
-        cy.contains('li', 'Encarregado Departamento Pessoal Pleno').should('be.visible').click({force:true})
+        cy.contains('li', 'Encarregado Departamento Pessoal Pleno').should('be.visible').click({ force: true })
     })
     cy.digita('input[name="valorDissidio"]', dados.valor_reajuste)
     cy.clickNewButton('Gravar')
@@ -967,7 +967,7 @@ Cypress.Commands.add('cadastraSolicitacaoRealinhamentoIndice', (dados) => {
     cy.clickNewButton('Inserir')
     cy.contains('label', 'Indices: *').next().click()
     cy.get('.p-dropdown-items').within(() => {
-        cy.contains('li', dados.indice_nome).should('be.visible').click({force:true})
+        cy.contains('li', dados.indice_nome).should('be.visible').click({ force: true })
     })
     cy.digita('input[name="valorDissidio"]', dados.valor_reajustepct)
     cy.clickNewButton('Gravar')
@@ -989,15 +989,15 @@ Cypress.Commands.add('popUpMessage2', (text) => {
 
 Cypress.Commands.add('cadastraCondicaoAmbiental', (dados) => {
     cy
-            .generalButtons("Condições Ambientais", dados.colaborador)
-            .clickNewButton('Inserir')
-            .get('input[name="data"').clear().type(dados.dataIni)
-       
-        cy
-            .contains('span', 'Descrição das atividades desempenhadas: *').click()
-            .get('.p-dropdown-label').eq(1).should('be.visible').click()
-        cy
-            .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({force:true})
+        .generalButtons("Condições Ambientais", dados.colaborador)
+        .clickNewButton('Inserir')
+        .get('input[name="data"').clear().type(dados.dataIni)
+
+    cy
+        .contains('span', 'Descrição das atividades desempenhadas: *').click()
+        .get('.p-dropdown-label').eq(1).should('be.visible').click()
+    cy
+        .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
 })
 Cypress.Commands.add('CadastraAtividadesPerigosasInsalubres', (dados) => {
 
@@ -1040,14 +1040,44 @@ Cypress.Commands.add('CadastraAtividadesPerigosasInsalubres', (dados) => {
 
 Cypress.Commands.add('cadastraLotacaotributaria', (dados) => {
     cy
-            .clickNewButton('Inserir')
-            .get('input[name="nome"').clear().type(dados.manualNomeLotacaoTrib)
-    cy      
-            .get('.tipo-lotacao-tributaria-formgroup-content').click()
-    cy      
-            .contains('01 - Classificação da atividade econômica exercida pela Pessoa Jurídica para fins de atribuição de código FPAS, inclusive obras de construção civil própria, exceto:').click()
-            .clickNewButton('Selecionar')
+        .clickNewButton('Inserir')
+        .get('input[name="nome"').clear().type(dados.manualNomeLotacaoTrib)
     cy
-            .clickNewButton('Gravar')
+        .get('.tipo-lotacao-tributaria-formgroup-content').click()
+    cy
+        .contains('01 - Classificação da atividade econômica exercida pela Pessoa Jurídica para fins de atribuição de código FPAS, inclusive obras de construção civil própria, exceto:').click()
+        .clickNewButton('Selecionar')
+    cy
+        .clickNewButton('Gravar')
+
+})
+
+Cypress.Commands.add('cadastraObra', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.nome_obra)
+    cy.digita('input[name="numeroInscricao"]', dados.cnoObra)
+    cy.digita('input[name="tipoObra"]', dados.tipoObra)
+    cy.digita('input[name="endereco.logradouro"]', dados.endereco_obra)
+    cy.digita('input[name="endereco.numero"]', dados.endereco_numero)
+    cy.contains('span', 'Nenhum').click()
+    cy.contains('li', 'CE').click()
+    cy.contains('span', 'Selecione').click()
+    cy.contains('li', 'Fortaleza').click()
+    cy.digita('input[name="endereco.bairro"]', dados.endereco_bairro)
+    cy.contains('span', 'Selecione').click()
+    cy.contains('li', 'Estabelecimento Padrão').click()
+    cy.clickNewButton('Gravar')
+
+})
+
+Cypress.Commands.add('cadastraPcmat', (dados) => {
+    cy.generalButtons('Listar PCMATs', dados.obra_nome)
+    cy.clickButton('#btnInserir')
+    cy.digita('#aPartirDe', dados.dataPcMat)
+    cy.digita('#dataIniObra', dados.dataIni)
+    cy.digita('#dataFimObra', dados.dataFin)
+    cy.digita('#qtdFuncionarios', dados.qtdFuncionario)
+    cy.clickButton('#btnGravar')
+    cy.clickButton('#btnGravar')
 
 })
