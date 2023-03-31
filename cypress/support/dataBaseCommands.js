@@ -446,6 +446,18 @@ Cypress.Commands.add("insereMedico", (med_sst) => {
     cy.exec_sql("insert into profissionalSST (id, nome, numeroinscricao, orgaodeclasse, uf_id, nit, cpf, codigoac, grupoac, cadastropendente, siglaorgaodeclasse) values (nextval('profissionalSST_sequence'), '" + med_sst + "','102030', 1,1, null, '07801832078',null, '001', false, '')")
 })
 
+Cypress.Commands.add("insereMedicoComContrato", (dados) => {
+    cy.exec_sql(
+        "insert into profissionalSST (id, nome, numeroinscricao, orgaodeclasse, uf_id, nit, cpf, codigoac, grupoac, cadastropendente, siglaorgaodeclasse) values (nextval('profissionalSST_sequence'), '" + dados.nomeMedico + "','102030', 1,1, null, '07801832078',null, '001', false, '')",
+        "insert into contratoprofissionalsst (id, inicio, fim, empresa_id, profissionalsst_id, registro, especialidade, endereco, telefone, horarioatendimento, name, contenttype, bytes, size, tipo, estabelecimentoresponsavel) values (nextval('contratoprofissionalsst_sequence'), '01/01/2022', null, (select id from empresa where nome = 'Empresa Padrão'), (select id from profissionalSST where nome = '"+dados.nomeMedico+"'),'','','','','', null, null, null, null, 'MEDICO_AUTORIZADO', 'TODOS' )",
+        "insert into contratoprofissionalsst (id, inicio, fim, empresa_id, profissionalsst_id, registro, especialidade, endereco, telefone, horarioatendimento, name, contenttype, bytes, size, tipo, estabelecimentoresponsavel) values (nextval('contratoprofissionalsst_sequence'), '01/01/2022', null, (select id from empresa where nome = 'Empresa Padrão'), (select id from profissionalSST where nome = '"+dados.nomeMedico+"'),'','Clínico Geral','','','', null, null, null, null, 'MEDICO_COORDENADOR', 'TODOS' )",
+        "insert into contratoprofissionalsst_exame (contratoprofissionalsst_id, exames_id) values ((select id from contratoprofissionalsst where tipo = 'MEDICO_AUTORIZADO'), (select id from exame where nome = 'Exame de Aptidões Física e Mental'))",
+        "insert into contratoprofissionalsst_exame (contratoprofissionalsst_id, exames_id) values ((select id from contratoprofissionalsst where tipo = 'MEDICO_AUTORIZADO'), (select id from exame where nome = 'Avaliação Clínica e Anamnese Ocupacional'))",
+        "insert into contratoprofissionalsst_exame (contratoprofissionalsst_id, exames_id) values ((select id from contratoprofissionalsst where tipo = 'MEDICO_AUTORIZADO'), (select id from exame where nome = 'AUDIOMETRIA'))",
+    
+        )
+})
+
 Cypress.Commands.add("insereCAT", (dados) => {
     cy.exec_sql(
         "insert into cat (id, data, gerouafastamento, colaborador_id,foitreinadoparafuncao, usavaepi, tipoacidente,limitacaofuncional,tipoinscricao,tipo,obito,comunicoupolicia,iniciatcat,tipolocal, logradouro, numero, bairro, cep, cidade_id, uf_id,localacidente,possuiatestado,dataatendimento, horaatendimento, duracaotratamentoemdias,codcid,indicativointernacao,indicativoafastamento, descricaonaturezalesao_id,statusCadastroESocial,profissionalsst_id,situacaoGeradoraDoencaProfissional_id,estabelecimento_id,datarecebimento) values (NEXTVAL('cat_sequence'), '01/09/2022', false, (select id from colaborador where nome = '" + dados.colaborador + "'), false, false, 2,false,3,1,false,false,1,1,'rua','55','Jardim das Oliveiras','60820060',946,1,'Pátio', true, '01/09/2022','23:30','2','S020',false, false,7,'HABITO_INTEGRADO',(select id from profissionalsst where nome =  '" + dados.medicoNome + "'),3,1, '01/09/2022')",
@@ -727,6 +739,28 @@ Cypress.Commands.add("insereLotacaotributaria", (dados) => {
     cy.exec_sql(
         "insert into lotacaotributaria(id, nome, tipolotacaotributaria_id, numeroinscricao, codigoac, empresa_id, statuscadastroesocial, cadastropendente) values (nextval('lotacaotributaria_sequence'), '"+dados.nomeLotacaoTrib+"', 1, null, null, (select id from empresa where nome = 'Empresa Padrão'), null, false);",      
        )
+})
+
+Cypress.Commands.add("insereExame", (dados) => {
+    cy.exec_sql(
+        "insert into exame (id, nome, periodicidade, periodico, empresa_id , aso, exameprocedimento_id, cadastropendente) values (nextval('exame_sequence'), 'AUDIOMETRIA', 0 , false, (select id from empresa where nome = 'Empresa Padrão'), false, 0281, false)"
+    )
+})
+
+Cypress.Commands.add("insereClinicaAutorizada", (dados) => {
+    cy.exec_sql(
+        "insert into clinicaautorizada (id, nome, crm, cnpj, tipo, data, datainativa, empresa_id, endereco, telefone, horarioatendimento, outro) values (nextval('clinicaautorizada_sequence'),'"+dados.nomeClinica+"', null, 64696516000103, 01, '01/01/2023', null, (select id from empresa where nome = 'Empresa Padrão'), 'RUA ANTONIO FORTES 330', '85999999999', null, null)",
+        "insert into clinicaautorizada_exame (clinicaautorizada_id, exames_id) values ((select id from clinicaautorizada where nome = '"+dados.nomeClinica+"'), (select id from exame where nome = 'AUDIOMETRIA'))"
+    )
+})
+
+Cypress.Commands.add("insereSolicitacaoExame", (dados) => {
+    cy.exec_sql(
+        "insert into solicitacaoexame (id , data, motivo, observacao, candidato_id, colaborador_id, empresa_id, ordem, faixasalarial_id, candidatosolicitacao_id, contratoprofissionalsst_id) values (nextval('solicitacaoexame_sequence'), '"+dados.dataSolicitacao+"','ADMISSIONAL','',null, (select id from colaborador where nome = '"+dados.colaborador+"'), (select id from empresa where nome = 'Empresa Padrão'),'1',null,null,(select id from contratoprofissionalsst where tipo = 'MEDICO_COORDENADOR'))",
+        "insert into examesolicitacaoexame (id, periodicidade, exame_id, solicitacaoexame_id, clinicaautorizada_id, contratoprofissionalsst_id, ordexame) values (nextval('examesolicitacaoexame_sequence'), '12','2', (select id from solicitacaoexame where motivo = 'ADMISSIONAL'), null, (select id from contratoprofissionalsst where tipo = 'MEDICO_AUTORIZADO'), '2')",
+        "insert into examesolicitacaoexame (id, periodicidade, exame_id, solicitacaoexame_id, clinicaautorizada_id, contratoprofissionalsst_id, ordexame) values (nextval('examesolicitacaoexame_sequence'), '12','3', (select id from solicitacaoexame where motivo = 'ADMISSIONAL'), null, (select id from contratoprofissionalsst where tipo = 'MEDICO_AUTORIZADO'), '2')",
+        "insert into examesolicitacaoexame (id, periodicidade, exame_id, solicitacaoexame_id, clinicaautorizada_id, contratoprofissionalsst_id, ordexame) values (nextval('examesolicitacaoexame_sequence'), '24',(select id from exame where nome = 'AUDIOMETRIA'), (select id from solicitacaoexame where motivo = 'ADMISSIONAL'), null, (select id from contratoprofissionalsst where tipo = 'MEDICO_AUTORIZADO'), '2')"
+    )
 })
 
 Cypress.Commands.add("inserePCMAT", (dados) => {
