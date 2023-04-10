@@ -327,9 +327,10 @@ Cypress.Commands.add("insereIndicesComHistorico", (indice_nome) => {
 })
 Cypress.Commands.add("inserirCargo", (cargo_nome) => {
     cy.exec_sql(
-        "insert into cargo values (nextval('cargo_sequence'), '" + cargo_nome + "', 'Cargo Teste', null, null, null, null, null, null, null, null, null, (select id from empresa where nome = 'Empresa Padrão'), true, true, null, null)",
-        "insert into faixasalarial values (nextval('faixasalarial_sequence'), 'Júnior', null, (select id from cargo where nome = '" + cargo_nome + "'), null, '411005')",
-    )
+        "insert into cargo (id, nome, nomemercado, missao,competencias, responsabilidades, escolaridade, experiencia,recrutamento, selecao, observacao, grupoocupacional_id, empresa_id, ativo, exibirmoduloexterno, atitude, complementoconhecimento ) values (nextval('cargo_sequence'), '" + cargo_nome + "', 'Cargo Teste', null, null, null, null, null, null, null, null, null, (select id from empresa where nome = 'Empresa Padrão'), true, true, null, null)",
+        "insert into faixasalarial (id, nome, codigoac, cargo_id, nomeacpessoal, codigocbo) values (nextval('faixasalarial_sequence'), 'Júnior', null, (select id from cargo where nome = '" + cargo_nome + "'), null, '411005')",
+        "insert into faixasalarialhistorico(id, data, valor, tipo, quantidade, faixasalarial_id, indice_id, status, reajustefaixasalarial_id) values (nextval('faixasalarialhistorico_sequence'), '01/01/2022', '1500', 3, null, (select id from faixasalarial where nome = 'Júnior'), null, 1, null )",
+        )
 })
 
 Cypress.Commands.add("insereEntrevistaDesligamento", (entrevista_nome) => {
