@@ -747,6 +747,14 @@ Cypress.Commands.add("insereExame", (dados) => {
     )
 })
 
+Cypress.Commands.add('insereResultadoExame', (dados) => {
+    cy.exec_sql(
+        "insert into realizacaoexame (id, data, observacao, resultado, examesolicitacaoexame_id, selecionadoresultadoaso) values (nextval('realizacaoexame_sequence'), '" +dados.dataRealizacaoExame+ "','', 'NORMAL', (select id from examesolicitacaoexame where exame_id = 2), false )",
+        "insert into realizacaoexame (id, data, observacao, resultado, examesolicitacaoexame_id, selecionadoresultadoaso) values (nextval('realizacaoexame_sequence'), '" +dados.dataRealizacaoExame+ "','', 'NORMAL', (select id from examesolicitacaoexame where exame_id = 3), false )",
+        "insert into realizacaoexame (id, data, observacao, resultado, examesolicitacaoexame_id, selecionadoresultadoaso) values (nextval('realizacaoexame_sequence'), '" +dados.dataRealizacaoExame+ "','', 'NORMAL', (select id from examesolicitacaoexame where exame_id = 4), false )"
+    )
+})
+
 Cypress.Commands.add("insereClinicaAutorizada", (dados) => {
     cy.exec_sql(
         "insert into clinicaautorizada (id, nome, crm, cnpj, tipo, data, datainativa, empresa_id, endereco, telefone, horarioatendimento, outro) values (nextval('clinicaautorizada_sequence'),'"+dados.nomeClinica+"', null, 64696516000103, 01, '01/01/2023', null, (select id from empresa where nome = 'Empresa Padrão'), 'RUA ANTONIO FORTES 330', '85999999999', null, null)",

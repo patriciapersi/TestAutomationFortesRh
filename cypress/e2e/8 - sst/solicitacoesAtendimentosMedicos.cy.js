@@ -6,32 +6,29 @@ describe('Solicitações Atendimentos Médicos', () => {
         nomeMedico: chance.name(),
         colaborador: chance.name(),
         cpf: chance.cpf().split(/[.\-]/).join(''),
-        dataSolicitacao: returnDate.formatDate(new Date(), 0)
+        dataSolicitacao: returnDate.formatDate(new Date(), 0),
+        dataRealizacaoExame: returnDate.formatDate(new Date(), 2),
+        dataEmissao: returnDate.formatDate(new Date(), 0),
     }
 
     beforeEach('', () => {
         cy
             .insereColaborador(dados)
             .insereExame(dados)
+            .insereMedicoComContrato(dados)
             .insereSolicitacaoExame(dados)
+            .insereResultadoExame(dados)
             .navigate('/sesmt/solicitacaoExame/list.action')
             .entendiButton()
 
     })
 
-it('Cadastra Solicitação Atendimento Medico', () => {
+    it('Cadastra Solicitação Atendimento Medico', () => {
         cy
             .cadastraSolicitacaoExame(dados)
             .validaMensagem('Solicitação/Atendimento Médico gravada com sucesso.')
     })
 
-it('Cadastra Resultados dos Exames com data invalida', () => {
-        cy
-            .generalButtons('Resultados', dados.colaborador)
-            .digita('input[name="realizacaoExames[0].data"]', '01/03/199')
-            .clickButton('#btnGravar')
-            .validaMensagem('Data inválida, por favor corrija.')
-    })
 
 it('Edita Solicitação Atendimento Medico', () => {
         cy
@@ -50,6 +47,33 @@ it('Exclui Solicitação Atendimento Medico', () => {
             
     })
 
+it('Cadastra Resultados dos Exames', () => {
+    cy
+        .generalButtons('Resultados', dados.colaborador)
+        .get('#resultado0').select('Normal').should('contain', 'Normal')
+        .get('#resultado1').select('Normal').should('contain', 'Normal')
+        .get('#resultado2').select('Normal').should('contain', 'Normal')
+        .clickButton('#btnGravar')
+        .validaMensagem('Resultados gravados com sucesso.') 
+    })
+    
+    
+it('Cadastra Resultados dos Exames com data invalida', () => {
+    cy
+        .generalButtons('Resultados', dados.colaborador)
+        .digita('input[name="realizacaoExames[0].data"]', '01/03/199')
+        .clickButton('#btnGravar')
+        .validaMensagem('Data inválida, por favor corrija.')
+})
+
+it('Verifica que um exame foi selecionado em Resultado ASO', () => { 
+    cy
+        .generalButtons('Resultado ASO', dados.colaborador)
+        .get('#dataEmissao').should('be.enabled').clear().type(dados.dataEmissao)
+        .get('#medicoEmitente').select('1', {force: true}).should('contain', dados.nomeMedico)
+        .clickButton('#btnGravar')
+        .validaMensagem('É necessário selecionar ao menos 1 exame.')
+})
 
 
 })
