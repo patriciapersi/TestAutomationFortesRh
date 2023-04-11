@@ -32,12 +32,12 @@ describe('Cadastro de Funções', () => {
         cy
             .contains('Hoje').should('be.visible').trigger('mouseouver').click()
         cy
-            .get('#nomeFuncao').should('be.visible').type(dados.nome_funcao)
-            .get('input[name="historicoFuncao.codigoCBO"]').should('be.enabled').and('be.visible').clear().type('Analista')
+            .digita('#nomeFuncao', dados.nome_funcao)
+            .digita('input[name="historicoFuncao.codigoCBO"]','Analista')
         cy
             .contains('252510 - Analista de câmbio').should('be.visible').click()
         cy
-            .get('textarea[name="historicoFuncao.descricao"]').should('be.enabled').clear().type(dados.descricaoFuncao, {delay:0})
+            .digita('textarea[name="historicoFuncao.descricao"]', dados.descricaoFuncao, {delay:0})
         cy
             .contains('label', 'EPIs (PPRA)').should('be.visible').click()
             .get('.checklistbox-header').eq(1).within(($form) => {
@@ -58,12 +58,13 @@ describe('Cadastro de Funções', () => {
         cy
             .contains('Hoje').should('be.visible').trigger('mouseouver').click()
         cy
-            .get('#nomeFuncao').should('be.visible').type(dados.nome_funcao)
-            .get('input[name="historicoFuncao.codigoCBO"]').should('be.enabled').and('be.visible').clear().type('Analista')
+            .digita('#nomeFuncao',dados.nome_funcao)
+            .digita('input[name="historicoFuncao.codigoCBO"]','Analista')
         cy
             .contains('252510 - Analista de câmbio').should('be.visible').click()
         cy
-            .get('textarea[name="historicoFuncao.descricao"]').should('be.enabled').clear().type(dados.descricaoFuncao, {delay:0})
+            .digita('textarea[name="historicoFuncao.descricao"]', dados.descricaoFuncao, {delay:0})
+            
         cy
             .contains('label', 'EPIs (PPRA)').should('be.visible').click()
             .get('.checklistbox-header').eq(1).within(($form) => {
@@ -99,32 +100,25 @@ describe('Cadastro de Funções', () => {
 
     it('Editar função - Historico cadastral', () => {
         cy
-             .contains('td', dados.funcao).parent()
-             .find('.fa-list-history').should('be.visible').click()    
-        cy
-            .contains('Históricos Cadastrais')
+            .generalButtons('Históricos Cadastrais',  dados.funcao)   
         cy            
-            .contains('td', dados.funcao).parent()
-            .find('.fa-edit').should('be.visible').click()
+            .generalButtons('Editar', dados.funcao)
         cy
             .get('.fa-calendar-alt').should('not.be.enabled')
-            .get('textarea[name="descricao"]').should('be.enabled').clear().type(dados.descricaoFuncao, {delay:0})
+            .digita('textarea[name="descricao"]',dados.descricaoFuncao)
             .clickNewButton('Gravar')
+            .validaMensagem('Histórico da função atualizado com sucesso.')
         cy 
             .contains('td', dados.funcao).parent()
             .find('.fa-trash').should('not.be.enabled').click()
 
     });
 
-    it('Editar função - Historico gerencial', () => {
+    it('Editar função - Historico gerencial', () => { 
             cy
-                 .contains('td', dados.funcao).parent()
-                 .find('.fa-list-cog').should('be.visible').click()    
-            cy
-                .contains('Históricos Gerenciais da Função')
+                .generalButtons('Históricos Gerenciais',  dados.funcao)   
             cy            
-                .contains('td', '01/05/2020').parent()
-                .find('.fa-edit').should('be.visible').click()
+                .generalButtons('Editar', '01/05/2020')
             cy
                 .contains('label','A função possui atribuição de comando, chefia, coordenação, supervisão ou gerência.').should('be.visible').click()
                 .clickNewButton('Gravar')
@@ -134,8 +128,7 @@ describe('Cadastro de Funções', () => {
     it('Inativar Função', () => {
 
         cy
-            .contains('td', dados.funcao).parent()
-            .find('.fa-unlock').should('be.visible').click()
+            .generalButtons('Inativar', dados.funcao)
         cy
             .contains(`Deseja inativar a função "${dados.funcao}"`) 
             .clickNewButton('OK')
@@ -144,9 +137,8 @@ describe('Cadastro de Funções', () => {
 
     })
     it('Excluir funcao', () => {
-        cy
-            .contains('td', dados.funcao).parent()
-            .find('.fa-trash').should('be.visible').click()       
+        cy         
+            .generalButtons('Excluir', dados.funcao)
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Função excluída com sucesso.')
     });
