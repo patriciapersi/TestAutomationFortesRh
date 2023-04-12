@@ -13,7 +13,6 @@ describe('Tentativas de Login no Módulo Externo', () => {
         cy
             .inserecandidato(dados)
             .inserecandidato(dados2)
-            // .insereCandidato(dados.candidato3)
             .visit('/externo/prepareLogin.action?empresaId=1')
     })
 
@@ -38,6 +37,19 @@ describe('Tentativas de Login no Módulo Externo', () => {
             .old_popUpMessage('Senha não confere.')
     })
 
+    it('Alteracao de Senha - Senha Atual Incorreta',() => {
+        cy
+            .loggedIn(dados.cpf, '1234')
+        cy
+            .contains('li', 'Alterar Senha').click()
+        cy
+            .digita('input[name="candidato.senha"]', chance.word())
+            .digita('input[name="candidato.novaSenha"]', '123456')
+            .digita('input[name="candidato.confNovaSenha"]', '123456')
+            .clickButton('#btnGravar')
+            .validaMensagem('A senha informada não confere com a senha do seu login.')
+    })
+
     it('Acessar modulo externo - Exige Aceite LGPD', () => {
 
         cy
@@ -50,4 +62,6 @@ describe('Tentativas de Login no Módulo Externo', () => {
         cy.contains('Li e aceito o Termo de Privacidade e Política de Segurança').click()
         cy.get('.ui-button-text').click()
     })
+
+    
 })
