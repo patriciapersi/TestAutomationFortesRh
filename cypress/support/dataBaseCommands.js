@@ -717,6 +717,13 @@ Cypress.Commands.add("inserePlanejamentoRealinhamentoIndice", (dados) => {
        )
 })
 
+Cypress.Commands.add("inserePlanejamentoRealinhamentoTalento", (dados) => {
+    cy.exec_sql(
+        "insert into tabelareajustecolaborador(id, nome, data, observacao, aprovada, empresa_id, dissidio, tiporeajuste) values (nextval('tabelareajustecolaborador_sequence'), 'Planejamento Teste Talento', '01/02/2023', '', false, (select id from empresa where nome = 'Empresa Padrão'), false, 'C')",      
+       )
+})
+
+
 Cypress.Commands.add("insereSolicitacaoRealinhamentoFaixaSalarial", (dados) => {
     cy.inserePlanejamentoRealinhamentoFaixaSalarial(dados)
     cy.exec_sql(

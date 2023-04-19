@@ -923,19 +923,8 @@ Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) =
     cy.get('.p-dropdown').click()
     cy.contains('li', 'Faixa Salarial').click()
     cy.clickNewButton('Gravar')
-
-    cy.validaMensagem('O usuário deverá sair e realizar novo login no sistema para refletir as alterações do Menu.')
 })
 
-Cypress.Commands.add('cadastraPlanejamentoRealinhamentoFaixaSalarial', (dados) => {
-    cy.clickNewButton('Inserir')
-    cy.digita('input[name="nome"]', dados.tituloplanejamento)
-    cy.digita('input[name="data"]', dados.dataAplicacao)
-    cy.get('.p-dropdown').click()
-    cy.contains('li', 'Faixa Salarial').click()
-    cy.clickNewButton('Gravar')
-
-})
 
 Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
     cy.clickNewButton('Inserir')
@@ -943,6 +932,16 @@ Cypress.Commands.add('cadastraPlanejamentoRealinhamentoIndice', (dados) => {
     cy.digita('input[name="data"]', dados.dataAplicacao)
     cy.contains('label', 'Tipo do Reajuste: *').next().click()
     cy.contains('.p-dropdown-item', 'Índice').dblclick({ force: true })
+    cy.clickNewButton('Gravar')
+
+})
+
+Cypress.Commands.add('cadastraPlanejamentoRealinhamentoTalento', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.tituloplanejamento)
+    cy.digita('input[name="data"]', dados.dataAplicacao)
+    cy.contains('label', 'Tipo do Reajuste: *').next().click()
+    cy.contains('.p-dropdown-item', 'Talento').dblclick({ force: true })
     cy.clickNewButton('Gravar')
 
 })
