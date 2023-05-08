@@ -793,3 +793,14 @@ Cypress.Commands.add("insereEPC", (dados) => {
         "insert into epc(id, codigo, descricao, empresa_id) values (nextval('epc_sequence'), '"+dados.codigo+"', '"+dados.descricaoEPC+"', (select id from empresa where nome = 'Empresa Padrão'))"
     )
 })
+
+Cypress.Commands.add("insereLNT", (dados) => {
+    cy.insereColaborador(dados)
+    cy.exec_sql(
+        "insert into lnt(id, descricao, datainicio, datafim, datafinalizada)values (nextval('lnt_sequence'), '"+dados.descricaoLNT+"', '06/04/2023', '07/04/2023', '10/04/2023')",
+        "insert into lnt_areaorganizacional (lnt_id, areasorganizacionais_id) values ((select id from lnt where descricao = '"+dados.descricaoLNT+"'), (select id from areaorganizacional where nome = 'Suporte'))",
+        "insert into lnt_empresa (lnt_id, empresas_id) values ((select id from lnt where descricao = '"+dados.descricaoLNT+"'), (select id from empresa where nome = 'Empresa Padrão'))",
+        "insert into cursolnt(id, nomenovocurso, conteudoprogramatico, justificativa, custo, cargahoraria, lnt_id, curso_id) values (nextval('cursolnt_sequence'), '"+dados.nomecursoLNT+"', null, null, null, null, (select id from lnt where descricao = '"+dados.descricaoLNT+"'), null)",
+        "insert into participantecursolnt(id, colaborador_id, cursolnt_id, areaorganizacional_id) values (nextval('participantecursolnt_sequence'), (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from cursolnt where nomenovocurso = '" + dados.nomecursoLNT + "'), (select id from areaorganizacional where nome = 'Suporte'))"
+     )
+})

@@ -1100,3 +1100,15 @@ Cypress.Commands.add('cadastraEPC', (dados) =>{
     cy.digita('input[name="descricao"]', dados.descricaoEPCManual)
     cy.clickNewButton('Gravar')
 })
+
+Cypress.Commands.add('inserirLntManual', (dados) => {
+    cy.clickButton('#btnInserir')
+    cy.digita('#descricao', dados.descricaoLNTManual)
+    cy.digita('#dataInicio', dados.dataIni)
+    cy.digita('#dataFim', dados.dataFin)
+    cy.contains('label','Empresa Padrão').click()
+    cy.contains('label','Suporte').click()
+    cy.clickButton('#btnGravar')
+
+        
+})
