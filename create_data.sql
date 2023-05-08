@@ -5761,8 +5761,8 @@ ALTER TABLE public.motivodemissao ENABLE TRIGGER ALL;
 
 ALTER TABLE public.usuario DISABLE TRIGGER ALL;
 
-INSERT INTO public.usuario (id, nome, login, senha, acessosistema, ultimologin, superadmin, caixasmensagens, expiracao) VALUES (2, 'FORTES PESSOAL', 'FORTESPESSOAL', 'QEZvcnRlc1Blc3NvYWw=', true, NULL, false, '', NULL);
-INSERT INTO public.usuario (id, nome, login, senha, acessosistema, ultimologin, superadmin, caixasmensagens, expiracao) VALUES (1, 'SOS', 'SOS', 'YzBtcDRjdDBy', true, NULL, false, '{"caixasDireita":["T","C","F","U"],"caixasEsquerda":["P","R","A","S"],"caixasMinimizadas":[]}', NULL);
+INSERT INTO public.usuario (id, nome, login, senha, acessosistema, ultimologin, superadmin, caixasmensagens, expiracao, ultimatrocadesenha) VALUES (2, 'FORTES PESSOAL', 'FORTESPESSOAL', 'QEZvcnRlc1Blc3NvYWw=', true, NULL, false, '', NULL, NULL);
+INSERT INTO public.usuario (id, nome, login, senha, acessosistema, ultimologin, superadmin, caixasmensagens, expiracao, ultimatrocadesenha) VALUES (1, 'SOS', 'SOS', 'YzBtcDRjdDBy', true, NULL, false, '{"caixasDireita":["T","C","F","U"],"caixasEsquerda":["P","R","A","S"],"caixasMinimizadas":[]}', NULL, NULL);
 
 
 ALTER TABLE public.usuario ENABLE TRIGGER ALL;
@@ -29909,6 +29909,46 @@ ALTER TABLE public.composicaosesmt DISABLE TRIGGER ALL;
 ALTER TABLE public.composicaosesmt ENABLE TRIGGER ALL;
 
 --
+-- Data for Name: contratoprofissionalsst; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contratoprofissionalsst DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.contratoprofissionalsst ENABLE TRIGGER ALL;
+
+--
+-- Data for Name: solicitacaoexame; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.solicitacaoexame DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.solicitacaoexame ENABLE TRIGGER ALL;
+
+--
+-- Data for Name: prontuario; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.prontuario DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.prontuario ENABLE TRIGGER ALL;
+
+--
+-- Data for Name: conclusao_prontuario; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.conclusao_prontuario DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.conclusao_prontuario ENABLE TRIGGER ALL;
+
+--
 -- Data for Name: grupohomogeneo; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -30069,16 +30109,6 @@ ALTER TABLE public.conhecimento_curso DISABLE TRIGGER ALL;
 
 
 ALTER TABLE public.conhecimento_curso ENABLE TRIGGER ALL;
-
---
--- Data for Name: contratoprofissionalsst; Type: TABLE DATA; Schema: public; Owner: -
---
-
-ALTER TABLE public.contratoprofissionalsst DISABLE TRIGGER ALL;
-
-
-
-ALTER TABLE public.contratoprofissionalsst ENABLE TRIGGER ALL;
 
 --
 -- Data for Name: contratoprofissionalsst_estabelecimento; Type: TABLE DATA; Schema: public; Owner: -
@@ -30660,6 +30690,7 @@ INSERT INTO public.delete_empresa (id, tabela, comando_sql) VALUES (496, 'sugest
 INSERT INTO public.delete_empresa (id, tabela, comando_sql) VALUES (497, 'eventoenvioesocialemlote', 'DELETE FROM eventoenvioesocialemlote WHERE empresa_id IS NOT NULL AND empresa_id NOT IN (SELECT id FROM empresa);');
 INSERT INTO public.delete_empresa (id, tabela, comando_sql) VALUES (498, 'eventoenvioesocialemlote', 'DELETE FROM eventoenvioesocialemlote_colaborador WHERE eventosenvioesocialemlote_id NOT IN (SELECT id FROM eventoenvioesocialemlote);');
 INSERT INTO public.delete_empresa (id, tabela, comando_sql) VALUES (499, 'eventoenvioesocialemlote', 'DELETE FROM eventoenvioesocialemlote_colaborador WHERE colaboradores_id NOT IN (SELECT id FROM colaborador);');
+INSERT INTO public.delete_empresa (id, tabela, comando_sql) VALUES (500, 'NineBox', 'DELETE FROM ninebox WHERE empresa_id IS NOT NULL AND empresa_id NOT IN (SELECT id FROM empresa);');
 
 
 ALTER TABLE public.delete_empresa ENABLE TRIGGER ALL;
@@ -30833,16 +30864,6 @@ ALTER TABLE public.eventoenvioesocialemlote_colaborador DISABLE TRIGGER ALL;
 
 
 ALTER TABLE public.eventoenvioesocialemlote_colaborador ENABLE TRIGGER ALL;
-
---
--- Data for Name: solicitacaoexame; Type: TABLE DATA; Schema: public; Owner: -
---
-
-ALTER TABLE public.solicitacaoexame DISABLE TRIGGER ALL;
-
-
-
-ALTER TABLE public.solicitacaoexame ENABLE TRIGGER ALL;
 
 --
 -- Data for Name: examesolicitacaoexame; Type: TABLE DATA; Schema: public; Owner: -
@@ -32496,6 +32517,15 @@ INSERT INTO public.migrations (name) VALUES ('20230328071801');
 INSERT INTO public.migrations (name) VALUES ('20230329120929');
 INSERT INTO public.migrations (name) VALUES ('20230331120623');
 INSERT INTO public.migrations (name) VALUES ('20230331040427');
+INSERT INTO public.migrations (name) VALUES ('20221023152601');
+INSERT INTO public.migrations (name) VALUES ('20230118071632');
+INSERT INTO public.migrations (name) VALUES ('20230320091058');
+INSERT INTO public.migrations (name) VALUES ('20230321034232');
+INSERT INTO public.migrations (name) VALUES ('20230330035659');
+INSERT INTO public.migrations (name) VALUES ('20230403095814');
+INSERT INTO public.migrations (name) VALUES ('20230412055205');
+INSERT INTO public.migrations (name) VALUES ('20230424032953');
+INSERT INTO public.migrations (name) VALUES ('20230428072423');
 
 
 ALTER TABLE public.migrations ENABLE TRIGGER ALL;
@@ -32519,6 +32549,17 @@ ALTER TABLE public.motivosolicitacaoepi DISABLE TRIGGER ALL;
 
 
 ALTER TABLE public.motivosolicitacaoepi ENABLE TRIGGER ALL;
+
+--
+-- Data for Name: ninebox; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.ninebox DISABLE TRIGGER ALL;
+
+INSERT INTO public.ninebox (id, data, box1, box2, box3, box4, box5, box6, box7, box8, box9, percentualbaixopotencial, percentualaltopotencial, percentualbaixodesempenho, percentualaltodesempenho, empresa_id) VALUES (1, '2000-01-01', 'Alto potencial e baixo desempenho. Avaliar se não há interferências internas e/ou externas atuando ou se é novo na função', 'Alto potencial, com desempenho médio. Trainees encontram-se nesse caso, por exemplo', 'Possui condições de ascensão imediata. São aqueles que garantem o futuro da empresa', 'Potencial médio e desempenho baixo. Pessoas novas na empresa apresentam essa situação', 'Apresentam condições para crescer, mas ainda precisam ser mais trabalhados em termos de desenvolvimento de suas competências', 'Excelente desempenho, pode assumir mais alguns desafios. Para desafios mais complexos precisa desenvolver-se mais', 'Discutir problemas que estejam interferindo no trabalho desse profissional', 'Foco maior no desempenho. Trabalho especializado', 'Possuem condições de movimentação lateral pelo excelente desempenho. Garantem o presente', 33, 66, 33, 66, 1);
+
+
+ALTER TABLE public.ninebox ENABLE TRIGGER ALL;
 
 --
 -- Data for Name: noticia; Type: TABLE DATA; Schema: public; Owner: -
@@ -33034,6 +33075,9 @@ INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelma
 INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelmae_id, help) VALUES (825, 'ROLE_SST_ESOCIAL', 'eSocial', '#', 5, true, NULL, 75, NULL);
 INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelmae_id, help) VALUES (826, 'ROLE_CAD_EVENTOS_ENVIO_ESOCIAL_EM_LOTE', 'Eventos de Envio para o eSocial em Lote', '/sst/evento-envio-esocial-em-lote', 1, true, NULL, 825, NULL);
 INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelmae_id, help) VALUES (713, 'DOWNLOAD_IMPORTADOR', 'Download - Importador do Fortes Pessoal', 'https://fortesrh.s3.amazonaws.com/Importador+Fortes+Pessoal+para+Fortes+RH+#VERSAO_IMPORTADOR#.zip', 6, true, NULL, 673, NULL);
+INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelmae_id, help) VALUES (840, 'ROLE_NINEBOX', 'Modelos de Nine Box', '/avaliacao/ninebox', 3, true, NULL, 481, NULL);
+INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelmae_id, help) VALUES (841, 'ROLE_ANALYTICS_DESEMPENHO', 'Analytics de Desempenho', '/analytics/desempenho', 4, true, NULL, 382, NULL);
+INSERT INTO public.papel (id, codigo, nome, url, ordem, menu, accesskey, papelmae_id, help) VALUES (842, 'ROLE_RELATORIO_NINEBOX', 'Nine Box do Talento', '/avaliacao/ninebox/relatorio', 11, true, NULL, 486, NULL);
 
 
 ALTER TABLE public.papel ENABLE TRIGGER ALL;
@@ -33056,7 +33100,7 @@ ALTER TABLE public.perfil ENABLE TRIGGER ALL;
 
 ALTER TABLE public.parametrosdosistema DISABLE TRIGGER ALL;
 
-INSERT INTO public.parametrosdosistema (id, appurl, appcontext, appversao, emailsmtp, emailport, emailuser, emailpass, atualizadorpath, servidorremprot, enviaremail, atualizadosucesso, perfilpadrao_id, acversaowebservicecompativel, uppercase, emaildosuportetecnico, codempresasuporte, codclientesuporte, camposcandidatoexternovisivel, camposcandidatoexternoobrigatorio, camposcandidatoexternotabs, compartilharcolaboradores, compartilharcandidatos, proximaversao, autenticacao, tls, sessiontimeout, emailremetente, caminhobackup, compartilharcursos, telainicialmoduloexterno, horariosbackup, inibirgerarrelatoriopesquisaanonima, quantidadecolaboradoresrelatoriopesquisaanonima, quantidadeconstraints, tamanhomaximoupload, modulospermitidossomatorio, versaoacademica, camposcandidatovisivel, camposcandidatoobrigatorio, camposcandidatotabs, camposcolaboradorvisivel, camposcolaboradorobrigatorio, camposcolaboradortabs, autorizacaogestornasolicitacaopessoal, smtpremetente, utilizarcaptchanologin, versaoimportador, utilizarcaptchanomoduloexterno, utilizarqualificacaocadastral, exibiralteracaoprimeiroacesso, considerardatafimafastamento, novanomenclaturacha, cnpjremprot, camposcolaboradoratualizarmeusdadosvisivel, camposcolaboradoratualizarmeusdadosobrigatorio, camposcolaboradoratualizarmeusdadostabs, tokenelore, paginacaopesquisa, qtdperguntaporpaginapesquisa, exibiriconecontatos, endpointchatpro, tokenchatpro, mensagemcolaboresequence, colaboreutilizarhomologacao, tokensolides, colaboresincronizacaomanual, versao, tokeneduvem, proximaversaoold, colaborechaveprivada, servidorhomologacaonps) VALUES (1, 'http://localhost:8080/fortesrh', '/fortesrh', '1.3.16.1', NULL, 25, NULL, NULL, NULL, '', true, NULL, 2, '1.1.81.1', false, NULL, '0002', NULL, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,cartairaHabilitacao,tituloEleitoral,certificadoMilitar,ctps,cargoNomeId', 'nome,cpf,escolaridade,ende,num,cidade,uf,fone,ddd,sexo,cargoNomeId', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais,abaCurriculo', true, true, NULL, true, false, 600, NULL, NULL, false, 'L', '2', false, 1, 575, NULL, 63, false, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,comoFicouSabendoVaga,comfirmaSenha,senha,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,pis,foto', 'nome,escolaridade,ende,num,cidade,uf,fone,ddd,sexo', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais', 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta,foto,matriculaESocial', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', false, false, false, '2.6.3', false, false, false, false, false, NULL, 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', NULL, false, NULL, true, NULL, NULL, 0, false, NULL, true, '1.4.14.9', NULL, '2014-01-01', NULL, false);
+INSERT INTO public.parametrosdosistema (id, appurl, appcontext, appversao, emailsmtp, emailport, emailuser, emailpass, atualizadorpath, servidorremprot, enviaremail, atualizadosucesso, perfilpadrao_id, acversaowebservicecompativel, uppercase, emaildosuportetecnico, codempresasuporte, codclientesuporte, camposcandidatoexternovisivel, camposcandidatoexternoobrigatorio, camposcandidatoexternotabs, compartilharcolaboradores, compartilharcandidatos, proximaversao, autenticacao, tls, sessiontimeout, emailremetente, caminhobackup, compartilharcursos, telainicialmoduloexterno, horariosbackup, inibirgerarrelatoriopesquisaanonima, quantidadecolaboradoresrelatoriopesquisaanonima, quantidadeconstraints, tamanhomaximoupload, modulospermitidossomatorio, versaoacademica, camposcandidatovisivel, camposcandidatoobrigatorio, camposcandidatotabs, camposcolaboradorvisivel, camposcolaboradorobrigatorio, camposcolaboradortabs, autorizacaogestornasolicitacaopessoal, smtpremetente, utilizarcaptchanologin, versaoimportador, utilizarcaptchanomoduloexterno, utilizarqualificacaocadastral, exibiralteracaoprimeiroacesso, considerardatafimafastamento, novanomenclaturacha, cnpjremprot, camposcolaboradoratualizarmeusdadosvisivel, camposcolaboradoratualizarmeusdadosobrigatorio, camposcolaboradoratualizarmeusdadostabs, tokenelore, paginacaopesquisa, qtdperguntaporpaginapesquisa, exibiriconecontatos, endpointchatpro, tokenchatpro, mensagemcolaboresequence, colaboreutilizarhomologacao, tokensolides, colaboresincronizacaomanual, versao, tokeneduvem, proximaversaoold, colaborechaveprivada, servidorhomologacaonps, atualizoupercentualindividual, exigirsenhasegura, exigirtrocasenhaaposperiodo, enviaremailtrocasenhaaposperiodo, periodotrocasenha, antecedencianotificacaosenhaforte) VALUES (1, 'http://localhost:8080/fortesrh', '/fortesrh', '1.3.16.1', NULL, 25, NULL, NULL, NULL, '', true, NULL, 2, '1.1.81.1', false, NULL, '0002', NULL, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,cartairaHabilitacao,tituloEleitoral,certificadoMilitar,ctps,cargoNomeId', 'nome,cpf,escolaridade,ende,num,cidade,uf,fone,ddd,sexo,cargoNomeId', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais,abaCurriculo', true, true, NULL, true, false, 600, NULL, NULL, false, 'L', '2', false, 1, 582, NULL, 63, false, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,comoFicouSabendoVaga,comfirmaSenha,senha,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,pis,foto', 'nome,escolaridade,ende,num,cidade,uf,fone,ddd,sexo', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais', 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta,foto,matriculaESocial', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', false, false, false, '2.7.0', false, false, false, false, false, NULL, 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', NULL, false, NULL, true, NULL, NULL, 0, false, NULL, true, '1.4.15.7', NULL, '2014-01-01', NULL, false, false, false, false, false, NULL, 5);
 
 
 ALTER TABLE public.parametrosdosistema ENABLE TRIGGER ALL;
@@ -33473,6 +33517,9 @@ INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (1, 818);
 INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (2, 818);
 INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (1, 825);
 INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (1, 826);
+INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (1, 840);
+INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (1, 841);
+INSERT INTO public.perfil_papel (perfil_id, papeis_id) VALUES (1, 842);
 
 
 ALTER TABLE public.perfil_papel ENABLE TRIGGER ALL;
@@ -33526,16 +33573,6 @@ ALTER TABLE public.pgr_profissionalsst DISABLE TRIGGER ALL;
 
 
 ALTER TABLE public.pgr_profissionalsst ENABLE TRIGGER ALL;
-
---
--- Data for Name: prontuario; Type: TABLE DATA; Schema: public; Owner: -
---
-
-ALTER TABLE public.prontuario DISABLE TRIGGER ALL;
-
-
-
-ALTER TABLE public.prontuario ENABLE TRIGGER ALL;
 
 --
 -- Data for Name: quantidadelimitecolaboradoresporcargo; Type: TABLE DATA; Schema: public; Owner: -
@@ -34016,6 +34053,16 @@ ALTER TABLE public.turmatipodespesa DISABLE TRIGGER ALL;
 
 
 ALTER TABLE public.turmatipodespesa ENABLE TRIGGER ALL;
+
+--
+-- Data for Name: usuario_senha; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.usuario_senha DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.usuario_senha ENABLE TRIGGER ALL;
 
 --
 -- Data for Name: usuarioajudaesocial; Type: TABLE DATA; Schema: public; Owner: -
@@ -34520,6 +34567,13 @@ SELECT pg_catalog.setval('public.composicaosesmt_sequence', 1, false);
 
 
 --
+-- Name: conclusao_prontuario_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.conclusao_prontuario_sequence', 1, false);
+
+
+--
 -- Name: condicaoambiental_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -34656,7 +34710,7 @@ SELECT pg_catalog.setval('public.cursolnt_sequence', 1, false);
 -- Name: delete_empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.delete_empresa_id_seq', 499, true);
+SELECT pg_catalog.setval('public.delete_empresa_id_seq', 500, true);
 
 
 --
@@ -35269,6 +35323,13 @@ SELECT pg_catalog.setval('public.naturezalesao_sequence', 1, false);
 
 
 --
+-- Name: ninebox_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.ninebox_sequence', 1, true);
+
+
+--
 -- Name: nivelcompetencia_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -35335,7 +35396,7 @@ SELECT pg_catalog.setval('public.pais_sequence', 261, true);
 -- Name: papel_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.papel_sequence', 827, false);
+SELECT pg_catalog.setval('public.papel_sequence', 843, false);
 
 
 --
@@ -35777,6 +35838,13 @@ SELECT pg_catalog.setval('public.turma_sequence', 1, false);
 --
 
 SELECT pg_catalog.setval('public.turmatipodespesa_sequence', 1, false);
+
+
+--
+-- Name: usuario_senha_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.usuario_senha_sequence', 1, false);
 
 
 --
