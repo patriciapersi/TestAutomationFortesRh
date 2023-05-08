@@ -1093,3 +1093,10 @@ Cypress.Commands.add('cadastraSolicitacaoExame', (dados) =>{
     cy.digita('input[name="examesSolicitacaoExame[2].periodicidade"]','12')
     cy.clickButton('#btnGravar')
 })
+
+Cypress.Commands.add('cadastraEPC', (dados) =>{
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="codigo"]', dados.codigoManual)
+    cy.digita('input[name="descricao"]', dados.descricaoEPCManual)
+    cy.clickNewButton('Gravar')
+})
