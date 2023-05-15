@@ -343,20 +343,20 @@ Cypress.Commands.add("cadastrarAvaliacaoDesempenho", (avaliacao) => {
         .digita('input[name="titulo"]', avaliacao.Titulo)
         .digita('input[name="dataIni"]', avaliacao.PeriodoInicial)
         .digita('input[name="dataFim"]', avaliacao.PeriodoFinal)
-    // .get('#inicio').should('be.enabled').and('be.visible').clear().type(avaliacao.PeriodoInicial)
-    // .get('#fim').should('be.enabled').and('be.visible').clear().type(avaliacao.PeriodoFinal)
-
+        
     if (avaliacao.ModeloAvaliacao === 'Não') {
         cy.contains('Avaliar somente as competências').click()
     } else {
         cy.get('#modelo').select(avaliacao.ModeloAvaliacao)
     }
-
-
-    cy.contains('Permitir autoavaliação').next().click()
-    cy.contains(avaliacao.PermiteAutoavaliacao).click({ force: true })
-    cy.contains('Anônima').next().click()
-    cy.contains('Não').should('be.visible').trigger('mouseouver').click()
+    cy
+        .contains('label', 'Autoavaliação:*').next().click()
+    cy
+        .contains('li', 'Sim').dblclick({ force: true }) 
+    cy
+        .contains('label', 'Anônima:*').next().click()
+    cy
+        .contains('li', 'Não').dblclick({ force: true }) 
         .clickNewButton('Avançar')
         .get('.done').click()
 

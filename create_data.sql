@@ -24894,7 +24894,6 @@ INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES (
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('515115', 'Parteira leiga', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516415', 'Passador de roupas, à mão', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516325', 'Passador de roupas em geral', true);
-INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516140', 'Pedicure', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('513610', 'Pizzaiolo', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('421205', 'Recebedor de apostas (loteria)', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('421210', 'Recebedor de apostas (turfe)', true);
@@ -25177,7 +25176,6 @@ INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES (
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('724510', 'Operador de máquina de dobrar chapas', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('721205', 'Operador de máquina de eletroerosão', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('722220', 'Operador de máquina de fundição', true);
-INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('722225', 'Operador de máquina de fundir sob pressão', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('722330', 'Operador de máquina de moldar automatizada', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('721420', 'Operador de máquina eletroerosão, à fio, com comando numérico', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('723230', 'Operador de máquina recobridora de arame', true);
@@ -25270,6 +25268,7 @@ INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES (
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('741125', 'Relojoeiro (reparação)', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('731330', 'Reparador de aparelhos de telecomunicações em laboratório', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('752115', 'Soprador de vidro', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766235', 'Impressor flexográfico', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('760405', 'Supervisor (indústria de calçados e artefatos de couro)', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('750205', 'Supervisor da indústria de minerais não metálicos (exceto os derivados de petróleo e carvão)', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('740105', 'Supervisor da mecânica de precisão', true);
@@ -25384,7 +25383,6 @@ INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES (
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766215', 'Impressor de ofsete (plano e rotativo)', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766220', 'Impressor de rotativa', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766225', 'Impressor de rotogravura', true);
-INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766235', 'Impressor flexográfico', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766240', 'Impressor letterset', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766205', 'Impressor (serigrafia)', true);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('766245', 'Impressor tampográfico', true);
@@ -27107,6 +27105,23 @@ INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES (
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('122520', 'Turismólogo', false);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('214130', 'Urbanista', false);
 INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('632015', 'Viveirista florestal', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('142140', 'Gerente de facility management', false);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('211220', 'Cientista de dados', false);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('223580', 'Enfermeiro estomaterapeuta', false);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('223585', 'Enfermeiro forense', false);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('234689', 'Professor de língua brasileira de sinais (libras)', false);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('322140', 'Instrutor de pilates', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('324140', 'Dosimetrista clínico', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('423115', 'Vistoriador veicular', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('511515', 'Condutor turismo náutico', false);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516145', 'Designer de unhas', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516150', 'Designer de sobrancelhas', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516155', 'Designer de cílios', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516905', 'Tatuador', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516910', 'Micropigmentador', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('516915', 'Body piercer', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('517130', 'Agente de proteção e defesa civil', true);
+INSERT INTO public.codigocbo (codigo, descricao, efeitocalculoaprendiz) VALUES ('913125', 'Vulcanizador de correias transportadoras', true);
 
 
 ALTER TABLE public.codigocbo ENABLE TRIGGER ALL;
@@ -29697,6 +29712,16 @@ ALTER TABLE public.colaboradorafastamento DISABLE TRIGGER ALL;
 
 
 ALTER TABLE public.colaboradorafastamento ENABLE TRIGGER ALL;
+
+--
+-- Data for Name: colaboradorafastamentoatestado; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+ALTER TABLE public.colaboradorafastamentoatestado DISABLE TRIGGER ALL;
+
+
+
+ALTER TABLE public.colaboradorafastamentoatestado ENABLE TRIGGER ALL;
 
 --
 -- Data for Name: colaboradorcertificacao; Type: TABLE DATA; Schema: public; Owner: -
@@ -32526,6 +32551,10 @@ INSERT INTO public.migrations (name) VALUES ('20230403095814');
 INSERT INTO public.migrations (name) VALUES ('20230412055205');
 INSERT INTO public.migrations (name) VALUES ('20230424032953');
 INSERT INTO public.migrations (name) VALUES ('20230428072423');
+INSERT INTO public.migrations (name) VALUES ('20230427104308');
+INSERT INTO public.migrations (name) VALUES ('20230502000000');
+INSERT INTO public.migrations (name) VALUES ('20230502102517');
+INSERT INTO public.migrations (name) VALUES ('20230509021806');
 
 
 ALTER TABLE public.migrations ENABLE TRIGGER ALL;
@@ -33100,7 +33129,7 @@ ALTER TABLE public.perfil ENABLE TRIGGER ALL;
 
 ALTER TABLE public.parametrosdosistema DISABLE TRIGGER ALL;
 
-INSERT INTO public.parametrosdosistema (id, appurl, appcontext, appversao, emailsmtp, emailport, emailuser, emailpass, atualizadorpath, servidorremprot, enviaremail, atualizadosucesso, perfilpadrao_id, acversaowebservicecompativel, uppercase, emaildosuportetecnico, codempresasuporte, codclientesuporte, camposcandidatoexternovisivel, camposcandidatoexternoobrigatorio, camposcandidatoexternotabs, compartilharcolaboradores, compartilharcandidatos, proximaversao, autenticacao, tls, sessiontimeout, emailremetente, caminhobackup, compartilharcursos, telainicialmoduloexterno, horariosbackup, inibirgerarrelatoriopesquisaanonima, quantidadecolaboradoresrelatoriopesquisaanonima, quantidadeconstraints, tamanhomaximoupload, modulospermitidossomatorio, versaoacademica, camposcandidatovisivel, camposcandidatoobrigatorio, camposcandidatotabs, camposcolaboradorvisivel, camposcolaboradorobrigatorio, camposcolaboradortabs, autorizacaogestornasolicitacaopessoal, smtpremetente, utilizarcaptchanologin, versaoimportador, utilizarcaptchanomoduloexterno, utilizarqualificacaocadastral, exibiralteracaoprimeiroacesso, considerardatafimafastamento, novanomenclaturacha, cnpjremprot, camposcolaboradoratualizarmeusdadosvisivel, camposcolaboradoratualizarmeusdadosobrigatorio, camposcolaboradoratualizarmeusdadostabs, tokenelore, paginacaopesquisa, qtdperguntaporpaginapesquisa, exibiriconecontatos, endpointchatpro, tokenchatpro, mensagemcolaboresequence, colaboreutilizarhomologacao, tokensolides, colaboresincronizacaomanual, versao, tokeneduvem, proximaversaoold, colaborechaveprivada, servidorhomologacaonps, atualizoupercentualindividual, exigirsenhasegura, exigirtrocasenhaaposperiodo, enviaremailtrocasenhaaposperiodo, periodotrocasenha, antecedencianotificacaosenhaforte) VALUES (1, 'http://localhost:8080/fortesrh', '/fortesrh', '1.3.16.1', NULL, 25, NULL, NULL, NULL, '', true, NULL, 2, '1.1.81.1', false, NULL, '0002', NULL, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,cartairaHabilitacao,tituloEleitoral,certificadoMilitar,ctps,cargoNomeId', 'nome,cpf,escolaridade,ende,num,cidade,uf,fone,ddd,sexo,cargoNomeId', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais,abaCurriculo', true, true, NULL, true, false, 600, NULL, NULL, false, 'L', '2', false, 1, 582, NULL, 63, false, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,comoFicouSabendoVaga,comfirmaSenha,senha,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,pis,foto', 'nome,escolaridade,ende,num,cidade,uf,fone,ddd,sexo', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais', 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta,foto,matriculaESocial', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', false, false, false, '2.7.0', false, false, false, false, false, NULL, 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', NULL, false, NULL, true, NULL, NULL, 0, false, NULL, true, '1.4.15.7', NULL, '2014-01-01', NULL, false, false, false, false, false, NULL, 5);
+INSERT INTO public.parametrosdosistema (id, appurl, appcontext, appversao, emailsmtp, emailport, emailuser, emailpass, atualizadorpath, servidorremprot, enviaremail, atualizadosucesso, perfilpadrao_id, acversaowebservicecompativel, uppercase, emaildosuportetecnico, codempresasuporte, codclientesuporte, camposcandidatoexternovisivel, camposcandidatoexternoobrigatorio, camposcandidatoexternotabs, compartilharcolaboradores, compartilharcandidatos, proximaversao, autenticacao, tls, sessiontimeout, emailremetente, caminhobackup, compartilharcursos, telainicialmoduloexterno, horariosbackup, inibirgerarrelatoriopesquisaanonima, quantidadecolaboradoresrelatoriopesquisaanonima, quantidadeconstraints, tamanhomaximoupload, modulospermitidossomatorio, versaoacademica, camposcandidatovisivel, camposcandidatoobrigatorio, camposcandidatotabs, camposcolaboradorvisivel, camposcolaboradorobrigatorio, camposcolaboradortabs, autorizacaogestornasolicitacaopessoal, smtpremetente, utilizarcaptchanologin, versaoimportador, utilizarcaptchanomoduloexterno, utilizarqualificacaocadastral, exibiralteracaoprimeiroacesso, novanomenclaturacha, cnpjremprot, camposcolaboradoratualizarmeusdadosvisivel, camposcolaboradoratualizarmeusdadosobrigatorio, camposcolaboradoratualizarmeusdadostabs, tokenelore, paginacaopesquisa, qtdperguntaporpaginapesquisa, exibiriconecontatos, endpointchatpro, tokenchatpro, mensagemcolaboresequence, colaboreutilizarhomologacao, tokensolides, colaboresincronizacaomanual, versao, tokeneduvem, proximaversaoold, colaborechaveprivada, servidorhomologacaonps, atualizoupercentualindividual, exigirsenhasegura, exigirtrocasenhaaposperiodo, enviaremailtrocasenhaaposperiodo, periodotrocasenha, antecedencianotificacaosenhaforte) VALUES (1, 'http://localhost:8080/fortesrh', '/fortesrh', '1.3.16.1', NULL, 25, NULL, NULL, NULL, '', true, NULL, 2, '1.1.82.1', false, NULL, '0002', NULL, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,cartairaHabilitacao,tituloEleitoral,certificadoMilitar,ctps,cargoNomeId', 'nome,cpf,escolaridade,ende,num,cidade,uf,fone,ddd,sexo,cargoNomeId', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais,abaCurriculo', true, true, NULL, true, false, 600, NULL, NULL, false, 'L', '2', false, 1, 585, NULL, 63, false, 'nome,nascimento,naturalidade,sexo,cpf,escolaridade,endereco,email,fone,celular,nomeContato,parentes,estadoCivil,qtdFilhos,nomeConjuge,profConjuge,nomePai,profPai,nomeMae,profMae,pensao,possuiVeiculo,deficiencia,comoFicouSabendoVaga,comfirmaSenha,senha,formacao,idioma,desCursos,cargosCheck,areasCheck,conhecimentosCheck,colocacao,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,pis,foto', 'nome,escolaridade,ende,num,cidade,uf,fone,ddd,sexo', 'abaDocumentos,abaExperiencias,abaPerfilProfissional,abaFormacaoEscolar,abaDadosPessoais', 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta,foto,matriculaESocial', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', false, false, false, '2.8.0', false, false, false, false, NULL, 'nome,nomeComercial,nascimento,sexo,cpf,escolaridade,endereco,email,fone,celular,estadoCivil,qtdFilhos,nomeConjuge,nomePai,nomeMae,deficiencia,matricula,dt_admissao,dt_encerramentoContrato,regimeRevezamento,formacao,idioma,desCursos,expProfissional,infoAdicionais,identidade,carteiraHabilitacao,tituloEleitoral,certificadoMilitar,ctps,modelosAvaliacao,pis,vinculo,codigoAcBanco,codigoAcAgencia,numeroConta,tipoConta', 'nome,nomeComercial,nascimento,cpf,escolaridade,ende,num,cidade,uf,email,fone,ddd,dt_admissao,vinculo,pis,sexo', 'abaDocumentos,abaExperiencias,abaDadosFuncionais,abaFormacaoEscolar,abaDadosPessoais,abaModelosAvaliacao', NULL, false, NULL, true, NULL, NULL, 0, false, NULL, true, '1.4.16.5', NULL, '2014-01-01', NULL, false, false, false, false, false, NULL, 5);
 
 
 ALTER TABLE public.parametrosdosistema ENABLE TRIGGER ALL;
@@ -34431,6 +34460,13 @@ SELECT pg_catalog.setval('public.colaborador_sequence', 1, false);
 --
 
 SELECT pg_catalog.setval('public.colaboradorafastamento_sequence', 1, false);
+
+
+--
+-- Name: colaboradorafastamentoatestado_sequence; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.colaboradorafastamentoatestado_sequence', 1, false);
 
 
 --
