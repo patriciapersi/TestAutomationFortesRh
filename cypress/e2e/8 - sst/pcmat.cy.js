@@ -1,14 +1,14 @@
 import * as returnDate from '../../support/functions'
-describe('Cadastro de PcMat', () => {
+describe('Cadastro de PCMAT', () => {
 
     const dados = {
-        dataPcMatSCRIPT: '01/01/2023',
+        dataPCMATScript: '01/01/2023',
         dataIniSCRIPT:'01/01/2023',
         dataFinSCRIPT:'31/01/2023',
         obra_nome: chance.word({ syllables: 8}),
         nomeFase: chance.word({ syllables: 8}),
         nomeAreaVivencia: chance.word({ syllables: 8}),
-        dataPcMat: returnDate.formatDate(new Date(), 0),
+        dataPCMAT: returnDate.formatDate(new Date(), 0),
         dataIni:returnDate.formatDate(new Date(), 5),
         dataFin:returnDate.formatDate(new Date(), 20),
         qtdFuncionario : chance.integer(),
@@ -26,12 +26,12 @@ describe('Cadastro de PcMat', () => {
             .entendiButton()
    })
  
-   it('Inserir Pcmat', () => {
+   it('Inserir PCMAT', () => {
         cy
-            .cadastraPcmat(dados)
+            .cadastraPCMAT(dados)
             .validaMensagem('PCMAT atualizado com sucesso.')
         cy  
-                .contains('td', dados.dataPcMatSCRIPT).parent().should('be.visible')
+                .contains('td', dados.dataPCMATScript).parent().should('be.visible')
         cy  
                 .contains('td', dados.dataIni).parent().should('be.visible')
    });
@@ -39,7 +39,7 @@ describe('Cadastro de PcMat', () => {
    it('Editar obra', () => {  
        cy
             .generalButtons('Listar PCMATs', dados.obra_nome)
-            .generalButtons('Editar', dados.dataPcMatSCRIPT)
+            .generalButtons('Editar', dados.dataPCMATScript)
             .get('#menuFases').click()
             .clickButton('#btnInserir')
             .get('#fase').should('be.visible').select(dados.nomeFase) 
@@ -58,7 +58,7 @@ describe('Cadastro de PcMat', () => {
             .clickButton('#btnGravar')
             .validaMensagem('PCMAT atualizado com sucesso.')
         cy  
-            .contains('td', dados.dataPcMatSCRIPT).parent().should('be.visible')
+            .contains('td', dados.dataPCMATScript).parent().should('be.visible')
    });
 
 
@@ -66,24 +66,24 @@ describe('Cadastro de PcMat', () => {
    it('Excluir PCMAT', () => {
        cy
            .generalButtons('Listar PCMATs', dados.obra_nome)
-           .generalButtons('Excluir', dados.dataPcMatSCRIPT)      
+           .generalButtons('Excluir', dados.dataPCMATScript)      
            .old_popUpMessage('Confirma exclusão?')
            .validaMensagem('PCMAT excluído com sucesso.')
        cy  
-           .contains('td', dados.dataPcMatSCRIPT).should('not.exist')
+           .contains('td', dados.dataPCMATScript).should('not.exist')
    });
 
    it('Clonar PCMAT', () => {
     cy
         .generalButtons('Listar PCMATs', dados.obra_nome)
-        .generalButtons('Clonar', dados.dataPcMatSCRIPT)
-        .digita('#aPartirDe', dados.dataPcMat)      
+        .generalButtons('Clonar', dados.dataPCMATScript)
+        .digita('#aPartirDe', dados.dataPCMAT)      
         .clickButton('#btnClonar')
         .validaMensagem('PCMAT clonado com sucesso.')
         cy  
-                .contains('td', dados.dataPcMatSCRIPT).parent().should('be.visible')
+                .contains('td', dados.dataPCMATScript).parent().should('be.visible')
         cy  
-                .contains('td', dados.dataPcMat).parent().should('be.visible')
+                .contains('td', dados.dataPCMAT).parent().should('be.visible')
 });
 
 })

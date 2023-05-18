@@ -1069,10 +1069,10 @@ Cypress.Commands.add('cadastraObra', (dados) => {
 
 })
 
-Cypress.Commands.add('cadastraPcmat', (dados) => {
+Cypress.Commands.add('cadastraPCMAT', (dados) => {
     cy.generalButtons('Listar PCMATs', dados.obra_nome)
     cy.clickButton('#btnInserir')
-    cy.digita('#aPartirDe', dados.dataPcMat)
+    cy.digita('#aPartirDe', dados.dataPCMAT)
     cy.digita('#dataIniObra', dados.dataIni)
     cy.digita('#dataFimObra', dados.dataFin)
     cy.digita('#qtdFuncionarios', dados.qtdFuncionario)

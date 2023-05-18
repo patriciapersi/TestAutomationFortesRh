@@ -119,10 +119,11 @@ describe('Condições ambientais', () => {
             cy
                 .contains('li', 'Critério qualitativo').click({ force: true })
             })
+        
         cy  
-            .get('#rh_id_31 > .p-dropdown-label').click()
+            .get('#rh_id_28 > .p-dropdown-label').click()
             .get('[aria-label="Utilizado"]').click()
-            .get('#rh_id_32').click()
+            .get('#rh_id_29').click()
             .get('[aria-label="Sim"]').click()
             .clickNewButton('Gravar')
         cy

@@ -137,28 +137,38 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
     });
 
     it('Competencias do talento', () => {
+
         cy
             .contains('td', dados.colaborador).parent()
             .find('.fa-competence').should('be.visible').click()
-        cy
-            .contains('.waDivFormulario', dados.colaborador).should('be.visible')
-            .get('#btnInserir').should('be.visible').click()
-            .get('#data').should('have.value', returnDate.formatDate(new Date(), 0)).and('be.visible')
-            .get('#avaliador').should('be.visible').select('Anônimo')
-            .get('#checkAllCompetencia').should('be.visible').click()
+        cy  .get('.p-toolbar-group-left').should('contain', `Competências do Talento - ${dados.colaborador}`)
+            .clickNewButton('Inserir')
+            .get('.p-filled').should('have.value', returnDate.formatDate(new Date(), 0)).and('be.visible')
+            
         cy
             .contains('td', 'Java').should('be.visible').parent()
-            .find('input[type="radio"]').should('be.visible').click()
+            .find('.p-checkbox').should('be.visible').click()
+        cy
+            .contains('td', 'Java').should('be.visible').parent()
+            .find('.p-radiobutton').should('be.visible').click() 
+            
         cy
             .contains('td', 'Organizado').should('be.visible').parent()
-            .find('input[type="radio"]').should('be.visible').click()
+            .find('.p-checkbox').should('be.visible').click()
+        cy
+            .contains('td', 'Organizado').should('be.visible').parent()
+            .find('.p-radiobutton').should('be.visible').click()
+
         cy
             .contains('td', 'Windows').should('be.visible').parent()
-            .find('input[type="radio"]').should('be.visible').click()
+            .find('.p-checkbox').should('be.visible').click()
         cy
-            .get('.base').should('be.visible')
-            .get('#btnGravar').should('be.visible').click()
-            .validaMensagem('Níveis de competência do talento salvos com sucesso.')
+            .contains('td', 'Windows').should('be.visible').parent()
+            .find('.p-radiobutton').should('be.visible').click()
+        cy
+            .get('.block').should('be.visible')
+            .clickNewButton('Gravar')
+            .validaMensagem('Competência do talento salva com sucesso.')
     })
 
     it('Incluir Talento em Solicitacão de Pessoal', () => {
@@ -223,7 +233,7 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
         cy  .contains('.rh-button', 'Inserir').should('be.disabled')
         cy  .contains('td', returnDate.formatDate(new Date(), 0)).parent().should('be.visible')
 
-            //cy  .get('.rh-button').eq(0)
+
 
     })
 });
