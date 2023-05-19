@@ -608,10 +608,47 @@ Cypress.Commands.add("insereAreaOrganizacionalMaeeFILHA", (dados) => {
 Cypress.Commands.add("insereCertificacoes", (dados) => {
     cy.exec_sql(
         "insert into curso (id, nome, conteudoprogramatico, empresa_id, cargahoraria, percentualminimofrequencia, criterioavaliacao, codigotru, periodicidade, modelocertificado_id, tipo, categoriacurso_id, online, certificado_id, uuidcursoeduvem) values (nextval('curso_sequence'), '" + dados.nomeCurso + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null, 0, null, -1, null, false, null, null)",
+        "insert into certificacao(id, nome, empresa_id, periodicidade, certificacaoprerequisito_id, modelocertificado_id, certificado_id) values (nextval('certificacao_sequence'), '" + dados.nomeCertificacaoManual + "', (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null)",
+        "insert into certificacao_curso(certificacaos_id, cursos_id) values ((select id from certificacao where nome = '" + dados.nomeCertificacaoManual + "'), (select id from curso where nome = '" + dados.nomeCurso + "'))"
+    )
+})
+
+Cypress.Commands.add("insereCertificacoesComTurma", (dados) => {
+    cy.exec_sql(
+        "insert into curso (id, nome, conteudoprogramatico, empresa_id, cargahoraria, percentualminimofrequencia, criterioavaliacao, codigotru, periodicidade, modelocertificado_id, tipo, categoriacurso_id, online, certificado_id, uuidcursoeduvem) values (nextval('curso_sequence'), '" + dados.nomeCurso + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null, 0, null, -1, null, false, null, null)",
+        "insert into turma (id, descricao, instrutor, custo, dataprevini, dataprevfim, empresa_id, instituicao, horario, realizada, qtdparticipantesprevistos, curso_id, porturno, assinaturadigitalurl, online, assistirtodasasaulas, eduvemintegra) values (nextval('turma_sequence'), '" + dados.descricaoTurma + "', 'Eliu Alves', '200', '27/07/2022', '27/07/2022', (select id from empresa where nome = 'Empresa Padrão'), null, null, true, null, (select id from curso where nome = '" + dados.nomeCurso + "'), false, null, false, false, false)",
+        "insert into colaboradorturma (id, aprovado, colaborador_id, prioridadetreinamento_id, turma_id, curso_id, cursolnt_id, motivoreprovacao) values (nextval('colaboradorturma_sequence'), true, (select id from colaborador where nome = '" + dados.colaborador + "'), null, (select id from turma where descricao = '" + dados.descricaoTurma + "') , (select id from curso where nome = '" + dados.nomeCurso + "'), null, null)",
+        "insert into diaturma (id, dia, turma_id, turno, horaini, horafim, link) values (nextval('diaturma_sequence'), '27/07/2022', (select id from turma where descricao = '" + dados.descricaoTurma + "'), 'D', '8:00', '12:00', null)",
+        "insert into colaboradorpresenca(id, presenca, colaboradorturma_id, diaturma_id) values (nextval('colaboradorpresenca_sequence'), true, (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from turma where descricao = '" + dados.descricaoTurma + "'))",
         "insert into certificacao(id, nome, empresa_id, periodicidade, certificacaoprerequisito_id, modelocertificado_id, certificado_id) values (nextval('certificacao_sequence'), '" + dados.nomeCertificacao + "', (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null)",
         "insert into certificacao_curso(certificacaos_id, cursos_id) values ((select id from certificacao where nome = '" + dados.nomeCertificacao + "'), (select id from curso where nome = '" + dados.nomeCurso + "'))"
     )
 })
+
+Cypress.Commands.add("insereCertificacoesComAvalPratica", (dados) => {
+    cy.exec_sql(
+        "insert into curso (id, nome, conteudoprogramatico, empresa_id, cargahoraria, percentualminimofrequencia, criterioavaliacao, codigotru, periodicidade, modelocertificado_id, tipo, categoriacurso_id, online, certificado_id, uuidcursoeduvem) values (nextval('curso_sequence'), '" + dados.nomeCurso + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null, 0, null, -1, null, false, null, null)",
+        "insert into turma (id, descricao, instrutor, custo, dataprevini, dataprevfim, empresa_id, instituicao, horario, realizada, qtdparticipantesprevistos, curso_id, porturno, assinaturadigitalurl, online, assistirtodasasaulas, eduvemintegra) values (nextval('turma_sequence'), '" + dados.descricaoTurma + "', 'Eliu Alves', '200', '27/07/2022', '27/07/2022', (select id from empresa where nome = 'Empresa Padrão'), null, null, true, null, (select id from curso where nome = '" + dados.nomeCurso + "'), false, null, false, false, false)",
+        "insert into colaboradorturma (id, aprovado, colaborador_id, prioridadetreinamento_id, turma_id, curso_id, cursolnt_id, motivoreprovacao) values (nextval('colaboradorturma_sequence'), true, (select id from colaborador where nome = '" + dados.colaborador + "'), null, (select id from turma where descricao = '" + dados.descricaoTurma + "') , (select id from curso where nome = '" + dados.nomeCurso + "'), null, null)",
+        "insert into diaturma (id, dia, turma_id, turno, horaini, horafim, link) values (nextval('diaturma_sequence'), '27/07/2022', (select id from turma where descricao = '" + dados.descricaoTurma + "'), 'D', '8:00', '12:00', null)",
+        "insert into colaboradorpresenca(id, presenca, colaboradorturma_id, diaturma_id) values (nextval('colaboradorpresenca_sequence'), true, (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from turma where descricao = '" + dados.descricaoTurma + "'))",
+        "insert into avaliacaopratica(id, titulo, notaminima, empresa_id) values (nextval('avaliacaopratica_sequence'), '"+dados.tituloAvalPratica+"', '"+dados.notaMinima+"', (select id from empresa where nome = 'Empresa Padrão')) ",
+        "insert into certificacao(id, nome, empresa_id, periodicidade, certificacaoprerequisito_id, modelocertificado_id, certificado_id) values (nextval('certificacao_sequence'), '" + dados.nomeCertificacao2 + "', (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null)",
+        "insert into certificacao(id, nome, empresa_id, periodicidade, certificacaoprerequisito_id, modelocertificado_id, certificado_id) values (nextval('certificacao_sequence'), '" + dados.nomeCertificacao + "', (select id from empresa where nome = 'Empresa Padrão'), '3', (select id from certificacao where nome = '" + dados.nomeCertificacao2 + "'), null, null)",
+        "insert into certificacao_curso(certificacaos_id, cursos_id) values ((select id from certificacao where nome = '" + dados.nomeCertificacao + "'), (select id from curso where nome = '" + dados.nomeCurso + "'))",
+        "insert into certificacao_avaliacaopratica (certificacao_id, avaliacoespraticas_id) values ((select id from certificacao where nome = '" + dados.nomeCertificacao + "'), (select id from avaliacaopratica where titulo = '" + dados.tituloAvalPratica + "'))"
+
+    )
+})
+
+Cypress.Commands.add("insereAvalPraticaIndividual", (dados) => {
+    cy.exec_sql(
+        "insert into colaboradoravaliacaopratica (id, avaliacaopratica_id, certificacao_id, colaborador_id, data, nota, colaboradorcertificacao_id) values (nextval('colaboradoravaliacaopratica_sequence'), (select id from avaliacaopratica where titulo = '" + dados.tituloAvalPratica + "'), (select id from certificacao where nome = '" + dados.nomeCertificacao + "'), (select id from colaborador where nome = '" + dados.colaborador + "'), '" + dados.data + "', '" + dados.notaMinima + "', null)"
+    )
+    
+})
+
+
 
 Cypress.Commands.add("insereSugestaoMelhoria", (dados) => {
 
@@ -803,4 +840,10 @@ Cypress.Commands.add("insereLNT", (dados) => {
         "insert into cursolnt(id, nomenovocurso, conteudoprogramatico, justificativa, custo, cargahoraria, lnt_id, curso_id) values (nextval('cursolnt_sequence'), '"+dados.nomecursoLNT+"', null, null, null, null, (select id from lnt where descricao = '"+dados.descricaoLNT+"'), null)",
         "insert into participantecursolnt(id, colaborador_id, cursolnt_id, areaorganizacional_id) values (nextval('participantecursolnt_sequence'), (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from cursolnt where nomenovocurso = '" + dados.nomecursoLNT + "'), (select id from areaorganizacional where nome = 'Suporte'))"
      )
+})
+
+Cypress.Commands.add("InsereAvalPratica", (dados) => {
+    cy.exec_sql(
+        "insert into avaliacaopratica(id, titulo, notaminima, empresa_id) values (nextval('avaliacaopratica_sequence'), '"+dados.tituloAvalPratica+"', '"+dados.notaMinima+"', (select id from empresa where nome = 'Empresa Padrão')) "
+    )
 })
