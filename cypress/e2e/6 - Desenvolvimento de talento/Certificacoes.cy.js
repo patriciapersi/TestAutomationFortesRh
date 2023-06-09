@@ -9,7 +9,12 @@ describe('Modelos de Avaliação de Aluno', () => {
 
     beforeEach('', () => {
         cy
+            
+            .ativaPeriodicidadeCertificacao()
             .insereCertificacoes(dados)
+            .insereCertificacoesPrerequisito(dados)
+            .visit('/logout')
+            .login(Cypress.config('user_name'), Cypress.config('user_password'))
             .navigate('/desenvolvimento/certificacao')
       });
 
@@ -17,7 +22,7 @@ describe('Modelos de Avaliação de Aluno', () => {
     it('Inserir uma Certificação', () => {
         cy
             .clickNewButton('Inserir')
-            .get('input[name="nome"]').should('be.visible').clear().type(dados.nomeCertificacaoManual)
+            .digita('input[name="nome"]', dados.nomeCertificacaoManual)
         cy  
             .contains('Incluir Todos').should('be.visible').click()
             .clickNewButton('Gravar')
@@ -26,6 +31,8 @@ describe('Modelos de Avaliação de Aluno', () => {
             .contains('td', dados.nomeCertificacaoManual).should('be.exist')
        
         })
+
+    
 
     it('Editar uma Certificação', () => {
         cy  
@@ -37,6 +44,21 @@ describe('Modelos de Avaliação de Aluno', () => {
         cy
             .contains('td', dados.nomeCertificacaoManual).should('be.exist')
            
+        })
+
+    it('Editar certificado informando requisito não permitido', () => {
+                         
+        cy
+                .generalButtons("Editar", 'AWS Cloud')
+        cy
+                .contains('label','Certificação:')
+                .get('.p-dropdown').click()
+        cy
+                .contains('.p-dropdown-item','AWS Develop').click()
+                .clickNewButton('Gravar')
+                .validaMensagem('Não é possível utilizar o Certificado AWS Develop como requisito para o Certificado AWS Cloud. O certificado AWS Cloud está configurado como requisito do certificado AWS Develop.')
+    
+    
         })
         
     it('Excluir uma Certificação', () => {
