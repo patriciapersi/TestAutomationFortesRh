@@ -265,6 +265,14 @@ Cypress.Commands.add("inserirFuncao", (dados) => {
     )
 })
 
+Cypress.Commands.add("inserirFuncaoHistorico", (dados) => {
+    cy.exec_sql(
+        "insert into funcao (id, nome, cargo_id, empresa_id, codigoac, ativa) values (nextval('funcao_sequence'), 'Assistente', null, (select id from empresa where nome = 'Empresa Padrão'), null, true)",
+        "insert into historicofuncao (id, data, descricao, funcao_id, funcaonome, codigocbo) values (nextval('historicofuncao_sequence'), '01/05/2020', 'Prestam serviços sociais', (select id from funcao where nome = 'Assistente'), 'Assistente', '251605')",
+        "insert into historicogerencialfuncao (id, data, normasinternas, funcao_id, atribuicaocomando) values (nextval('historicogerencialfuncao_sequence'), '01/04/2020', null, (select id from funcao where nome = 'Assistente'), false)"
+    )
+})
+
 Cypress.Commands.add("inserirProfissionalSaude", (profissional_nome) => {
     cy.exec_sql("insert into profissionalsst values (nextval('profissionalsst_sequence'), '" + profissional_nome + "', '10708', '1', '1', '', '07347161339', '', '001', false, '')")
 })

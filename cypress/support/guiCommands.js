@@ -869,6 +869,29 @@ Cypress.Commands.add('cadastraRisco', (dados) => {
         })
         .clickNewButton('Gravar')
 })
+
+Cypress.Commands.add('cadastraFuncao', (dados) => {
+
+cy
+    .clickNewButton('Inserir')
+    .get('.fa-calendar-alt').first().trigger('mouseouver').click()
+cy
+    .contains('Hoje').should('be.visible').trigger('mouseouver').click()
+cy
+    .digita('#nomeFuncao', dados.nome_funcao)
+    .digita('input[name="historicoFuncao.codigoCBO"]','Analista')
+cy
+    .contains('252510 - Analista de câmbio').should('be.visible').click()
+cy
+    .digita('textarea[name="historicoFuncao.descricao"]', dados.descricaoFuncao, {delay:0})
+cy
+    .contains('label', 'EPIs (PPRA)').should('be.visible').click()
+    .get('.checklistbox-header').eq(1).within(($form) => {
+        cy.contains('button', 'Marcar Todos').should('be.visible').click({ force: true })
+    })
+    .clickNewButton('Gravar')
+})
+
 Cypress.Commands.add('cadastraEpi', (dados) => {
     cy.contains('.rh-button', 'Inserir').should('be.visible').and('be.enabled').click()
     cy.contains('label', 'Categoria de EPI: *').next().click()
