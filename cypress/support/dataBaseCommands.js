@@ -795,6 +795,13 @@ Cypress.Commands.add("insereSolicitacaoRealinhamentoIndice", (dados) => {
      )
 })
 
+Cypress.Commands.add("insereSolicitacaoRealinhamentoTalento", (dados) => {
+cy.exec_sql(
+    "insert into tabelareajustecolaborador(id, nome, data, observacao, aprovada, empresa_id, dissidio, tiporeajuste) values (nextval('tabelareajustecolaborador_sequence'), '"+ dados.tituloplanejamento+"', '01/03/2023', '', false, (select id from empresa where nome = 'Empresa Padrão'), false, 'C')",      
+    "insert into reajustecolaborador (id, salarioatual, salarioproposto, colaborador_id, tabelareajustecolaborador_id,  areaorganizacionalatual_id, areaorganizacionalproposta_id, funcaoatual_id, funcaoproposta_id, ambienteatual_id, ambienteproposto_id, estabelecimentoatual_id, estabelecimentoproposto_id, tiposalarioproposto, indiceproposto_id, quantidadeindiceproposto, tiposalarioatual, indiceatual_id, quantidadeindiceatual, observacao, faixasalarialatual_id, faixasalarialproposta_id) values (nextval('reajustecolaborador_sequence'), 2000, 2246, (select id from colaborador where nome = '"+ dados.colaborador +"'), (select id from tabelareajustecolaborador where nome = '"+dados.tituloplanejamento+"'), (select id from areaorganizacional where nome = 'Suporte'), (select id from areaorganizacional where nome = 'Suporte'), null, null, null, null, (select id from estabelecimento where nome = 'Estabelecimento Padrão'), (select id from estabelecimento where nome = 'Estabelecimento Padrão'), 3, null, 0, 3, null, 0, null, (select id from faixasalarial where nome = 'Júnior'), (select id from faixasalarial where nome = 'Júnior'))"
+)
+ })
+
 Cypress.Commands.add("insereLotacaotributaria", (dados) => {
     cy.exec_sql(
         "insert into lotacaotributaria(id, nome, tipolotacaotributaria_id, numeroinscricao, codigoac, empresa_id, statuscadastroesocial, cadastropendente) values (nextval('lotacaotributaria_sequence'), '"+dados.nomeLotacaoTrib+"', 1, null, null, (select id from empresa where nome = 'Empresa Padrão'), null, false);",      

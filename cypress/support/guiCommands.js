@@ -972,6 +972,17 @@ Cypress.Commands.add('cadastraSolicitacaoRealinhamentoIndice', (dados) => {
     cy.clickNewButton('Gravar')
 })
 
+Cypress.Commands.add('cadastraSolicitacaoRealinhamentoTalento', (dados) => {
+    cy.contains('label','Planejamento de Realinhamento:*').next().click()
+    cy.contains('Planejamento Teste Talento').click({ force: true })
+    cy.contains('label', 'Áreas Organizacionais:*').next().click()
+    cy.contains('li','Suporte').click()
+    cy.contains('label', 'Talento: *').next().click()
+    cy.contains('li', dados.colaborador).click()
+    cy.digita('input[name="salarioProposto"]', dados.valorReajuste)
+    cy.clickNewButton('Gravar')
+})
+
 
 
 Cypress.Commands.add('popUpMessage2', (text) => {
