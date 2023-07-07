@@ -58,7 +58,7 @@ describe('Cadastro de EPI', () => {
             .digita('input[name="atenuacao"]', dados.atenuacaoRisco)
             .digita('input[name="validadeUso"]', dados.diasRecomendado)
             .clickNewButton('Gravar')
-            .validaMensagem('Histórico da Faixa Salarial gravada com sucesso.')
+            .validaMensagem('Histórico do EPI gravado com sucesso.')
             .clickNewButton('Gravar')
     })
     it('Excluir Cadastro de EPI com apenas um historico', () => {

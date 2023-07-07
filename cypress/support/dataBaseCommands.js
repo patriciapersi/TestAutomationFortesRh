@@ -622,8 +622,8 @@ Cypress.Commands.add("insereAreaOrganizacionalMaeeFILHA", (dados) => {
 Cypress.Commands.add("insereCertificacoes", (dados) => {
     cy.exec_sql(
         "insert into curso (id, nome, conteudoprogramatico, empresa_id, cargahoraria, percentualminimofrequencia, criterioavaliacao, codigotru, periodicidade, modelocertificado_id, tipo, categoriacurso_id, online, certificado_id, uuidcursoeduvem) values (nextval('curso_sequence'), '" + dados.nomeCurso + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null, 0, null, -1, null, false, null, null)",
-        "insert into certificacao(id, nome, empresa_id, periodicidade, certificacaoprerequisito_id, modelocertificado_id, certificado_id) values (nextval('certificacao_sequence'), '" + dados.nomeCertificacaoManual + "', (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null)",
-        "insert into certificacao_curso(certificacaos_id, cursos_id) values ((select id from certificacao where nome = '" + dados.nomeCertificacaoManual + "'), (select id from curso where nome = '" + dados.nomeCurso + "'))"
+        "insert into certificacao(id, nome, empresa_id, periodicidade, certificacaoprerequisito_id, modelocertificado_id, certificado_id) values (nextval('certificacao_sequence'), '" + dados.nomeCertificacao + "', (select id from empresa where nome = 'Empresa Padrão'), null, null, null, null)",
+        "insert into certificacao_curso(certificacaos_id, cursos_id) values ((select id from certificacao where nome = '" + dados.nomeCertificacao + "'), (select id from curso where nome = '" + dados.nomeCurso + "'))"
     )
 })
 
