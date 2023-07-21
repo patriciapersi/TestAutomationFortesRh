@@ -15,12 +15,13 @@ describe('Risco', () => {
         cy
             .cadastraRisco(dados)
             .validaMensagem('Risco salvo com sucesso.')
+        cy  
+            .contains('td', dados.descricao).parent().should('be.visible')    
     });
 
     it('Editar Risco', () => {
         cy
-            .contains('td', dados.nomeRiscoScript).parent()
-            .find('.fa-edit').should('be.visible').click()
+            .generalButtons('Editar', dados.nomeRiscoScript)
         cy
             .contains('label', 'Tipo de Risco').next().click()
             .get('.p-dropdown-items').within(() => {
@@ -35,8 +36,7 @@ describe('Risco', () => {
 
     it('Excluir Risco', () => {
         cy
-            .contains('td', dados.nomeRiscoScript).parent()
-            .find('.fa-trash').should('be.visible').click()
+            .generalButtons('Remover', dados.nomeRiscoScript)
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Risco excluído com sucesso.')
         cy
@@ -48,8 +48,7 @@ describe('Risco', () => {
             .exec_sql("INSERT INTO riscoambiente(id, epceficaz, historicoambiente_id, risco_id, periodicidadeexposicao, medidadeseguranca, grauderisco, insalubridade, periculosidade, obsprevidenciarias, obstrabalhista, probabilidaderisco_id, gravidaderisco_id, classificacaoseveridaderisco_id) VALUES (nextval('riscoambiente_sequence'), false, (select id from ambiente where nome = '" + dados.ambienteNome + "'), (select id from risco where descricao = '" + dados.nomeRiscoScript + "'), null, '', null, null, null, null, null, null, null, null)")
             .reload()
         cy
-            .contains('td', dados.nomeRiscoScript).parent()
-            .find('.fa-trash').should('be.visible').click()
+            .generalButtons('Remover', dados.nomeRiscoScript)
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Entidade risco possui dependências em:')
         cy

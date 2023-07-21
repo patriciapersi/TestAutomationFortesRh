@@ -861,7 +861,8 @@ Cypress.Commands.add('cadastraTipodeDocumento', (dados) => {
 Cypress.Commands.add('cadastraRisco', (dados) => {
     cy
         .clickNewButton('Inserir')
-        .get('input[name="descricao"]').should('be.visible').and('be.enabled').clear().type(dados.descricao)
+    cy
+        .digita('input[name = "descricao"]',dados.descricao)
     cy
         .contains('label', 'Tipo de Risco').next().click()
         .get('.p-dropdown-items').within(() => {
