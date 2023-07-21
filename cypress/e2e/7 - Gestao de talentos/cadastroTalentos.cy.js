@@ -12,7 +12,8 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
         entrevistaDesligamento: chance.sentence({ words: 3 }),
         ambiente: chance.word(),
         funcao: chance.word({ syllables: 6 }),
-        dataIni: returnDate.formatDate(new Date(), 0)
+        dataIni: returnDate.formatDate(new Date(), 0),
+        documentos : chance.word()
        
     }
     const dados2 = {
@@ -186,14 +187,32 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
 
     it('Anexar Documentos', () => {
         cy
+            .exec_sql(
+                "insert into tipodocumento(id, descricao) values (nextval('tipodocumento_sequence'), 'Pessoal')",
+                "insert into tipodocumento(id, descricao) values (nextval('tipodocumento_sequence'), 'Trabalho')")
+            .reload()
+        cy
             .contains('td', dados.colaborador).parent()
             .find('.fa-paperclip').should('be.visible').click()
             .get('#btnInserir').should('be.visible').click()
-            .get('input[name = "documentoAnexo.descricao"]').should('be.visible').and('have.attr', 'maxLength', "100").clear().type(chance.word())
+            .get('input[name = "documentoAnexo.descricao"]').should('be.visible').and('have.attr', 'maxLength', "100").clear().type(dados.documentos)
             .get('#data').clear().type(returnDate.formatDate(new Date(), 0))
-        cy.fixture('example.json', { encoding: null }).as('myFile')
+        cy
+            .fixture('example.json', { encoding: null }).as('myFile')
             .get('input[type="file"').selectFile('@myFile')
+            .get('#tipoDocumentoId').select('Pessoal')
             .get('#btnGravar').should('be.visible').click()
+        cy
+            .get('#linkFiltro').click()
+            .get('#tipoDocumentoId').select('Trabalho')
+            .get('#btnPesquisar').click()
+        cy
+            .contains('td', dados.documentos).should('not.exist')
+            .get('#linkFiltro').click()
+            .get('#tipoDocumentoId').select('Pessoal')
+            .get('#btnPesquisar').click()
+        cy
+            .contains('td', dados.documentos).should('be.exist').and('be.visible')
     });
 
     it('Incluir condições ambientais para o talento - sem medição', () => {
