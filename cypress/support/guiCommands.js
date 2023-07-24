@@ -1148,3 +1148,16 @@ Cypress.Commands.add('inserirLntManual', (dados) => {
         
 })
 
+Cypress.Commands.add('inserirNineBox', (dados) =>{
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="data"]', dados.data)
+    cy.digita('textarea[name="box1.descricao"]', dados.campos)
+    cy.digita('textarea[name="box2.descricao"]', dados.campos)
+    cy.digita('textarea[name="box3.descricao"]', dados.campos)
+    cy.digita('textarea[name="box4.descricao"]', dados.campos)
+    cy.digita('textarea[name="box5.descricao"]', dados.campos)
+    cy.digita('textarea[name="box6.descricao"]', dados.campos)
+    cy.digita('textarea[name="box7.descricao"]', dados.campos)
+    cy.digita('textarea[name="box8.descricao"]', dados.campos)
+    cy.clickNewButton('Gravar')
+})
