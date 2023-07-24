@@ -8,14 +8,18 @@ describe('Cursos e Treinamentos', () => {
       curso1: chance.word(),
       descCurso: chance.name(),
       custo : chance.integer(),
-      data: returnDate.formatDate(new Date(), 0)
+      data: returnDate.formatDate(new Date(), 0),
+      empresa_nome: chance.word(),
+      
       //data: '27/07/2022'
-  
     }
-  
+
+       
     beforeEach('', () => {
       cy
         .ativaIntegracaoEduvem()
+        .insereEmpresa(dados.empresa_nome)
+        .ativaCompartilharCursosEmpresas()
         .insereColaboradorComCompetencias(dados)
         .insereCurso(dados.curso)
         .navigate('/desenvolvimento/cursos')
@@ -67,6 +71,35 @@ describe('Cursos e Treinamentos', () => {
         .contains(dados.curso1).should('be.exist')
         
     })
+
+    it('Criar curso compartilhado com outra empresa', () => {
+    cy
+      .clickNewButton('Inserir')
+      .digita('input[name="nome"]', dados.curso1)
+    cy
+      .contains('label', 'Curso Eduvem').next().click() 
+    cy
+      .contains('li', 'Eduvem - Eduvem').dblclick({ force: true }) 
+      
+    cy.contains('label', 'Compartilhar com as empresas')
+    cy.get('.p-checkbox').first().should('be.visible').click()
+      .clickNewButton('Gravar')
+      .validaMensagem('Esse curso agora está integrado com a plataforma Eduvem. Efetue a alteração nas turmas para que também tenham o vínculo com o Eduvem.')
+      .clickNewButton('OK') 
+      .validaMensagem('Curso salvo com sucesso.')
+
+  // Verificando que o curso está cadastrado na nova empresa
+    
+    cy.reload()
+    cy.alteraEmpresa(dados.empresa_nome)
+    cy.contains('Continuar').click()
+    cy.navigate('/desenvolvimento/cursos')
+    cy.generalButtons('Editar', dados.curso1)
+    cy.validaMensagem('Este curso foi compartilhado pela empresa Empresa Padrão').and('have.css', 'color', "rgb(4, 72, 104)")
+    cy.contains('.p-dropdown-label','Eduvem - Eduvem')
+
+
+     })
   
     it('Editar um curso e ativar integração eduvem', () => {
 

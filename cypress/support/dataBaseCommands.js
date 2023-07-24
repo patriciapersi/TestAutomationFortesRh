@@ -299,6 +299,12 @@ Cypress.Commands.add('ativaPaginacaoPesquisa', () => {
     )
 })
 
+Cypress.Commands.add('ativaCompartilharCursosEmpresas',() => {
+    cy.exec_sql(
+        "update parametrosdosistema set compartilharcursos = true"
+    )
+})
+
 Cypress.Commands.add("PesquisaLiberadaCom50Perguntas", (pesquisa_nome) => {
     cy.exec_sql(
         "insert into questionario (id, titulo, cabecalho, datainicio, datafim, liberado, anonimo, aplicarporaspecto, tipo, empresa_id, monitoramentosaude, integradocolabore) values (nextval('questionario_sequence'), '" + pesquisa_nome + "', null, '01/01/2021', '31/12/2021', true, false, false, 2, (select id from empresa where nome = 'Empresa Padrão'), false, false)",
@@ -379,6 +385,14 @@ Cypress.Commands.add("insereEmpresa", (empresa_nome) => {
         "insert into empresa (id, nome, acintegra, maxcandidatacargo, exibirsalario, solPessoalExibirSalario, solPessoalObrigarDadosComplementares) values (nextval('empresa_sequence'), '" + empresa_nome + "', false, 10, true, true, true)",
         "insert into estabelecimento values (nextval('estabelecimento_sequence'), 'Padrão', null, null, null, null, null, '0001', null, null, null, (select id from empresa where nome = '" + empresa_nome + "'))",
         "insert into usuarioempresa values (nextval('usuarioempresa_sequence'), (select id from usuario where nome = 'homolog'), 1, (select id from empresa where nome = '" + empresa_nome + "'))",
+    )
+})
+
+Cypress.Commands.add("insereEmpresaUsuario", (dados) => {
+    cy.exec_sql(
+        "insert into empresa (id, nome, acintegra, maxcandidatacargo, exibirsalario, solPessoalExibirSalario, solPessoalObrigarDadosComplementares) values (nextval('empresa_sequence'), '" + dados.nomeEmpresa + "', false, 10, true, true, true)",
+        "insert into estabelecimento values (nextval('estabelecimento_sequence'), 'Padrão', null, null, null, null, null, '0001', null, null, null, (select id from empresa where nome = '" + dados.nomeEmpresa + "'))",
+        "insert into usuarioempresa values (nextval('usuarioempresa_sequence'), (select id from usuario where nome = 'homolog'), 1, (select id from empresa where nome = '" + dados.nomeEmpresa + "'))",
     )
 })
 
