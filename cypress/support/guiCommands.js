@@ -1147,3 +1147,4 @@ Cypress.Commands.add('inserirLntManual', (dados) => {
 
         
 })
+

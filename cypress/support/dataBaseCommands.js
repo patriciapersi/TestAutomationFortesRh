@@ -257,6 +257,17 @@ Cypress.Commands.add("insereCurso", (nome_curso) => {
     )
 })
 
+Cypress.Commands.add("insereCursoComColaborador", (dados) => {
+    cy.exec_sql(
+        "insert into curso (id, nome, conteudoprogramatico, empresa_id, cargahoraria,percentualminimofrequencia, criterioavaliacao, codigotru, periodicidade, modelocertificado_id, tipo, categoriacurso_id , online, certificado_id, uuidcursoeduvem ) values (nextval('curso_sequence'), '" + dados.nomeCurso + "', null, (select id from empresa where nome = 'Empresa Padrão'), null,null,'','', 12, null, 'TECNICO', null, true, null, '')",
+        "insert into turma (id, descricao, instrutor,custo, dataprevini, dataprevfim, empresa_id, instituicao, horario,realizada, qtdparticipantesprevistos, curso_id, porturno, assinaturadigitalurl, online, assistirtodasasaulas, eduvemintegra) values (nextval('turma_sequence'), 'Turma Avançada', 'Robert Martin', '100', '05/01/2022', '06/01/2022', (select id from empresa where nome = 'Empresa Padrão'), null, null, false, null, (select id from curso where nome = '" + dados.nomeCurso + "'), false, null, false, false, false)",
+        "insert into colaboradorturma (id, aprovado, colaborador_id, prioridadetreinamento_id, turma_id, curso_id, cursolnt_id, motivoreprovacao) values (nextval('colaboradorturma_sequence'), false, (select id from colaborador where nome = '"+dados.colaborador+"'), null, (select id from turma where descricao = 'Turma Avançada'), (select id from curso where nome = '"+dados.nomeCurso+"'), null, null)",
+        "insert into diaturma (id, dia, turma_id, turno, horaini, horafim, link) values (nextval('diaturma_sequence'), '05/01/2022', (select id from turma where descricao = 'Turma Avançada'), 'D', null, null, null)",
+        "insert into diaturma (id, dia, turma_id, turno, horaini, horafim, link) values (nextval('diaturma_sequence'), '06/01/2022', (select id from turma where descricao = 'Turma Avançada'), 'D', null, null, null)",
+        
+    )
+})
+
 Cypress.Commands.add("inserirFuncao", (dados) => {
     cy.exec_sql(
         "insert into funcao (id, nome, cargo_id, empresa_id, codigoac, ativa) values (nextval('funcao_sequence'), '" + dados.funcao + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, true)",
