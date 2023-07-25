@@ -29,6 +29,24 @@ describe('Etapas Seletivas', () => {
         cy.contains('td', etapa.nome[0]).should('be.visible')
         cy.contains('Análise Comportamental').should('not.exist')
             .validaMensagem(etapa.mensagem[2]).and('have.css', 'color', "rgb(34, 74, 35)")
+        
+            cy.get('.p-datatable-tbody > :nth-child(1) > [style="width: 70px; text-align: right;"]').parent()
+            .within(() => {
+                cy.contains('td', etapa.nome[1])
+                cy.contains('td', 2)
+            })
+
+            cy.get(':nth-child(2) > [style="width: 70px; text-align: right;"]').parent()
+            .within(() => {
+                cy.contains('td', etapa.nome[0])
+                cy.contains('td', 3)
+            })
+
+            cy.get(':nth-child(3) > [style="width: 70px; text-align: right;"]').parent()
+            .within(() => {
+                cy.contains('td', etapa.nome[2])
+                cy.contains('td', 4)
+            })
     });
 
     it('Inserir Etapa Seletiva - Analise Comportamental', () => {
@@ -41,8 +59,7 @@ describe('Etapas Seletivas', () => {
 
     it('Editar Etapa Seletiva', () => {
         cy
-            .contains('td', etapa.nome[1]).parent()
-            .find('.fa-edit').should('be.visible').click()
+            .generalButtons('Editar',  etapa.nome[1])
             .digita('#nome', etapa.nome[0])
             .clickNewButton('Gravar')
             .validaMensagem(etapa.mensagem[0]).and('have.css', 'color', "rgb(34, 74, 35)")
@@ -51,8 +68,7 @@ describe('Etapas Seletivas', () => {
 
     it('Excluir Etapa Seletiva', () => {
         cy
-            .contains('td', etapa.nome[1]).parent()
-            .find('.fa-trash').should('be.visible').click()
+            .generalButtons('Remover',  etapa.nome[1])
             .popUpMessage('Confirmar exclusão?')
             .validaMensagem(etapa.mensagem[1]).and('have.css', 'color', "rgb(34, 74, 35)")
         cy.contains(etapa.nome[1]).should('not.exist')

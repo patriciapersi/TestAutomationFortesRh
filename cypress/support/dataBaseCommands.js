@@ -109,7 +109,7 @@ Cypress.Commands.add("insereColaboradorDemitido", (dados) => {
 })
 
 Cypress.Commands.add("insereEtapaSeletiva", (etapaSeletiva_nome) => {
-    cy.exec_sql("insert into etapaseletiva values (nextval('etapaseletiva_sequence'), '" + etapaSeletiva_nome + "', 1, (select id from empresa where nome = 'Empresa Padrão'), false)")
+    cy.exec_sql("insert into etapaseletiva values (nextval('etapaseletiva_sequence'), '" + etapaSeletiva_nome + "', nextval('etapaseletiva_sequence'), (select id from empresa where nome = 'Empresa Padrão'), false)")
 })
 
 Cypress.Commands.add("inserirSolicitacaoPessoal", (descricao) => {
