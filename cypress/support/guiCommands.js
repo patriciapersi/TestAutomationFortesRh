@@ -618,7 +618,7 @@ Cypress.Commands.add('cadastrarComissao', (comissao) => {
 
 Cypress.Commands.add('inserirAmbienteManual', (dados) => {
     cy
-        .contains('.rh-button', 'Inserir').should('be.visible').click()
+        .clickNewButton('Inserir')
         .get('.fa-calendar-alt').first().trigger('mouseouver').click()
     cy
         .contains('Jan').should('be.visible').trigger('mouseouver').click()
@@ -635,12 +635,13 @@ Cypress.Commands.add('inserirAmbienteManual', (dados) => {
     cy.contains('span', 'Selecione...').first().click()
     cy.contains('li', 'Estabelecimento Padrão').click({ force: true })
     cy
-        .contains('.rh-button', 'Gravar').should('be.visible').click()
-})
+        .clickNewButton('Gravar')
+    
+    })
 
 Cypress.Commands.add('inserirAmbientecomEPIManual', (dados) => {
     cy
-        .contains('.rh-button', 'Inserir').should('be.visible').click()
+        .clickNewButton('Inserir')
         .get('.fa-calendar-alt').first().trigger('mouseouver').click()
     cy
         .contains('Jan').should('be.visible').trigger('mouseouver').click()
@@ -665,9 +666,9 @@ Cypress.Commands.add('inserirAmbientecomEPIManual', (dados) => {
     cy.contains('td', dados.nomeRisco).parent()
         .find('.fa-list').should('be.visible').click()
     cy.contains('div', dados.nomeEpiRisco2).parent()
-        .find('.p-dropdown-label').click()
+      .find('.p-dropdown-label').click()
     cy.contains('li', 'Não').click({ force: true })
-    cy.contains('.rh-button', 'OK').should('be.visible').click()
+    cy.get('.p-dialog-footer > .p-button').click()
     cy.contains('.rh-button', 'Gravar').should('be.visible').click()
 })
 

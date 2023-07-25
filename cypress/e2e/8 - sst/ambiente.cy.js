@@ -29,28 +29,29 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
     });
 
     it('Editar Ambiente de Um Estabelecimento Do Próprio Empregador', () => {
+        cy          
+            .generalButtons("Históricos", dados.name)
         cy
-            .contains('td', dados.name).parent()
-            .find('.fa-list').should('be.visible').click()    
+            .generalButtons("Editar", 'Descrição Histórico')   
         cy
-            .contains('td', 'Descrição Histórico').parent()
-            .find('.fa-edit').should('be.visible').click()    
+            .contains('label', 'Tempo de Exposição:').next().click()
+        cy 
+            .digita('input[name="tempoExposicao"]', 'Integral')
         cy
-            .contains('.rh-button', 'Gravar').should('be.visible').click() 
+            .clickNewButton('Gravar')
             .validaMensagem('Histórico do Ambiente atualizada com sucesso.')
     });
 
     it('Excluir Ambiente Em Um Estabelecimento Do Próprio Empregador', () => {
-        cy
-            .contains('td', dados.name).parent()
-            .find('.fa-trash').should('be.visible').click()       
+        cy          
+            .generalButtons("Remover", dados.name)    
             .popUpMessage('Confirma exclusão?')
             .validaMensagem('Ambiente excluído com sucesso.')
     });
 
     it('Inserir Ambiente Em Um Estabelecimento Do Próprio Empregador usando OBRA', () => {
         cy
-            .contains('.rh-button', 'Inserir').should('be.visible').click()
+            .clickNewButton('Inserir')
             .get('.fa-calendar-alt').first().trigger('mouseouver').click()
         cy
             .contains('Jan').should('be.visible').trigger('mouseouver').click()
@@ -67,15 +68,14 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
             .get('.p-dropdown-trigger-icon').eq(2).click()     
         cy
             .contains('li', dados.obraNome).click({ force: true })
-        cy
-            .contains('.rh-button', 'Gravar').should('be.visible').click()  
+            .clickNewButton('Gravar')
             .validaMensagem('Ambiente salvo com sucesso.')    
 
     });
 
     it('Inserir Ambiente Em Um Estabelecimento De Terceiros ~CAEPF~', () => {
         cy
-            .contains('.rh-button', 'Inserir').should('be.visible').click()
+            .clickNewButton('Inserir')
             .get('.fa-calendar-alt').first().trigger('mouseouver').click()
         cy
             .contains('Jan').should('be.visible').trigger('mouseouver').click()
@@ -91,13 +91,13 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
             .contains('label', 'CAEPF:').click()
             .get('input[name="historicoAmbienteAtual.caepf"]').clear().type(dados.caepfTeste)
         cy
-            .contains('.rh-button', 'Gravar').should('be.visible').click()  
+            .clickNewButton('Gravar')
             .validaMensagem('Ambiente salvo com sucesso.')        
     });
 
     it('Inserir Ambiente Em Um Estabelecimento De Terceiros ~CNPJ~', () => {
         cy
-            .contains('.rh-button', 'Inserir').should('be.visible').click()
+            .clickNewButton('Inserir')
             .get('.fa-calendar-alt').first().trigger('mouseouver').click()
         cy
             .contains('Jan').should('be.visible').trigger('mouseouver').click()
@@ -113,13 +113,13 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
             .contains('label', 'CNPJ:').click()
             .get('input[name="historicoAmbienteAtual.cnpj"]').clear().type(dados.cnpjTeste)
         cy
-            .contains('.rh-button', 'Gravar').should('be.visible').click()  
+            .clickNewButton('Gravar')
             .validaMensagem('Ambiente salvo com sucesso.')                 
     });
 
     it('Inserir Ambiente Em Um Estabelecimento De Terceiros ~CNO~', () => {
-       cy
-            .contains('.rh-button', 'Inserir').should('be.visible').click()
+        cy
+            .clickNewButton('Inserir')
             .get('.fa-calendar-alt').first().trigger('mouseouver').click()
         cy
             .contains('Jan').should('be.visible').trigger('mouseouver').click()
@@ -135,7 +135,7 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
             .contains('label', 'CNO:').click()
             .get('input[name="historicoAmbienteAtual.cno"]').clear().type(dados.cnoTeste)
         cy
-            .contains('.rh-button', 'Gravar').should('be.visible').click()  
+            .clickNewButton('Gravar')
             .validaMensagem('Ambiente salvo com sucesso.')                                
     });
 
@@ -143,6 +143,17 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
         cy
             .inserirAmbientecomEPIManual(dados)
             .validaMensagem('Ambiente salvo com sucesso.')     
+    });
+
+    it('Valida o Ambiente caso o sistema esteja integrado', () => {
+        cy
+            .integraFortesPessoal()
+            .visit('/logout')
+            .login(Cypress.config('user_name'), Cypress.config('user_password'))
+            .visit('/sst/ambientes')
+        cy
+            .clickNewButton('Continuar')
+            .validaButtonsInexistente("Remover", dados.name)
     });
 
 

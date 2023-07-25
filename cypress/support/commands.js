@@ -66,3 +66,9 @@ Cypress.Commands.add('generalButtons', (title, nome) => {
       .click();
 })
 
+Cypress.Commands.add('validaButtonsInexistente', (title, nome) => {
+    cy.contains('td', nome)
+      .closest('tr')
+      .find(`[title="${title}"]`)
+      .should('not.exist')
+})
