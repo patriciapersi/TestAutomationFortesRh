@@ -1,5 +1,6 @@
 describe('Gerenciamento de Candidatos', () => {
     let dados = {
+        descricao: chance.word(),
         nome: chance.name({ gender: 'Male' }),
         sexo: 'Masculino',
         nasc: chance.birthday({ string: true, day: 13, month: 9, year: chance.year({ min: 1980, max: 2000 }), american: false }),
@@ -25,6 +26,7 @@ describe('Gerenciamento de Candidatos', () => {
     beforeEach('', () => {
         cy
             .inserirCargo(dadosCurriculo.cargoNome)
+            .inserirSolicitacaoPessoal(dados.descricao)
             .navigate('/captacao/candidato/list.action')
             .entendiButton()
     });
@@ -41,9 +43,21 @@ describe('Gerenciamento de Candidatos', () => {
         cy
             .insereColaborador(dados)
             .cadastraCandidato(dados)
-        cy.contains(`Existem talentos que já foram contratados com esse CPF ${dados.cpf}`).should('be.visible')
+        cy
+            .contains(`Existem talentos que já foram contratados com esse CPF ${dados.cpf}`).should('be.visible')
             .get(':nth-child(1) > .ui-button-text').click()
             .validaMensagem(dados.mensagem[0]).and('have.css', 'color', "rgb(34, 74, 35)")
+            .clickButton('#btnVoltar')
+            .get('.fa-search').should('be.visible').click()
+        cy
+            .contains('label', 'Exibir também contratados').should('be.visible').click()
+        cy
+            .get('#btnPesquisar').click()
+        cy 
+            .generalButtons('Incluir em Solicitação', dados.nome)
+        cy
+            .contains('label', dados.descricao).should('be.visible').click()
+            .clickButton('#btnInserir') 
     });
 
     it('Inserção de Candidatos - mesmo CPF empregado demitido', () => {

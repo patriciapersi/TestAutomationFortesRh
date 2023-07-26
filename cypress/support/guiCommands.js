@@ -81,7 +81,7 @@ Cypress.Commands.add('cadastraCandidato', (candidato) => {
         .preencheDadosCandidato(candidato)
         .insereFormacao()
         .insereDocumentos()
-    cy.contains('button', 'Gravar').should('be.visible').click()
+    cy  .clickButton('#btnGravar')
 })
 
 Cypress.Commands.add('insereFormacao', () => {
@@ -418,28 +418,26 @@ Cypress.Commands.add('insereDocumentos', () => {
 })
 
 Cypress.Commands.add('preencheDadosCandidato', candidato => {
-    cy.get('#nome').should('be.enabled').clear().type(candidato.nome)
-    cy.get('#nascimento').should('be.enabled').clear().type('14/06/2012')
+    cy.digita('input[name="candidato.nome"]', candidato.nome)
+    cy.digita('input[name="candidato.pessoal.dataNascimento"]', '14/06/2012')
     cy.get('#sexo').select(candidato.sexo)
-    cy.get('#cpf').should('be.enabled').clear().type(candidato.cpf)
+    cy.digita('input[name="candidato.pessoal.cpf"]', candidato.cpf)
     cy.get('#escolaridade').select('Ensino Médio completo')
-    cy.get('#cep').should('be.enabled').clear().type('60822285')
-    cy.get('#ende').should('be.visible').clear().type('Rua Ciro Monteiro', { force: true })
-    cy.get('#num').should('be.enabled').clear().type('249')
-    cy.get('#complemento').should('be.enabled').clear().type('Apto 2 Bloco C')
+    cy.digita('input[name="candidato.endereco.cep"]', '60822285')
+    cy.digita('input[name="candidato.endereco.logradouro"]', 'Rua Ciro Monteiro')
+    cy.digita('input[name="candidato.endereco.numero"]', '249')
+    cy.digita('input[name="candidato.endereco.complemento"]', 'Apto 2 Bloco C')
     cy.get('#uf').should('be.visible').select('CE', { force: true })
     cy.get('#cidade').should('be.visible').select('Fortaleza', { force: true })
-    cy.get('#ddd').should('be.enabled').clear().type('85')
-    cy.get('#fone').should('be.enabled').clear().type(candidato.fone)
-
+    cy.digita('input[name="candidato.contato.ddd"]', '85')
+    cy.digita('input[name="candidato.contato.foneFixo"]', candidato.fone)
 
     if (candidato.senha == null) {
         cy.log('Ignora')
     } else {
-
-        cy.get('#naturalidade').should('be.enabled').clear().type(candidato.naturalidade)
-        cy.get('#senha').should('be.enabled').clear().type(candidato.senha)
-        cy.get('#comfirmaSenha').should('be.enabled').clear().type(candidato.senha)
+        cy.digita('input[name="candidato.pessoal.naturalidade"]', candidato.naturalidade)
+        cy.digita('input[name="candidato.senha"]', candidato.senha)
+        cy.digita('input[name="confirmaSenha"]', candidato.senha)
     }
 })
 
