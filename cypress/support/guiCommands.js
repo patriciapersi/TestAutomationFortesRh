@@ -418,19 +418,19 @@ Cypress.Commands.add('insereDocumentos', () => {
 })
 
 Cypress.Commands.add('preencheDadosCandidato', candidato => {
-    cy.digita('input[name="candidato.nome"]', candidato.nome)
-    cy.digita('input[name="candidato.pessoal.dataNascimento"]', '14/06/2012')
+    cy.digita('input[id="nome"]', candidato.nome)
+    cy.digita('input[id="nascimento"]', '14/06/2012')
     cy.get('#sexo').select(candidato.sexo)
-    cy.digita('input[name="candidato.pessoal.cpf"]', candidato.cpf)
+    cy.digita('input[id="cpf"]', candidato.cpf)
     cy.get('#escolaridade').select('Ensino Médio completo')
-    cy.digita('input[name="candidato.endereco.cep"]', '60822285')
-    cy.digita('input[name="candidato.endereco.logradouro"]', 'Rua Ciro Monteiro')
-    cy.digita('input[name="candidato.endereco.numero"]', '249')
-    cy.digita('input[name="candidato.endereco.complemento"]', 'Apto 2 Bloco C')
+    cy.digita('input[id="cep"]', '60822285')
+    cy.digita('input[id="ende"]', 'Rua Ciro Monteiro')
+    cy.digita('input[id="num"]', '249')
+    cy.digita('input[id="complemento"]', 'Apto 2 Bloco C')
     cy.get('#uf').should('be.visible').select('CE', { force: true })
     cy.get('#cidade').should('be.visible').select('Fortaleza', { force: true })
-    cy.digita('input[name="candidato.contato.ddd"]', '85')
-    cy.digita('input[name="candidato.contato.foneFixo"]', candidato.fone)
+    cy.digita('input[id="ddd"]', '85')
+    cy.digita('input[id="fone"]', candidato.fone)
 
     if (candidato.senha == null) {
         cy.log('Ignora')
