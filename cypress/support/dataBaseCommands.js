@@ -308,6 +308,10 @@ Cypress.Commands.add("ativaIntegracaoEduvem", () => {
     cy.exec_sql("update parametrosdosistema set tokeneduvem = '68fac2927d3c4de898cd3ec87a35606a'")
 })
 
+Cypress.Commands.add('ativaCompartilharCursosEmpresas',() => {
+    cy.exec_sql("update parametrosdosistema set compartilharcursos = true")
+})
+
 Cypress.Commands.add('ativaPaginacaoPesquisa', () => {
     cy.exec_sql(
         "update parametrosdosistema set paginacaopesquisa = true;",
