@@ -1143,7 +1143,6 @@ Cypress.Commands.add('inserirLntManual', (dados) => {
     cy.contains('label','Empresa Padrão').click()
     cy.contains('label','Suporte').click()
     cy.clickButton('#btnGravar')
-
         
 })
 
@@ -1158,5 +1157,12 @@ Cypress.Commands.add('inserirNineBox', (dados) =>{
     cy.digita('textarea[name="box6.descricao"]', dados.campos)
     cy.digita('textarea[name="box7.descricao"]', dados.campos)
     cy.digita('textarea[name="box8.descricao"]', dados.campos)
+    cy.clickNewButton('Gravar')
+})
+Cypress.Commands.add('cadastraCategoriaCurso', (dados) => {
+    cy.clickNewButton('Inserir')
+    cy.digita('input[name="nome"]', dados.nomeCategoria)
+    cy.digita('input[name="metas[0].mesAno"]','01/2023')
+    cy.digita('input[name="metas[0].metaHora"]', dados.metaHoras)
     cy.clickNewButton('Gravar')
 })

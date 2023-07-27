@@ -250,6 +250,22 @@ Cypress.Commands.add("insereColaboradorNaAvaliacao", (avaliacao_nome, colaborado
     )
 })
 
+Cypress.Commands.add("insereCategoriaCurso", (dados) => {
+    cy.exec_sql(
+        "insert into categoriacurso (id, nome) values (nextval('categoriacurso_sequence'), '"+dados.descricaoCategoria+"')",
+        "insert into metascategoriacurso (id, mesano, metahora, categoriacurso_id) values (nextval('metascategoriacurso_sequence'), '"+dados.dataMeta+"','"+dados.valorMetaHora+"', (select id from categoriacurso where nome = '"+dados.descricaoCategoria+"'))"
+    )
+})
+
+Cypress.Commands.add("insereCategoriaComCurso", (dados) => {
+    
+    cy.exec_sql(
+        "insert into categoriacurso (id, nome) values (nextval('categoriacurso_sequence'), '"+dados.descricaoCategoria+"')",
+        "insert into metascategoriacurso (id, mesano, metahora, categoriacurso_id) values (nextval('metascategoriacurso_sequence'), '"+dados.dataMeta+"','"+dados.valorMetaHora+"', (select id from categoriacurso where nome = '"+dados.descricaoCategoria+"'))",
+        "insert into curso (id, nome, conteudoprogramatico, empresa_id, cargahoraria, percentualminimofrequencia, criterioavaliacao, codigotru, periodicidade, modelocertificado_id, tipo, categoriacurso_id, online, certificado_id, uuidcursoeduvem) values (nextval('curso_sequence'), '" + dados.nomeCurso + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, null, '', '', 12, null, 'TECNICO', (select id from categoriacurso where nome = '"+dados.descricaoCategoria+"'), true, null, '')",
+    )
+})
+
 Cypress.Commands.add("insereCurso", (nome_curso) => {
     cy.exec_sql(
         "insert into curso values (nextval('curso_sequence'), '" + nome_curso + "', null, (select id from empresa where nome = 'Empresa Padrão'))",
