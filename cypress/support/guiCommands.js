@@ -1120,11 +1120,10 @@ Cypress.Commands.add('cadastraSolicitacaoExame', (dados) =>{
     cy.get('#colaborador').select('1').should('contain', dados.colaborador)
     cy.get('#motivoExame').select('ADMISSIONAL').should('contain', 'Exame médico admissional')
     cy.entendiButton()
-    cy.contains('td', 'Avaliação Clínica e Anamnese Ocupacional').should('be.visible')
-    cy.contains('td', 'Exame de Aptidões Física e Mental').should('be.visible')
+    cy.contains('td', 'Avaliação clínica ocupacional (anamnese e exame físico)').should('be.visible')
     cy.contains('td', 'AUDIOMETRIA').should('be.visible')
     cy.get('[type="checkbox"]').check('4', {force: true})
-    cy.digita('input[name="examesSolicitacaoExame[2].periodicidade"]','12')
+    cy.digita('input[name="examesSolicitacaoExame[1].periodicidade"]','12')
     cy.clickButton('#btnGravar')
 })
 
