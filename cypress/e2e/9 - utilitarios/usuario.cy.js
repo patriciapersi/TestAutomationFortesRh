@@ -64,4 +64,25 @@ describe('Funcionalidade Cadastros de Usuários', () => {
         cy
             .contains('td', dados.usu_nome).should('be.visible').click()
     })
+
+    it('Validando cadastro de Usuário com senha forte', () => {
+
+        const dados = {usu_nome: chance.name(), senha: chance.string({ length: 7 })}
+        cy.exec_sql("update parametrosdosistema set exigirsenhasegura = true")
+          .reload()
+          .cadastrarUsuario(dados)
+          .old_popUpMessage('Campo de "Senha" deve conter no mínimo 8 caracteres contendo letra minúscula, letra maiúscula e número.')
+          
+    })
+
+    it('cadastro de Usuário com senha forte', () => {
+
+        const dados = {usu_nome: chance.name(), senha: '^ebp4KeP'}
+        cy.exec_sql("update parametrosdosistema set exigirsenhasegura = true")
+          .reload()
+          .cadastrarUsuario(dados)
+        cy.contains('Campo de "Senha" deve conter no mínimo 8 caracteres contendo letra minúscula, letra maiúscula e número.').should('not.exist')
+          
+    })
+
 })
