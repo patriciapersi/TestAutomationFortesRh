@@ -920,3 +920,12 @@ Cypress.Commands.add("InsereAvalPratica", (dados) => {
         "insert into avaliacaopratica(id, titulo, notaminima, empresa_id) values (nextval('avaliacaopratica_sequence'), '"+dados.tituloAvalPratica+"', '"+dados.notaMinima+"', (select id from empresa where nome = 'Empresa Padrão')) "
     )
 })
+
+Cypress.Commands.add("InsereVacina", (dados) => {
+    cy.exec_sql(
+        "insert into vacina(id, nome, quantidadedoses, empresa_id)values (nextval('vacina_sequence'), '"+dados.nomeVacina+"', '3', (select id from empresa where nome = 'Empresa Padrão'))",
+        "insert into dosevacina(id, numerodose, diasproximadose, vacina_id) values (nextval('dosevacina_sequence'), '1' , '" + dados.diasproximaDose + "', (select id from vacina where nome = '" + dados.nomeVacina + "'))",
+        "insert into dosevacina(id, numerodose, diasproximadose, vacina_id) values (nextval('dosevacina_sequence'), '2' , '" + dados.diasproximaDose + "', (select id from vacina where nome = '" + dados.nomeVacina + "'))",
+        "insert into dosevacina(id, numerodose, diasproximadose, vacina_id) values (nextval('dosevacina_sequence'), '3' , null , (select id from vacina where nome = '" + dados.nomeVacina + "'))",
+    )
+})

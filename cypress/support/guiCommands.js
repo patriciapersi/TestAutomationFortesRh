@@ -1158,6 +1158,20 @@ Cypress.Commands.add('inserirNineBox', (dados) =>{
     cy.digita('textarea[name="box8.descricao"]', dados.campos)
     cy.clickNewButton('Gravar')
 })
+
+Cypress.Commands.add('inserirVacinaManual', (dados) =>{
+    cy.clickNewButton('Inserir')
+    cy.contains('Após a vacina ser aplicada a um colaborador, a quantidade de doses e dias para próxima dose não poderão ser alterados.')
+    cy
+        .contains('label', 'Nº de doses:').next().click()
+        .get('.p-dropdown-items').within(($form) => {
+        cy
+            .contains('li', '2').click({ force: true })
+    })
+    cy.digita('input[name="doses[0].diasProximaDose"]', dados.diasproximaDose)
+    cy.digita('input[name="nome"]', dados.nomeVacinaManual)
+    cy.clickNewButton('Gravar e voltar')
+})
 Cypress.Commands.add('cadastraCategoriaCurso', (dados) => {
     cy.clickNewButton('Inserir')
     cy.digita('input[name="nome"]', dados.nomeCategoria)
