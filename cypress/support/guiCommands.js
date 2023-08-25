@@ -667,7 +667,9 @@ Cypress.Commands.add('inserirAmbientecomEPIManual', (dados) => {
       .find('.p-dropdown-label').click()
     cy.contains('li', 'Não').click({ force: true })
     cy.get('.p-dialog-footer > .p-button').click()
-    cy.contains('.rh-button', 'Gravar').should('be.visible').click()
+    cy.contains('.p-dialog', 'Foram identificados EPIS com eficácias divergentes.')
+    cy.clickNewButton('OK')
+    cy.clickNewButton('Gravar')
 })
 
 Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
