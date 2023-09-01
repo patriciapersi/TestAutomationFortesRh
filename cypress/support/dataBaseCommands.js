@@ -108,6 +108,21 @@ Cypress.Commands.add("insereColaboradorDemitido", (dados) => {
     )
 })
 
+Cypress.Commands.add("insereColaboradorSemFuncaoAmbiente", (dados) => {
+    cy.exec_sql(
+         "insert into areaorganizacional (id, nome, empresa_id) values (nextval('areaorganizacional_sequence'), 'Desenvolvimento', (select id from empresa where nome = 'Empresa Padrão'))",
+         "insert into cargo values (nextval('cargo_sequence'), 'Quality Assurance', 'QA', null, null, null, null, null, null, null, null, null, (select id from empresa where nome = 'Empresa Padrão'), true, true, null, null)",
+         "insert into faixasalarial values (nextval('faixasalarial_sequence'), 'Júnior', null, (select id from cargo where nome = 'Quality Assurance'), null, '212430')",
+         "insert into cargo_areaorganizacional values ((select id from cargo where nome = 'Quality Assurance'), (select id from areaorganizacional where nome = 'Desenvolvimento'))",
+         "insert into nivelcompetencia values (nextval('nivelcompetencia_sequence'), 'Nível 1', (select id from empresa where nome = 'Empresa Padrão'))",
+         "insert into nivelcompetenciahistorico values (nextval('nivelcompetenciahistorico_sequence'), '2020/01/01', (select id from empresa where nome = 'Empresa Padrão'))",
+         "insert into confighistoriconivel values (nextval('confighistoriconivel_sequence'), (select id from nivelcompetencia where descricao = 'Nível 1'), (select max(id) from nivelcompetenciahistorico), 2, 50)",
+        "insert into colaborador (id, matricula, nome, nomecomercial, desligado, datadesligamento, observacao, dataadmissao, logradouro, numero, complemento, bairro, cep, cpf, pis, rg, naturalidade, pai, mae, conjuge, profissaopai, profissaomae, profissaoconjuge, conjugetrabalha, parentesamigos, qtdfilhos, sexo, datanascimento, escolaridade, estadocivil, ddd, fonefixo, fonecelular, email, vinculo, codigoac, cursos, regimerevezamento, naointegraac, empresa_id, uf_id, cidade_id, usuario_id, candidato_id, motivodemissao_id, deficiencia, rgorgaoemissor, rguf_id, rgdataexpedicao, numerohab, registro, emissao, vencimento, categoria, titeleitnumero, titeleitzona, titeleitsecao, certmilnumero, certmiltipo, certmilserie, ctpsnumero, ctpsserie, ctpsdv, ctpsuf_id, ctpsdataexpedicao, respondeuentrevista, indicadopor, name, contenttype, bytes, size, nomecontato, camposextras_id, dataatualizacao, observacaodemissao, datasolicitacaodesligamentoac, dataencerramentocontrato, datasolicitacaodesligamento, solicitantedemissao_id, demissaogerousubstituicao, dddcelular, ufhab_id, codigoacbanco, codigoacagencia, tipoconta, numeroconta, exportadoelore, solidesid, freemium, uuideduvem, nomesocial,  matriculaesocial) values (nextval('colaborador_sequence'), null, '" + dados.colaborador + "', '" + dados.colaborador + "', false, null, null, '20/02/2020', 'Rua Antonio Fortes', '330', null, 'Luciano Cavalcante', '60813460', '" + dados.cpf + "', '17001956129', null, null, 'Enzo Guilherme Leandro Silva', 'Francisca Joana Tatiane', null, null, null, null, false, null, 0, 'M', '08/05/2002', '03', '03', '85', '40051111', null, 'teste@teste.com.br', 'E', null, null, null, false, 1, 1, 946, null, null, null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, false, null,null, null, null, null, null, null, '25/09/2020', null, null, null, null, null, null, null, null, null, null, null, null, false, null, false, null, null, null)",
+        "insert into historicocolaborador (id, salario, data, motivo, gfip, colaborador_id, areaorganizacional_id, funcao_id, ambiente_id, estabelecimento_id, tiposalario, indice_id, quantidadeindice, faixasalarial_id, reajustecolaborador_id, status, movimentosalarialid, candidatosolicitacao_id) values (nextval('historicocolaborador_sequence'), 2000, '01/05/2020', 'C', null, (select id from colaborador where nome = '" + dados.colaborador + "'), (select id from areaorganizacional where nome = 'Desenvolvimento'), null, null, (select id from estabelecimento where nome = 'Estabelecimento Padrão'), 3, null, 0, (select id from faixasalarial where id = (select id from cargo where nome = 'Quality Assurance')), null, 1, null, null)",
+
+    )
+})
+
 Cypress.Commands.add("insereEtapaSeletiva", (etapaSeletiva_nome) => {
     cy.exec_sql("insert into etapaseletiva values (nextval('etapaseletiva_sequence'), '" + etapaSeletiva_nome + "', nextval('etapaseletiva_sequence'), (select id from empresa where nome = 'Empresa Padrão'), false)")
 })
@@ -190,6 +205,16 @@ Cypress.Commands.add("inserirAmbiente", (ambiente_nome) => {
     cy.exec_sql(
         "insert into ambiente(id,nome,empresa_id,codigoac) values (nextval('ambiente_sequence'), '" + ambiente_nome + "', (select id from empresa where nome = 'Empresa Padrão'), null)",
         "INSERT INTO public.historicoambiente(id, descricao, data, datainativo, tempoexposicao, ambiente_id, nomeambiente, estabelecimento_id, localambiente, numeroinscricaodeterceiro, tipoinscricaodeterceiro, datavalidade, lotacaotributaria_id, obra_id, cadastropendente) VALUES (nextval('historicoambiente_sequence'), 'Descrição Histórico', '01/05/2020', null, '', 1, '" + ambiente_nome + "', 1, 1, '', null, null, null, null, false)"
+    )
+})
+
+Cypress.Commands.add("insereAmbienteFuncaoTalento", (dados) => {
+    cy.exec_sql(
+        "insert into ambiente(id,nome,empresa_id,codigoac) values (nextval('ambiente_sequence'), '" + dados.ambiente + "', (select id from empresa where nome = 'Empresa Padrão'), null)",
+        "insert into historicoambiente(id, descricao, data, datainativo, tempoexposicao, ambiente_id, nomeambiente, estabelecimento_id, localambiente, numeroinscricaodeterceiro, tipoinscricaodeterceiro, datavalidade, lotacaotributaria_id, obra_id, cadastropendente) values (nextval('historicoambiente_sequence'), 'Ambiente Padrão', '01/05/2020', null, '', (select id from ambiente where nome = '"+dados.ambiente+"'), (select nome from ambiente where nome = '"+dados.ambiente+"'), 1, 1, '', 3, null, null, null, false)",
+        "insert into funcao (id, nome, cargo_id, empresa_id, codigoac, ativa) values (nextval('funcao_sequence'), '" + dados.funcao + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, true)",
+        "insert into historicofuncao (id, data, descricao, funcao_id, funcaonome, codigocbo) values (nextval('historicofuncao_sequence'), '01/05/2020', 'Descrição de homologação', (select id from funcao where nome = '" + dados.funcao + "'), (select nome from funcao where nome = '" + dados.funcao + "'), '212430')",
+        "insert into historicogerencialfuncao (id, data, normasinternas, funcao_id, atribuicaocomando) values (nextval('historicogerencialfuncao_sequence'), '01/05/2020', null, (select id from funcao where nome = '" + dados.funcao + "'), false)"
     )
 })
 
@@ -289,6 +314,14 @@ Cypress.Commands.add("inserirFuncao", (dados) => {
         "insert into funcao (id, nome, cargo_id, empresa_id, codigoac, ativa) values (nextval('funcao_sequence'), '" + dados.funcao + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, true)",
         "insert into historicofuncao (id, data, descricao, funcao_id, funcaonome, codigocbo) values (nextval('historicofuncao_sequence'), '01/05/2020', 'homologação teste descrição', (select id from funcao where nome = '" + dados.funcao + "'), '" + dados.funcao + "', '241025')",
         "insert into historicogerencialfuncao (id, data, normasinternas, funcao_id, atribuicaocomando) values (nextval('historicogerencialfuncao_sequence'), '01/05/2020', null, (select id from funcao where nome = '" + dados.funcao + "'), false)"
+    )
+})
+
+Cypress.Commands.add("insereFuncaoDataAtual", (dados) => {
+    cy.exec_sql(
+        "insert into funcao (id, nome, cargo_id, empresa_id, codigoac, ativa) values (nextval('funcao_sequence'), '" + dados.funcao + "', null, (select id from empresa where nome = 'Empresa Padrão'), null, true)",
+        "insert into historicofuncao (id, data, descricao, funcao_id, funcaonome, codigocbo) values (nextval('historicofuncao_sequence'), '"+dados.dataFuncao+"', 'Função criada na data atual', (select id from funcao where nome = '" + dados.funcao + "'), '" + dados.funcao + "', '241025')",
+        "insert into historicogerencialfuncao (id, data, normasinternas, funcao_id, atribuicaocomando) values (nextval('historicogerencialfuncao_sequence'), '"+dados.dataFuncao+"', null, (select id from funcao where nome = '" + dados.funcao + "'), false)"
     )
 })
 
