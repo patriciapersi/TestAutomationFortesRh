@@ -962,3 +962,12 @@ Cypress.Commands.add("InsereVacina", (dados) => {
         "insert into dosevacina(id, numerodose, diasproximadose, vacina_id) values (nextval('dosevacina_sequence'), '3' , null , (select id from vacina where nome = '" + dados.nomeVacina + "'))",
     )
 })
+
+Cypress.Commands.add("InsereEmpregadoVacinado", (dados) => {
+    cy.insereColaborador(dados)
+    cy.exec_sql(
+        "insert into vacinacao(id, lote, datarealizacao, dataprevista, observacao, colaborador_id, dosevacina_id, profissionalsst_id) values (nextval('vacinacao_sequence'), 'aaaa', '01/01/2023', '01/01/2023', null, (select id from colaborador where nome = '" + dados.colaborador + "'), '1', null)",
+        "insert into vacinacao(id, lote, datarealizacao, dataprevista, observacao, colaborador_id, dosevacina_id, profissionalsst_id) values (nextval('vacinacao_sequence'), null, null, '30/01/2023', null, (select id from colaborador where nome = '" + dados.colaborador + "'), '2', null)",
+        "insert into vacinacao(id, lote, datarealizacao, dataprevista, observacao, colaborador_id, dosevacina_id, profissionalsst_id) values (nextval('vacinacao_sequence'), null, null, '30/01/2023', null, (select id from colaborador where nome = '" + dados.colaborador + "'), '3', null)"
+    )
+})
