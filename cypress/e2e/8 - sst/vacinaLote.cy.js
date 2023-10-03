@@ -43,7 +43,7 @@ describe('Vacinas', () => {
             })
         cy.digita('input[name = "lote"]', dados.loteVacina)
         cy
-            .contains('Incluir Todos').should('be.visible').click()
+            .contains('Marcar Todos').should('be.visible').click()
         cy.clickNewButton('Realizar Vacinação')
             .validaMensagem('Vacinação em Lote realizada com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 

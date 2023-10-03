@@ -24,7 +24,7 @@ describe('Modelos de Avaliação de Aluno', () => {
             .clickNewButton('Inserir')
             .digita('input[name="nome"]', dados.nomeCertificacaoManual)
         cy  
-            .contains('Incluir Todos').should('be.visible').click()
+            .contains('Marcar Todos').should('be.visible').click()
             .clickNewButton('Gravar')
             .validaMensagem('Certificação salva com sucesso.')
         cy

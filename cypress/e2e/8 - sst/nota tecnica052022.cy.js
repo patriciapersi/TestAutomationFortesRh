@@ -37,7 +37,7 @@ describe('Testes da nota tecnica com prazo 20/07', () => {
             .get('.p-dropdown-label').eq(1).should('be.visible').click()
         cy
             .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
-        cy  .contains('Incluir Todos').should('be.enabled').and('be.visible').click()
+        cy  .contains('Marcar Todos').should('be.enabled').and('be.visible').click()
         cy  .clickNewButton('Gravar')
         cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 
@@ -61,7 +61,7 @@ describe('Testes da nota tecnica com prazo 20/07', () => {
             .get('.p-dropdown-label').eq(1).should('be.visible').click()
         cy
             .contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
-        cy  .contains('Incluir Todos').should('be.enabled').and('be.visible').click()
+        cy  .contains('Marcar Todos').should('be.enabled').and('be.visible').click()
         cy  .clickNewButton('Gravar')
         cy  .contains('Condição Ambiental gravado com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
 

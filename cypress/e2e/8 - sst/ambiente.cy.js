@@ -153,7 +153,7 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
             .visit('/sst/ambientes')
         cy
             .clickNewButton('Continuar')
-            .validaButtonsInexistente("Remover", dados.name)
+            .validaButtonsInexistente("Remoção somente pelo Fortes Pessoal", dados.name)
     });
 
 
