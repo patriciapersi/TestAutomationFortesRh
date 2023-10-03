@@ -154,6 +154,7 @@ describe('Funcionalidade SST > Cadastros > Ambiente', () => {
         cy
             .clickNewButton('Continuar')
             .validaButtonsInexistente("Remoção somente pelo Fortes Pessoal", dados.name)
+            //Correcao
     });
 
 
