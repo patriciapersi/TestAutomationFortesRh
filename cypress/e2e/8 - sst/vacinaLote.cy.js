@@ -17,7 +17,7 @@ describe('Vacinas', () => {
             .navigate('/sst/vacinacao-em-lote')
     })
 
-    it.only('Vacina em Lote', () => {
+    it('Vacina em Lote', () => {
 
         const dados2 = {
 

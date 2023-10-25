@@ -379,7 +379,11 @@ Cypress.Commands.add('inserirDiasExperiencia', (dias) => {
 })
 
 Cypress.Commands.add("insereMotivoAfastamento", (dados) => {
-    cy.exec_sql("insert into afastamento values (nextval('afastamento_sequence'), false, '" + dados.afastamentoMotivo + "', false, true)")
+    cy.exec_sql("insert into afastamento(id, inss, descricao, absenteismo, ativo, classe, codigoac, grupoac)values (nextval('afastamento_sequence'), false, '" + dados.afastamentoMotivo + "',false, true, null, null, null)")
+})
+
+Cypress.Commands.add("insereMotivoAfastamentoIntegrado", (dados) => {
+    cy.exec_sql("insert into afastamento(id, inss, descricao, absenteismo, ativo, classe, codigoac, grupoac)values (nextval('afastamento_sequence'), false, '" + dados.afastamentoMotivoINTEGRADO + "', false, true,'NAO_SUPORTADO', nextval('afastamento_sequence'), null)")
 })
 
 Cypress.Commands.add("insereAfastamento", () => {
