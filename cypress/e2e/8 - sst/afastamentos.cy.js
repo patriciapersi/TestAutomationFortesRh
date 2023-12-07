@@ -65,31 +65,18 @@ describe('Funcionalidade SST > Afastamentos', () => {
             cy
                 .contains('li', 'Atestado Clinica Geral').click({ force: true })
             })
-        .get('input[name="inicio"').clear().type('15/01/2021')
-        .clickNewButton('Gravar')
-        .validaMensagem('Este afastamento conflita com 1 afastamento(s) já cadastrado(s).').and('have.css', 'color', "rgb(115, 0, 12)")
-    
-    });
-
-    it('Inserir Afastamento anterior a admissao', () => {
-    
-    cy  .clickNewButton('Inserir')
-    cy  
-        .contains('label', 'Talento: *').next().click()
-        .get('.p-dropdown-filter').should('be.visible').clear().type('Colaborador Teste 0')
-        .get('.p-dropdown-items').within(($form) => {
-            cy
-                .contains('li', 'Colaborador Teste 0').click({ force: true })
-            })
-    cy
-        .contains('label', 'Motivo: *').next().click()
-        .get('.p-dropdown-items').within(($form) => {
-            cy
-                .contains('li', 'Atestado Clinica Geral').click({ force: true })
-            })
+        // Valida conflitos entre a data    
+        
         .get('input[name="inicio"').clear().type('10/05/2020')
         .clickNewButton('Gravar')
+        .validaMensagem('Este afastamento conflita com 1 afastamento(s) já cadastrado(s).').and('have.css', 'color', "rgb(115, 0, 12)")
+        
+        // Valida conflito entre a admissão do talento x data do afastamento
+        .get('input[name="fim"').clear().type('10/05/2020')
+        .clickNewButton('Gravar')
         .validaMensagem('O início do afastamento não pode ser anterior à admissão (20/07/2020).').and('have.css', 'color', "rgb(115, 0, 12)")
+        
+
 
     });
 

@@ -58,7 +58,7 @@ describe('Motivo Afastamento', () => {
             .contains('td', dados.afastamentoMotivo).should('exist')
     });
 
-    it.only('Validar Comportamento da tela durante integração', () => {
+    it('Validar Comportamento da tela durante integração', () => {
         cy
             .integraFortesPessoal()
             .visit('/logout')
