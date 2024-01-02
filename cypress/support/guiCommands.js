@@ -84,6 +84,15 @@ Cypress.Commands.add('cadastraCandidato', (candidato) => {
     cy  .clickButton('#btnGravar')
 })
 
+Cypress.Commands.add('cadastraCandidatoGRINGO', (candidato) => {
+    cy
+        .clickButton('#btnInserir')
+        .preencheDadosCandidatoGringo(candidato)
+        .insereFormacao()
+        .insereDocumentos()
+    cy  .clickButton('#btnGravar')
+})
+
 Cypress.Commands.add('insereFormacao', () => {
     let curso = chance.sentence({ words: 2 })
     cy
@@ -435,7 +444,31 @@ Cypress.Commands.add('preencheDadosCandidato', candidato => {
     if (candidato.senha == null) {
         cy.log('Ignora')
     } else {
-        cy.digita('input[name="candidato.pessoal.naturalidade"]', candidato.naturalidade)
+        cy.digita('input[name="candidato.senha"]', candidato.senha)
+        cy.digita('input[name="confirmaSenha"]', candidato.senha)
+    }
+})
+
+Cypress.Commands.add('preencheDadosCandidatoGringo', candidato => {
+    cy.digita('input[id="nome"]', candidato.nome)
+    cy.digita('input[id="nascimento"]', '14/06/2012')
+    cy.get('#sexo').select(candidato.sexo)
+    cy.digita('input[id="cpf"]', candidato.cpf)
+    cy.get('#escolaridade').select('Ensino Médio completo')
+    cy.get('#nacionalidadePais').select('Alemanha')
+    cy.get('#nacionalidade').select('Russo')
+    cy.get('#tipoVisto').select('Asilado')
+    cy.digita('#dataChegada', '01/01/2023')
+    cy.digita('input[id="cep"]', '60822285')
+    cy.digita('input[id="ende"]', 'Rua Ciro Monteiro')
+    cy.digita('input[id="num"]', '249')
+    cy.digita('input[id="complemento"]', 'Apto 2 Bloco C')
+    cy.digita('input[id="ddd"]', '85')
+    cy.digita('input[id="fone"]', candidato.fone)
+
+    if (candidato.senha == null) {
+        cy.log('Ignora')
+    } else {
         cy.digita('input[name="candidato.senha"]', candidato.senha)
         cy.digita('input[name="confirmaSenha"]', candidato.senha)
     }
@@ -454,6 +487,17 @@ Cypress.Commands.add('cadastrarDadosFuncionaisTalento', () => {
 Cypress.Commands.add('cadastrarTalento', (talento) => {
     cy.get('#btnInserir').should('be.enabled').and('be.visible').click()
     cy.preencheDadosCandidato(talento)
+    cy.get('#email').type('email@teste.com')
+    cy.cadastrarDadosFuncionaisTalento()
+    cy.insereFormacao()
+    cy.insereIdiomas()
+    cy.insereDocumentos()
+    cy.contains('Gravar').click()
+})
+
+Cypress.Commands.add('cadastrarTalentoGringo', (talento) => {
+    cy.get('#btnInserir').should('be.enabled').and('be.visible').click()
+    cy.preencheDadosCandidatoGringo(talento)
     cy.get('#email').type('email@teste.com')
     cy.cadastrarDadosFuncionaisTalento()
     cy.insereFormacao()
@@ -698,9 +742,6 @@ Cypress.Commands.add('cadastrarGrupoHomogeneoExposicao', (ghe) => {
     cy.get('.p-inputtext').eq(1).clear().type(ghe.dataIni)
     cy.get('.p-inputtext').eq(3).click()
     cy.contains('li', 'Utilizar "Descrição das Atividades Executadas" da Função').click({ force: true })
-    cy.contains('label', 'Responsáveis pelos registros (Profissionais de SST (CRM, CREA e Outros)): ').next().click().within(($form) => {
-        cy.contains('label', ghe.nomeProfissional).click({ force: true })
-    })
     cy.clickNewButton('Gravar e Gerar Medição')
     cy.contains('Histórico do Grupo Homogêneo gravada com sucesso.').and('have.css', 'color', "rgb(34, 74, 35)")
     //AgentesNocivos

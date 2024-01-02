@@ -58,6 +58,13 @@ describe('Funcionalidade de Cadastro de Colaborador', () => {
 
     });
 
+    it('Cadastrar Talento Gringo', () => {
+        cy
+            .cadastrarTalentoGringo(dados2)
+        cy.contains(`Talento ${dados2.nome} cadastrado com sucesso.`).should('be.visible')
+
+    });
+
     it('Tentativa de criar acesso ao sistema com empregado demitido', () => {
         cy.get('.fa-search').click()
         cy.get('#situacao').should('be.visible').select('Todos')

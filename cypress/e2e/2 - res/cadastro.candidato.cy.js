@@ -39,6 +39,14 @@ describe('Gerenciamento de Candidatos', () => {
         cy.contains('td', dados.nome).should('be.visible')
     });
 
+    it('Inserir Candidato Gringo', () => {
+        cy
+            .cadastraCandidatoGRINGO(dados)
+            .validaMensagem(dados.mensagem[0]).and('have.css', 'color', "rgb(34, 74, 35)")
+            .clickButton('#btnVoltar')
+        cy.contains('td', dados.nome).should('be.visible')
+    });
+
     it('Inserção de Candidatos - Associar Candidato ao Colaborador Contratado', () => {
         cy
             .insereColaborador(dados)
