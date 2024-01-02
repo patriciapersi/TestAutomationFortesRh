@@ -32,7 +32,7 @@ describe('Tentativas de Login', () => {
                 .validaMensagem(dados.mensagem[0]).and('have.css', 'color', "rgb(255, 87, 87)")
         });
     
-        it('Primeiro Acesso', () => {
+        it('Primeiro Acesso e valida mensagem da Licença', () => {
             cy
                 .exec_sql("update parametrosdosistema set exibiralteracaoprimeiroacesso = true")
                 .insereUsuario(dados.user)
@@ -40,6 +40,7 @@ describe('Tentativas de Login', () => {
                 .alterarSenhaPrimeiroAcesso(dados.pass[1])
                 .login(dados.user, dados.pass[1])
                 .validaUsuarioLogado(dados.user)
+                .validaMensagem("Foi identificado uma discrepância com os dados da licença de instalação. Acesse o menu 'Utilitários > Registrar Nova Licença' registro de licença para retificar.")
         });
     
         it('Login válido', () => {
