@@ -29,13 +29,10 @@ describe('Motivo Afastamento', () => {
             .clickNewButton('Gravar')
             .validaMensagem('Motivo de Afastamento atualizado com sucesso.')
         cy
-            .get('#pr_id_9_header_0').click()
-        cy
-            .contains('label', 'Ativos:').next().click()
-        cy
-            .contains('li', 'Sim').dblclick({ force: true })
-            .clickNewButton('Pesquisar')
-            .contains('td', dados.afastamentoMotivo).should('not.exist')
+            .get('#rh_id_8').click()
+            cy.digita('input[name = "descricao"]', dados.afastamentoMotivo)
+            cy.clickNewButton('Gravar')
+            cy.validaMensagem('Motivo de Afastamento atualizado com sucesso.')
     });
 
     it('Excluir Motivo Afastamento', () => {

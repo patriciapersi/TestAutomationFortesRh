@@ -40,7 +40,7 @@ describe('Tentativas de Login', () => {
                 .alterarSenhaPrimeiroAcesso(dados.pass[1])
                 .login(dados.user, dados.pass[1])
                 .validaUsuarioLogado(dados.user)
-                .validaMensagem("Foi identificado uma discrepância com os dados da licença de instalação. Acesse o menu 'Utilitários > Registrar Nova Licença' registro de licença para retificar.")
+                .validaMensagem("Foi identificado uma discrepância com os dados da licença de instalação. Acesse o menu 'Utilitários > Registrar Nova Licença' para retificar os dados.")
         });
     
         it('Login válido', () => {
